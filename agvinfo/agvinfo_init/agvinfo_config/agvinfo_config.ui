@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>agvinfo_configClass</class>
+ <widget class="QMainWindow" name="agvinfo_configClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>951</width>
+    <height>599</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>agvinfo_config</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(253, 253, 253);</string>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="page">
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>IP:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="IPLineEdit">
+              <property name="maximumSize">
+               <size>
+                <width>400</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>10.10.102.15</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; color:#ff0000;&quot;&gt;*&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Port:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="portLineEdit">
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>9100</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; color:#ff0000;&quot;&gt;*&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="getPushButton">
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">.QPushButton {
+	border-style: none;
+	border: 0px;
+	min-height:42px;
+    min-width:80px;
+	border-radius: 8px;
+	color: rgb(255, 255, 255);
+	
+	background-color: rgb(26, 188, 156);
+    background-repeat:no-repeat;
+}
+
+
+.QPushButton:hover{ 
+background-color: rgb(74, 215, 187);
+    background-repeat:no-repeat;
+}
+
+.QPushButton:pressed{ 
+background-color: rgb(19, 159, 131);
+}
+</string>
+              </property>
+              <property name="text">
+               <string>获取</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QPushButton" name="pushButton">
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">.QPushButton {
+	border-style: none;
+	border: 0px;
+	min-height:42px;
+    min-width:80px;
+	border-radius: 8px;
+	color: rgb(255, 255, 255);
+	
+	background-color: rgb(26, 188, 156);
+    background-repeat:no-repeat;
+}
+
+
+.QPushButton:hover{ 
+background-color: rgb(74, 215, 187);
+    background-repeat:no-repeat;
+}
+
+.QPushButton:pressed{ 
+background-color: rgb(19, 159, 131);
+}
+</string>
+              </property>
+              <property name="text">
+               <string>一键清空</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>348</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="combPushButton">
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">.QPushButton {
+	border-style: none;
+	border: 0px;
+	min-height:42px;
+    min-width:80px;
+	border-radius: 8px;
+	color: rgb(255, 255, 255);
+	
+	background-color: rgb(26, 188, 156);
+    background-repeat:no-repeat;
+}
+
+
+.QPushButton:hover{ 
+background-color: rgb(74, 215, 187);
+    background-repeat:no-repeat;
+}
+
+.QPushButton:pressed{ 
+background-color: rgb(19, 159, 131);
+}
+</string>
+              </property>
+              <property name="text">
+               <string>合并</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="merge">
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">.QPushButton {
+	border-style: none;
+	border: 0px;
+	min-height:42px;
+    min-width:80px;
+	border-radius: 8px;
+	color: rgb(255, 255, 255);
+	
+	background-color: rgb(26, 188, 156);
+    background-repeat:no-repeat;
+}
+
+
+.QPushButton:hover{ 
+background-color: rgb(74, 215, 187);
+    background-repeat:no-repeat;
+}
+
+.QPushButton:pressed{ 
+background-color: rgb(19, 159, 131);
+}
+</string>
+              </property>
+              <property name="text">
+               <string>一键合并</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_add">
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">.QPushButton {
+	border-style: none;
+	border: 0px;
+	min-height:42px;
+    min-width:80px;
+	border-radius: 8px;
+	color: rgb(255, 255, 255);
+	
+	background-color: rgb(26, 188, 156);
+    background-repeat:no-repeat;
+}
+
+
+.QPushButton:hover{ 
+background-color: rgb(74, 215, 187);
+    background-repeat:no-repeat;
+}
+
+.QPushButton:pressed{ 
+background-color: rgb(19, 159, 131);
+}
+</string>
+              </property>
+              <property name="text">
+               <string>添加</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_delete">
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">.QPushButton {
+	border-style: none;
+	border: 0px;
+	min-height:42px;
+    min-width:80px;
+	border-radius: 8px;
+	color: rgb(255, 255, 255);
+	
+	background-color: rgb(26, 188, 156);
+    background-repeat:no-repeat;
+}
+
+
+.QPushButton:hover{ 
+background-color: rgb(74, 215, 187);
+    background-repeat:no-repeat;
+}
+
+.QPushButton:pressed{ 
+background-color: rgb(19, 159, 131);
+}
+</string>
+              </property>
+              <property name="text">
+               <string>删除</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="updatePushButton">
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">.QPushButton {
+	border-style: none;
+	border: 0px;
+	min-height:42px;
+    min-width:80px;
+	border-radius: 8px;
+	color: rgb(255, 255, 255);
+	
+	background-color: rgb(26, 188, 156);
+    background-repeat:no-repeat;
+}
+
+
+.QPushButton:hover{ 
+background-color: rgb(74, 215, 187);
+    background-repeat:no-repeat;
+}
+
+.QPushButton:pressed{ 
+background-color: rgb(19, 159, 131);
+}
+</string>
+              </property>
+              <property name="text">
+               <string>一键更新</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="morePushButton">
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">.QPushButton {
+	border-style: none;
+	border: 0px;
+	min-height:42px;
+    min-width:160px;
+	border-radius: 8px;
+	color: rgb(255, 255, 255);
+	
+background-color: rgb(26, 137, 188);
+    background-repeat:no-repeat;
+}
+
+
+.QPushButton:hover{ 
+background-color: rgb(88, 174, 214);
+    background-repeat:no-repeat;
+}
+
+.QPushButton:pressed{ 
+background-color: rgb(20, 113, 157);
+}
+
+</string>
+              </property>
+              <property name="text">
+               <string>修改更多车辆信息&gt;&gt;</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0">
+           <widget class="QTableWidget" name="tableWidget">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>800</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+            </property>
+            <column>
+             <property name="text">
+              <string/>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>vehicle_id</string>
+             </property>
+             <property name="font">
+              <font>
+               <family>微软雅黑</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>mac_address</string>
+             </property>
+             <property name="font">
+              <font>
+               <family>微软雅黑</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>IP</string>
+             </property>
+             <property name="font">
+              <font>
+               <family>微软雅黑</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>state</string>
+             </property>
+             <property name="font">
+              <font>
+               <family>微软雅黑</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+            </column>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_2">
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QPushButton" name="backButton">
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">.QPushButton {
+	border-style: none;
+	border: 0px;
+	min-height:42px;
+    min-width:80px;
+	border-radius: 8px;
+	color: rgb(255, 255, 255);
+	
+background-color: rgb(26, 137, 188);
+    background-repeat:no-repeat;
+}
+
+
+.QPushButton:hover{ 
+background-color: rgb(88, 174, 214);
+    background-repeat:no-repeat;
+}
+
+.QPushButton:pressed{ 
+background-color: rgb(20, 113, 157);
+}
+
+</string>
+          </property>
+          <property name="text">
+           <string>返回</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>654</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="0" colspan="4">
+         <widget class="QTableWidget" name="attributeWidget">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>800</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+          </property>
+          <column>
+           <property name="text">
+            <string>vehicle_id</string>
+           </property>
+           <property name="font">
+            <font>
+             <family>微软雅黑</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>type</string>
+           </property>
+           <property name="font">
+            <font>
+             <family>微软雅黑</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>mac_addr</string>
+           </property>
+           <property name="font">
+            <font>
+             <family>微软雅黑</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>IP</string>
+           </property>
+           <property name="font">
+            <font>
+             <family>微软雅黑</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>port</string>
+           </property>
+           <property name="font">
+            <font>
+             <family>微软雅黑</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>shell_port</string>
+           </property>
+           <property name="font">
+            <font>
+             <family>微软雅黑</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>ftsport</string>
+           </property>
+           <property name="font">
+            <font>
+             <family>微软雅黑</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string/>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QPushButton" name="attributeButton">
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">.QPushButton {
+	border-style: none;
+	border: 0px;
+	min-height:42px;
+    min-width:80px;
+	border-radius: 8px;
+	color: rgb(255, 255, 255);
+	
+	background-color: rgb(26, 188, 156);
+    background-repeat:no-repeat;
+}
+
+
+.QPushButton:hover{ 
+background-color: rgb(74, 215, 187);
+    background-repeat:no-repeat;
+}
+
+.QPushButton:pressed{ 
+background-color: rgb(19, 159, 131);
+}
+</string>
+          </property>
+          <property name="text">
+           <string>属性</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="agvinfo_config.qrc"/>
+ </resources>
+ <connections/>
+</ui>

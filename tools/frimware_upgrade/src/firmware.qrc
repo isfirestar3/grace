@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/operate">
+        <file>../image/add.png</file>
+        <file>../image/plus_alt.png</file>
+        <file>../image/logout.png</file>
+        <file>../image/order.png</file>
+        <file>../image/package-download.png</file>
+        <file>../image/sign-out.png</file>
+        <file>../image/upload3.png</file>
+        <file>../image/delete.png</file>
+        <file>../image/reset.png</file>
+        <file>../image/restart.png</file>
+        <file>../image/open_file.png</file>
+        <file>../image/start.png</file>
+        <file>../image/start_task.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>image/wait.gif</file>
+    </qresource>
+</RCC>

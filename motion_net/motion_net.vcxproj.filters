@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="proto">
+      <UniqueIdentifier>{bea4d903-6d83-4600-9c51-b920afbd6d4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\nsp">
+      <UniqueIdentifier>{0ce7efed-0443-449b-a8bc-802f37f876d3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="net_motion_session.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="net_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="asio.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\misc\mntypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\misc\net_impls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\application_network_framwork.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\endpoint.h">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\exception.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\log.h">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\network_handler.h">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\old.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\os_util.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\serialize.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\singleton.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\swnet.h">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\task_scheduler.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\toolkit.h">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_add_navigation_task_traj_ack.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_allocate_operation_task.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_canio_msg.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_common.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_common_ack.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_common_by_id.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_common_report.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_control_navi_task_status_ack.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_dbg_varls.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_definion.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_login.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_navigation_task.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_navigation_task_status_ack.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_navigation_task_traj_ack.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_operator_task_action_ack.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_pre_login.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_report_status.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_task_opera_parm.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto\proto_task_status.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="packet_pool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="net_impls.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="net_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="net_motion_session.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\encrypt.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\endpoint.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\log.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\network_handler.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\os_util.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\swnet.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\toolkit.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="packet_pool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="impls.def">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="motion_net.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

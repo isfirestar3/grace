@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;cxx;c;def</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h</Extensions>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{15da861e-a49d-4a05-9e69-906225f90832}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{35631036-55dd-4518-906c-5caaebb6037b}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="nsp">
+      <UniqueIdentifier>{26a993ff-090d-45c1-aee4-ac5e8e2e3782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nsp\icom">
+      <UniqueIdentifier>{43d26153-60d7-41e2-8e51-e43e49ae573a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="agvinfo_config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_agvinfo_config.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_agvinfo_config.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_agvinfo_config.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="item_delegate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\encrypt.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\endpoint.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\log.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\network_handler.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\os_util.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\swnet.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\toolkit.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="edit_attribute.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_edit_attribute.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_edit_attribute.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="edit_attribute_value.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_edit_attribute_value.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_edit_attribute_value.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="agv_single.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="agvinfo_config.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="agvinfo_config.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="agvinfo_config.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="edit_attribute.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="edit_attribute.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="edit_attribute_value.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="edit_attribute_value.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GeneratedFiles\ui_agvinfo_config.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="item_delegate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\misc\libagvinfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\application_network_framwork.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\endpoint.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\exception.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\log.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\network_handler.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\old.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\os_util.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\serialize.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\singleton.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\swnet.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\task_scheduler.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\toolkit.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\avltree.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\base64.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\clist.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\compiler.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\crc32.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\des.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\logger.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\md5.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\nis.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\nisdef.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\object.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_atomic.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_ifos.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_naos.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_string.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_thread.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_time.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_wait.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_edit_attribute.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_edit_attribute_value.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="agv_single.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

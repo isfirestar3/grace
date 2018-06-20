@@ -1,0 +1,8 @@
+09:19:03 0913 trace 102C # IO Thread Startup.LWP:4140 epfd:4
+09:19:03 0913 trace 102E # IO Thread Startup.LWP:4142 epfd:6
+09:19:03 0913 trace 102D # IO Thread Startup.LWP:4141 epfd:5
+09:19:03 0913 trace 102F # IO Thread Startup.LWP:4143 epfd:7
+09:19:03 0913 trace 1030 # IO Thread Startup.LWP:4144 epfd:8
+09:19:03 0913 trace 1033 # IO Thread Startup.LWP:4147 epfd:10
+09:19:03 0915 trace 1034 # IO Thread Startup.LWP:4148 epfd:11
+09:19:03 0915 trace 1032 # IO Thread Startup.LWP:4146 epfd:9

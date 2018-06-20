@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/agv.png</file>
+        <file>images/map.bmp</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="nsp">
+      <UniqueIdentifier>{4038ee79-c15d-4601-b099-04d3914cd4c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="proto">
+      <UniqueIdentifier>{888daeca-433f-4bda-93b0-516fb6c1f1b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rapid">
+      <UniqueIdentifier>{378487b0-2e3c-45c5-b226-b2dd60091a61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manager">
+      <UniqueIdentifier>{f4f11ffb-5a61-4be8-b9f7-6de6c65f7aaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dhcp">
+      <UniqueIdentifier>{8228d879-ba41-45ef-a500-b78de715e6ed}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="impls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operation_session.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fts_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fts_push_task_group.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="file_read.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="frimware_core_task.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fts_pull_task_group.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="err_msg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="proto_process_status.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="operation_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="asio.hpp">
+      <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="net_manager.h">
+      <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="asio_manage.h">
+      <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="rw_xml_file.h">
+      <Filter>rapid</Filter>
+    </ClInclude>
+    <ClInclude Include="proto_interface.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\private\proto\agv_shell_proto.hpp">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\private\proto\proto_frimware_msg.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\rapidxml\rapidxml.hpp">
+      <Filter>rapid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\rapidxml\rapidxml_iterators.hpp">
+      <Filter>rapid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\rapidxml\rapidxml_print.hpp">
+      <Filter>rapid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\rapidxml\rapidxml_utils.hpp">
+      <Filter>rapid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\private\proto\proto_agv_msg.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\misc\agv_shell_common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\misc\agv_shell_define.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\application_network_framwork.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\endpoint.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\exception.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\log.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\network_handler.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\old.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\os_util.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\serialize.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\singleton.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\swnet.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\task_scheduler.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\toolkit.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="dhcp_manager.h">
+      <Filter>dhcp</Filter>
+    </ClInclude>
+    <ClInclude Include="recv_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="impls.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operation_session.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fts_handler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="file_read.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fts_push_task_group.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rw_xml_file.cpp">
+      <Filter>rapid</Filter>
+    </ClCompile>
+    <ClCompile Include="frimware_core_task.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fts_pull_task_group.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operation_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="net_manager.cpp">
+      <Filter>manager</Filter>
+    </ClCompile>
+    <ClCompile Include="asio_manage.cpp">
+      <Filter>manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\encrypt.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\endpoint.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\log.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\network_handler.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\os_util.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\swnet.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\toolkit.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="dhcp_manager.cpp">
+      <Filter>dhcp</Filter>
+    </ClCompile>
+    <ClCompile Include="recv_handler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="impls.def">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

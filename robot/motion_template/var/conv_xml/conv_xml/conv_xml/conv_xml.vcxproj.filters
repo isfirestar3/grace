@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="nsp">
+      <UniqueIdentifier>{97569fc3-1e4a-45ea-86e2-621b7dbb95a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libxml2">
+      <UniqueIdentifier>{919207ff-f897-4273-9a87-efd82866e3fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libxml2\libxml">
+      <UniqueIdentifier>{98db29f8-33fb-4413-a8fd-fc5d626aa299}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="var">
+      <UniqueIdentifier>{a03f3295-a90c-45be-8890-8ed059fe675e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\c14n.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\catalog.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\chvalid.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\debugXML.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\dict.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\DOCBparser.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\encoding.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\entities.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\globals.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\hash.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\HTMLparser.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\HTMLtree.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\iconv.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\list.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\nanoftp.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\nanohttp.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\parser.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\parserInternals.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\pattern.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\relaxng.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\SAX.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\SAX2.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\schemasInternals.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\schematron.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\threads.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\tree.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\uri.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\valid.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xinclude.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xlink.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xmlautomata.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xmlerror.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xmlexports.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xmlIO.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xmlmemory.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xmlmodule.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xmlreader.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xmlregexp.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xmlsave.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xmlschemas.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xmlschemastypes.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xmlstring.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xmlunicode.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xmlversion.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xmlwriter.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xpath.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xpathInternals.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\private\libxml2\libxml\xpointer.h">
+      <Filter>libxml2\libxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\sdk\nsp\icom\avltree.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\sdk\nsp\icom\base64.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\sdk\nsp\icom\clist.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\sdk\nsp\icom\compiler.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\sdk\nsp\icom\crc32.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\sdk\nsp\icom\des.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\sdk\nsp\icom\logger.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\sdk\nsp\icom\md5.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\sdk\nsp\icom\nis.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\sdk\nsp\icom\nisdef.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\sdk\nsp\icom\object.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\sdk\nsp\icom\posix_atomic.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\sdk\nsp\icom\posix_ifos.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\sdk\nsp\icom\posix_naos.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\sdk\nsp\icom\posix_string.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\sdk\nsp\icom\posix_thread.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\sdk\nsp\icom\posix_time.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\sdk\nsp\icom\posix_wait.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\map_test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\var.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vartypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xml_loaded.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\convert_xml.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\map.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\map_test.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xml_loaded.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

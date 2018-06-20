@@ -1,0 +1,38 @@
+LIBRARY
+
+EXPORTS
+
+init_net @1
+connect_host @2
+disconnect @3
+get_listdir @4
+push_files_to_remote @5
+regist_pull_callback @6
+regist_push_callback @7
+push_files_to_remote @8
+get_file_crc @9
+get_push_files_detail @10
+free_detail @11
+delete_remote_files @12
+repeat_push_files @13
+restore_factory_setting @14
+pull_files_from_remote @15
+update_folder_config @16
+set_block_size @17
+post_cmd_agv_process @18
+cancel_pull_opreate @19
+get_m_camera_info_request @20
+regist_m_core_info_callback @21
+push_m_camera_file @22
+regist_m_core_transfer_callback @23
+restart_m_core @24
+pull_m_camera_file @25
+regist_process_status_callback @26
+update_agv_shell @27
+get_current_catalog @28
+regist_netowrk_callback @29
+get_agv_process_table @30
+post_async_package @31
+post_sync_package @32
+is_open_dhcp @33
+post_sync_without_id @34

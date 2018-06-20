@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>edit_attribute</class>
+ <widget class="QDialog" name="edit_attribute">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>427</width>
+    <height>470</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>edit_attribute</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0" colspan="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>378</width>
+       <height>41</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="2">
+    <widget class="QPushButton" name="addButton">
+     <property name="styleSheet">
+      <string notr="true">.QPushButton {
+	border-style: none;
+	border: 0px;
+	min-height:44px;
+    min-width:44px;
+	border-radius: 8px;
+	
+	background-image: url(:/agvinfo_config/image/add_normal.png);
+    background-repeat:no-repeat;
+}
+
+
+.QPushButton:hover{ 
+background-image: url(:/agvinfo_config/image/add_hover.png);
+    background-repeat:no-repeat;
+}
+
+.QPushButton:pressed{ 
+background-image: url(:/agvinfo_config/image/add_active.png);
+}
+</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QPushButton" name="deleteButton">
+     <property name="styleSheet">
+      <string notr="true">.QPushButton {
+	border-style: none;
+	border: 0px;
+	min-height:36px;
+    min-width:36px;
+	border-radius: 8px;
+	
+	background-image: url(:/agvinfo_config/image/delete_normal.png);
+    background-repeat:no-repeat;
+}
+
+
+.QPushButton:hover{ 
+background-image: url(:/agvinfo_config/image/delete_hover.png);
+    background-repeat:no-repeat;
+}
+
+.QPushButton:pressed{ 
+background-image: url(:/agvinfo_config/image/delete_active.png);
+}
+</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="4">
+    <widget class="QTableWidget" name="tableWidget">
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string/>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>name</string>
+      </property>
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>131</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="1">
+    <widget class="QRadioButton" name="allButton">
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>应用所有车</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="yesButton">
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">.QPushButton {
+	border-style: none;
+	border: 0px;
+	min-height:42px;
+    min-width:60px;
+	border-radius: 8px;
+	color: rgb(255, 255, 255);
+	
+	background-color: rgb(26, 188, 156);
+    background-repeat:no-repeat;
+}
+
+
+.QPushButton:hover{ 
+background-color: rgb(74, 215, 187);
+    background-repeat:no-repeat;
+}
+
+.QPushButton:pressed{ 
+background-color: rgb(19, 159, 131);
+}
+</string>
+     </property>
+     <property name="text">
+      <string>确定</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="3">
+    <widget class="QPushButton" name="cancelButton">
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">.QPushButton {
+	border-style: none;
+	border: 0px;
+	min-height:42px;
+    min-width:60px;
+	border-radius: 8px;
+	color: rgb(255, 255, 255);
+	
+background-color: rgb(26, 137, 188);
+    background-repeat:no-repeat;
+}
+
+
+.QPushButton:hover{ 
+background-color: rgb(88, 174, 214);
+    background-repeat:no-repeat;
+}
+
+.QPushButton:pressed{ 
+background-color: rgb(20, 113, 157);
+}
+
+</string>
+     </property>
+     <property name="text">
+      <string>取消</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="agvinfo_config.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>yesButton</sender>
+   <signal>clicked()</signal>
+   <receiver>edit_attribute</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>307</x>
+     <y>438</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>252</x>
+     <y>421</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cancelButton</sender>
+   <signal>clicked()</signal>
+   <receiver>edit_attribute</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>409</x>
+     <y>435</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>423</x>
+     <y>400</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

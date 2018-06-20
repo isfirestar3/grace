@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="Tool.CommView.CommBtn"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Tool.CommView"
+             mc:Ignorable="d" 
+              BorderThickness="0"
+             MouseEnter="comm_mouse_enter"
+             MouseLeave="comm_mouse_leave"
+             GotFocus="comm_get_focus"
+             LostFocus="comm_lost_focus"
+             MouseLeftButtonDown="comm_left_button_down"
+             Loaded="comm_loaded"
+             VerticalAlignment="Stretch"
+             HorizontalAlignment="Stretch"
+             d:DesignHeight="25"
+             d:DesignWidth="80">
+    <Grid VerticalAlignment="Stretch"
+          HorizontalAlignment="Stretch">
+        <Button x:Name="bt"
+                Height="0"
+                Width="0"
+                Click="comm_click"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"/>
+        <Border x:Name="bd"
+                BorderThickness="1"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch">
+            <TextBlock x:Name="tb"
+                       Text="提  示"
+                       Foreground="Gray"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1D2CCB9F-5511-45C3-B9EE-90635A2C2698}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>agv_interface</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>../../sdk\lib\</OutDir>
+    <TargetName>$(ProjectName)d</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>../../sdk/lib/</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../sdk/misc;../../sdk/rapidxml;../../sdk/var;../../sdk\nsp;../../sdk\nsp\icom;../../private/proto;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../sdk/misc;../../sdk/rapidxml;../../sdk/var;../../sdk/nsp;../../private/proto/;../../sdk\nsp\icom;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\package\inc\agv_interface\agv_atom_taskdata_base.h" />
+    <ClInclude Include="..\..\package\inc\agv_interface\agv_atom_taskdata_nav.h" />
+    <ClInclude Include="..\..\package\inc\agv_interface\agv_atom_taskdata_opt.h" />
+    <ClInclude Include="..\..\package\inc\agv_interface\agv_combine_taskdata_action.h" />
+    <ClInclude Include="..\..\package\inc\agv_interface\agv_combine_taskdata_base.h" />
+    <ClInclude Include="..\..\package\inc\agv_interface\agv_combine_taskdata_goto.h" />
+    <ClInclude Include="..\..\package\inc\agv_interface\agv_combine_taskdata_gotoaction.h" />
+    <ClInclude Include="..\..\package\inc\agv_interface\agv_taskdata_base.h" />
+    <ClInclude Include="..\..\package\inc\agv_interface\agv_task_define.h" />
+    <ClInclude Include="..\..\private\proto\agv_shell_define.h" />
+    <ClInclude Include="..\..\private\proto\agv_shell_proto.hpp" />
+    <ClInclude Include="..\..\private\proto\proto_agv_msg.h" />
+    <ClInclude Include="..\..\private\proto\proto_definion.h" />
+    <ClInclude Include="..\..\sdk\misc\agv_base.hpp" />
+    <ClInclude Include="..\..\sdk\misc\agv_driver.h" />
+    <ClInclude Include="..\..\sdk\misc\agv_shell_base.h" />
+    <ClInclude Include="..\..\sdk\misc\agv_shell_common.h" />
+    <ClInclude Include="..\..\sdk\misc\dhcp_server_base.h" />
+    <ClInclude Include="..\..\sdk\nsp\application_network_framwork.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\endpoint.h" />
+    <ClInclude Include="..\..\sdk\nsp\exception.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\icom\avltree.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\base64.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\clist.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\compiler.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\crc32.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\des.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\logger.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\md5.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\nis.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\nisdef.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\object.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_atomic.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_ifos.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_naos.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_string.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_thread.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_time.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_wait.h" />
+    <ClInclude Include="..\..\sdk\nsp\log.h" />
+    <ClInclude Include="..\..\sdk\nsp\network_handler.h" />
+    <ClInclude Include="..\..\sdk\nsp\old.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\os_util.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\serialize.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\singleton.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\swnet.h" />
+    <ClInclude Include="..\..\sdk\nsp\task_scheduler.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\toolkit.h" />
+    <ClInclude Include="agv_shell_alive.h" />
+    <ClInclude Include="agv_shell_session.h" />
+    <ClInclude Include="asio.hpp" />
+    <ClInclude Include="asio_manage.h" />
+    <ClInclude Include="dhcp_notify.hpp" />
+    <ClInclude Include="dhcp_session.h" />
+    <ClInclude Include="net_manager.h" />
+    <ClInclude Include="task_threadpool.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\sdk\nsp\encrypt.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\endpoint.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\log.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\network_handler.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\os_util.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\swnet.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\toolkit.cpp" />
+    <ClCompile Include="agv_atom_taskdata_base.cpp" />
+    <ClCompile Include="agv_atom_taskdata_nav.cpp" />
+    <ClCompile Include="agv_atom_taskdata_opt.cpp" />
+    <ClCompile Include="agv_base.cpp" />
+    <ClCompile Include="agv_combine_taskdata_action.cpp" />
+    <ClCompile Include="agv_combine_taskdata_base.cpp" />
+    <ClCompile Include="agv_combine_taskdata_goto.cpp" />
+    <ClCompile Include="agv_combine_taskdata_gotoaction.cpp" />
+    <ClCompile Include="agv_driver.cpp" />
+    <ClCompile Include="agv_shell_alive.cpp" />
+    <ClCompile Include="agv_shell_base.cpp" />
+    <ClCompile Include="agv_shell_session.cpp" />
+    <ClCompile Include="agv_taskdata_base.cpp" />
+    <ClCompile Include="asio_manage.cpp" />
+    <ClCompile Include="layout_info.cpp" />
+    <ClCompile Include="dhcp_server_base.cpp" />
+    <ClCompile Include="dhcp_session.cpp" />
+    <ClCompile Include="net_manager.cpp" />
+    <ClCompile Include="task_threadpool.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

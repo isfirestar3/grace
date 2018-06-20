@@ -1,0 +1,414 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="rapidxml">
+      <UniqueIdentifier>{7ef9380c-f43b-4263-9660-809fc5b9f361}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CommonKit">
+      <UniqueIdentifier>{5f241ee6-06c2-4a2a-9a19-d37185295aea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="algorithm">
+      <UniqueIdentifier>{cddcf62c-69b9-408d-b5da-207e9e0bc44f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="var">
+      <UniqueIdentifier>{f4904ad2-4003-4673-acc8-8833696358ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="curve">
+      <UniqueIdentifier>{2e814bcf-cb74-4d59-8042-24752d883a3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nsp">
+      <UniqueIdentifier>{729c6a72-5826-440f-b844-1d14354c2cdb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawMapWid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MapScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MapView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main_resource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeItemManage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CtrlPointItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EdgeItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EdgeItemManage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TerminalPointItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataManage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VehicleItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VehicleItemManage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WopsEditWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EdgeInfoWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectWopWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetItemManage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetInfoWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShowNavPathWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AlignItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="moc_MapScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeInfoWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonKit\rw_config_file.cpp">
+      <Filter>CommonKit</Filter>
+    </ClCompile>
+    <ClCompile Include="AnchorItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnchorItemManage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnchorInfoWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectVehicleWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CtrlPointInfoWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VehicleInfoWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OptInfoWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonKit\rw_layout_data.cpp">
+      <Filter>CommonKit</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonKit\net_interface.cpp">
+      <Filter>CommonKit</Filter>
+    </ClCompile>
+    <ClCompile Include="OperateCtrlWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="curve\GenerateVariable.cpp">
+      <Filter>curve</Filter>
+    </ClCompile>
+    <ClCompile Include="curve\GenerateVariable180.cpp">
+      <Filter>curve</Filter>
+    </ClCompile>
+    <ClCompile Include="curve\Matrix.cpp">
+      <Filter>curve</Filter>
+    </ClCompile>
+    <ClCompile Include="WopAttrWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SegmentPosWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EdgeListShowWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\package\nsp\encrypt.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\package\nsp\endpoint.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\package\nsp\log.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\package\nsp\network_handler.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\package\nsp\os_util.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\package\nsp\swnet.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\package\nsp\toolkit.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="algorithm\Geometry.cpp">
+      <Filter>algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="algorithm\PosandTrack.cpp">
+      <Filter>algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="algorithm\search_path.cpp">
+      <Filter>algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="algorithm\md5.c">
+      <Filter>nsp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MainWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawMapWid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MapScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MapView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicDefine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeItemManage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CtrlPointItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgeItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgeItemManage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TerminalPointItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\rapidxml\rapidxml.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\rapidxml\rapidxml_iterators.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\rapidxml\rapidxml_print.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\rapidxml\rapidxml_utils.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="VehicleItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VehicleItemManage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WopsEditWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgeInfoWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectWopWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algorithm\AlgorithmDefine.hpp">
+      <Filter>algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algorithm\ComputeLinks.hpp">
+      <Filter>algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonKit\StringTool.hpp">
+      <Filter>CommonKit</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetItemManage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetInfoWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShowNavPathWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AlignItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeInfoWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonKit\rw_config_file.h">
+      <Filter>CommonKit</Filter>
+    </ClInclude>
+    <ClInclude Include="AnchorItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnchorItemManage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnchorInfoWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectVehicleWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonKit\rw_layout_data.h">
+      <Filter>CommonKit</Filter>
+    </ClInclude>
+    <ClInclude Include="CtrlPointInfoWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VehicleInfoWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OptInfoWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\var\navigation.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\var\vehicle.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonKit\net_interface.h">
+      <Filter>CommonKit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\var\optpar.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\var\operation.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonKit\pack_opt_param.hpp">
+      <Filter>CommonKit</Filter>
+    </ClInclude>
+    <ClInclude Include="OperateCtrlWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="curve\curve_product.hpp">
+      <Filter>curve</Filter>
+    </ClInclude>
+    <ClInclude Include="curve\GenerateVariable.h">
+      <Filter>curve</Filter>
+    </ClInclude>
+    <ClInclude Include="curve\GenerateVariable180.h">
+      <Filter>curve</Filter>
+    </ClInclude>
+    <ClInclude Include="curve\GlobalVariables.h">
+      <Filter>curve</Filter>
+    </ClInclude>
+    <ClInclude Include="curve\Matrix.h">
+      <Filter>curve</Filter>
+    </ClInclude>
+    <ClInclude Include="curve\curve_factory.hpp">
+      <Filter>curve</Filter>
+    </ClInclude>
+    <ClInclude Include="WopAttrWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SegmentPosWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgeListShowWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\package\nsp\application_network_framwork.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\package\nsp\endpoint.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\package\nsp\log.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\package\nsp\network_handler.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\package\nsp\old.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\package\nsp\os_util.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\package\nsp\serialize.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\package\nsp\singleton.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\package\nsp\swnet.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\package\nsp\task_scheduler.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\package\nsp\toolkit.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="algorithm\Geometry.h">
+      <Filter>algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="algorithm\PosandTrack.h">
+      <Filter>algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="algorithm\search_path.h">
+      <Filter>algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="algorithm\md5.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\package\nsp\icom\nis.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\package\nsp\icom\nisdef.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

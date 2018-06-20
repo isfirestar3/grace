@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C5429DFA-164D-4544-89EF-4C245E0CA43D}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>motion_net</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <TargetName>$(ProjectName)</TargetName>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)..\..\package\nsp;$(SolutionDir)..\..\package\inc\var;$(SolutionDir)..\..\package\inc\motion_net;$(SolutionDir)..\..\private;$(SolutionDir)\proto</IncludePath>
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)..\..\package\nsp;$(SolutionDir)..\..\package\inc\var;$(SolutionDir)..\..\package\inc\motion_net;$(SolutionDir)..\..\private;$(SolutionDir)\proto</IncludePath>
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;MOTION_NET_EXPORTS;DISPLAY_RW_LOG_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\sdk\var\;$(ProjectDir)proto\;$(ProjectDir)..\sdk\misc\;$(ProjectDir)..\private\proto\;$(ProjectDir)..\private\;$(ProjectDir)..\sdk\nsp\;$(SolutionDir)..\sdk\rapidxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libnsp.d;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>impls.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\sdk\lib\</AdditionalLibraryDirectories>
+      <ProgramDatabaseFile>$(SolutionDir)..\sdk\bin\</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(OutDir)$(ProjectName).lib"  "$(ProjectDir)..\sdk\lib\$(ProjectName)d.lib"
+copy "$(OutDir)$(ProjectName).dll"  "$(ProjectDir)..\Debug\"
+copy "$(OutDir)$(ProjectName).dll"  "$(ProjectDir)..\sdk\bin\"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;MOTION_NET_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\sdk\var\;$(ProjectDir)proto\;$(ProjectDir)..\sdk\misc\;$(ProjectDir)..\private\proto\;$(ProjectDir)..\private\;$(ProjectDir)..\sdk\nsp\;$(SolutionDir)..\sdk\rapidxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>libnsp.a;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>impls.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\sdk\lib\</AdditionalLibraryDirectories>
+      <GenerateMapFile>true</GenerateMapFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(OutDir)$(ProjectName).lib"  "$(ProjectDir)..\sdk\lib\$(ProjectName).lib"
+copy "$(OutDir)$(ProjectName).dll"  "$(ProjectDir)..\RTM\"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\private\proto\proto_add_navigation_task_traj_ack.h" />
+    <ClInclude Include="..\private\proto\proto_allocate_operation_task.h" />
+    <ClInclude Include="..\private\proto\proto_canio_msg.h" />
+    <ClInclude Include="..\private\proto\proto_common.h" />
+    <ClInclude Include="..\private\proto\proto_common_ack.h" />
+    <ClInclude Include="..\private\proto\proto_common_by_id.h" />
+    <ClInclude Include="..\private\proto\proto_common_report.h" />
+    <ClInclude Include="..\private\proto\proto_control_navi_task_status_ack.h" />
+    <ClInclude Include="..\private\proto\proto_dbg_varls.h" />
+    <ClInclude Include="..\private\proto\proto_definion.h" />
+    <ClInclude Include="..\private\proto\proto_login.h" />
+    <ClInclude Include="..\private\proto\proto_navigation_task.h" />
+    <ClInclude Include="..\private\proto\proto_navigation_task_status_ack.h" />
+    <ClInclude Include="..\private\proto\proto_navigation_task_traj_ack.h" />
+    <ClInclude Include="..\private\proto\proto_operator_task_action_ack.h" />
+    <ClInclude Include="..\private\proto\proto_pre_login.h" />
+    <ClInclude Include="..\private\proto\proto_report_status.h" />
+    <ClInclude Include="..\private\proto\proto_task_opera_parm.h" />
+    <ClInclude Include="..\private\proto\proto_task_status.h" />
+    <ClInclude Include="..\sdk\misc\mntypes.h" />
+    <ClInclude Include="..\sdk\misc\net_impls.h" />
+    <ClInclude Include="..\sdk\nsp\application_network_framwork.hpp" />
+    <ClInclude Include="..\sdk\nsp\endpoint.h" />
+    <ClInclude Include="..\sdk\nsp\exception.hpp" />
+    <ClInclude Include="..\sdk\nsp\log.h" />
+    <ClInclude Include="..\sdk\nsp\network_handler.h" />
+    <ClInclude Include="..\sdk\nsp\old.hpp" />
+    <ClInclude Include="..\sdk\nsp\os_util.hpp" />
+    <ClInclude Include="..\sdk\nsp\serialize.hpp" />
+    <ClInclude Include="..\sdk\nsp\singleton.hpp" />
+    <ClInclude Include="..\sdk\nsp\swnet.h" />
+    <ClInclude Include="..\sdk\nsp\task_scheduler.hpp" />
+    <ClInclude Include="..\sdk\nsp\toolkit.h" />
+    <ClInclude Include="asio.hpp" />
+    <ClInclude Include="net_manager.h" />
+    <ClInclude Include="net_motion_session.h" />
+    <ClInclude Include="packet_pool.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\sdk\nsp\encrypt.cpp" />
+    <ClCompile Include="..\sdk\nsp\endpoint.cpp" />
+    <ClCompile Include="..\sdk\nsp\log.cpp" />
+    <ClCompile Include="..\sdk\nsp\network_handler.cpp" />
+    <ClCompile Include="..\sdk\nsp\os_util.cpp" />
+    <ClCompile Include="..\sdk\nsp\swnet.cpp" />
+    <ClCompile Include="..\sdk\nsp\toolkit.cpp" />
+    <ClCompile Include="net_impls.cpp" />
+    <ClCompile Include="net_manager.cpp" />
+    <ClCompile Include="net_motion_session.cpp" />
+    <ClCompile Include="packet_pool.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="impls.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="motion_net.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

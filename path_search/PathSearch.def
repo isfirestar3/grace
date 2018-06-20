@@ -1,0 +1,20 @@
+LIBRARY "PathSearch"
+
+EXPORTS
+PathSearch_SetType @1
+PathSearch_OpenMap @2
+PathSearch_LoadData @3
+PathSearch_SetWops @4
+PathSearch_SetLinks @5
+PathSearch_SetEdges @6
+PathSearch_StartFolyd @7
+PathSearch_GetPath @8
+PathSearch_GetPathByPos @9
+PathSearch_GetPathBySPosAndEUpl @10
+PathSearch_GetPathByWop @11
+GetPathAtWeight @12
+PathSearch_ReleasePath @13
+
+
+
+

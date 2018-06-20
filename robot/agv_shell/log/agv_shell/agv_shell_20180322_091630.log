@@ -1,0 +1,39 @@
+09:16:30 0476 info 0E5A # loadXml:/home/anderson/work/svn/grace/trunk/robot/agv_shell/standard/agv_shell.xml
+09:16:30 0476 info 0E5A # loadXml auto_startup:0
+09:16:30 0476 info 0E5A # loadXml port:4410
+09:16:30 0476 info 0E5A # loadXml fts port:4411
+09:16:30 0476 info 0E5A # loadXml fts fts_long_port port:4412
+09:16:30 0477 info 0E5A # loadXml fin
+09:16:30 0481 info 0E5A # success to lock file:/gzrobot/Visual2dCodeLoc.ini
+09:16:30 0485 info 0E5A # success to lock file:/etc/agv/var/dwheel.xml
+09:16:30 0487 info 0E5A # success to lock file:/etc/agv/var/swheel.xml
+09:16:30 0487 error 0E5A # failed to open version file:/gzrobot/version.txt.
+09:16:30 0487 info 0E5A # agvshell auto startup flag: 0 , upgrade flag:0
+09:16:30 0488 info 0E5A # agvshell start listening 4410 ...
+09:16:30 0490 info 0E5A # interface num:2
+09:16:30 0490 info 0E5A # ndevice name:enp0s25
+09:16:30 0490 info 0E5A # device ip:192.168.0.29
+09:16:30 0490 info 0E5A # device mac:68:f7:28:98:5d:74
+09:16:30 0490 error 0E5A # file:/agvshell/standard/autostart.sh chmod failed, errno:2
+09:16:33 0491 info 0E7D # send keep alive package to vcu successful.
+09:16:33 0491 error 0E7D # keep alive send local info to fix ip failed.
+09:16:36 0505 info 0E7D # send keep alive package to vcu successful.
+09:16:36 0505 error 0E7D # keep alive send local info to fix ip failed.
+09:16:39 0516 info 0E7D # send keep alive package to vcu successful.
+09:16:39 0516 error 0E7D # keep alive send local info to fix ip failed.
+09:16:42 0528 info 0E7D # send keep alive package to vcu successful.
+09:16:42 0528 error 0E7D # keep alive send local info to fix ip failed.
+09:16:45 0539 info 0E7D # send keep alive package to vcu successful.
+09:16:45 0539 error 0E7D # keep alive send local info to fix ip failed.
+09:16:48 0552 info 0E7D # send keep alive package to vcu successful.
+09:16:48 0552 error 0E7D # keep alive send local info to fix ip failed.
+09:16:51 0566 info 0E7D # send keep alive package to vcu successful.
+09:16:51 0566 error 0E7D # keep alive send local info to fix ip failed.
+09:16:54 0578 info 0E7D # send keep alive package to vcu successful.
+09:16:54 0578 error 0E7D # keep alive send local info to fix ip failed.
+09:16:57 0592 info 0E7D # send keep alive package to vcu successful.
+09:16:57 0592 error 0E7D # keep alive send local info to fix ip failed.
+09:17:00 0604 info 0E7D # send keep alive package to vcu successful.
+09:17:00 0604 error 0E7D # keep alive send local info to fix ip failed.
+09:17:03 0616 info 0E7D # send keep alive package to vcu successful.
+09:17:03 0617 error 0E7D # keep alive send local info to fix ip failed.

@@ -1,0 +1,5 @@
+LIBRARY
+EXPORTS
+
+netdev_create @1
+netdev_uinit @2

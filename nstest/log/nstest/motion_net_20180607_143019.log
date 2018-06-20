@@ -1,0 +1,4 @@
+14:30:19 0292 info 3D35 # [1] try connect to host 127.0.0.1:4409
+14:30:19 0292 info 3D4A # [1] session successful connected to target host 127.0.0.1:4409
+14:30:19 0293 info 3D38 # [1] session received key, target: 127.0.0.1:4409
+14:30:19 0394 info 3D39 # [1] successful login to host 127.0.0.1:4409

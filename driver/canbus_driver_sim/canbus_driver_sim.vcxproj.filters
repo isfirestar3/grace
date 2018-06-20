@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="nsp">
+      <UniqueIdentifier>{8b4be238-e62c-41d3-a12f-248d58e316c9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\canbus_driver_sim\canbus_base.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver_sim\canbus_driver_main.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver_sim\canbus_kvaser.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver_sim\canbus_manager.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver_sim\dllmain.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver_sim\driver_angle.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver_sim\driver_base.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver_sim\driver_cutis.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver_sim\driver_dio.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver_sim\driver_elmo.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver_sim\driver_moons.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\encrypt.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\endpoint.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\log.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\network_handler.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\os_util.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\swnet.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\toolkit.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\canbus_driver_sim\canbus_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver_sim\canbus_kvaser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver_sim\canbus_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver_sim\driver_angle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver_sim\driver_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver_sim\driver_cutis.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver_sim\driver_dio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver_sim\driver_elmo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver_sim\driver_moons.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver_sim\object_switcher.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\inc\var\canio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\application_network_framwork.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\endpoint.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\exception.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\log.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\network_handler.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\old.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\os_util.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\serialize.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\singleton.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\swnet.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\task_scheduler.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\toolkit.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\canbus_driver_sim\canbus_driver.def">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

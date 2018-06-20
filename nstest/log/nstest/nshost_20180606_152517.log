@@ -1,0 +1,18 @@
+15:25:17 0281 trace 595D # IO Thread Startup.LWP:22877 epfd:3
+15:25:17 0281 trace 595F # IO Thread Startup.LWP:22879 epfd:5
+15:25:17 0281 trace 595E # IO Thread Startup.LWP:22878 epfd:4
+15:25:17 0281 trace 5963 # IO Thread Startup.LWP:22883 epfd:8
+15:25:17 0281 trace 5961 # IO Thread Startup.LWP:22881 epfd:7
+15:25:17 0281 trace 5960 # IO Thread Startup.LWP:22880 epfd:6
+15:25:17 0281 trace 5964 # IO Thread Startup.LWP:22884 epfd:9
+15:25:17 0281 trace 5965 # IO Thread Startup.LWP:22885 epfd:11
+15:25:17 0282 trace 595E # link [0x00000001] io close event : 8212
+15:25:17 0282 trace 5961 # link [0x00000004] io close event : 8220
+15:25:17 0282 trace 5964 # link [0x00000006] io close event : 8217
+15:25:17 0282 trace 5960 # link [0x00000003] io close event : 8220
+15:25:17 0282 trace 595F # link [0x00000002] io close event : 8220
+15:25:17 0282 trace 595E # link [0x00000009] io close event : 8212
+15:25:17 0282 trace 595D # link [0x00000008] io close event : 8220
+15:25:17 0282 trace 5965 # link [0x00000007] io close event : 8220
+15:25:17 0282 trace 595F # link [0x0000000A] io close event : 8220
+15:25:17 0284 trace 5963 # link [0x00000005] io close event : 8220

@@ -1,0 +1,467 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="CML">
+      <UniqueIdentifier>{39ae7d88-41e3-4153-98e2-138369d79218}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CML\CanDriver">
+      <UniqueIdentifier>{bece7649-2e72-4c80-815e-b1312564a8c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CML\CanNormal">
+      <UniqueIdentifier>{0009c50f-1b24-4f3b-ab5e-9160f32e4bba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CML\CanLib">
+      <UniqueIdentifier>{0491a97e-42f7-4544-be90-c885d818190e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nsp">
+      <UniqueIdentifier>{df39b05b-1d49-4c94-9038-72c9dcd81f9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CML\CanDriver\can">
+      <UniqueIdentifier>{a5c54498-b5d3-4b00-b640-460db69bbb2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CML\CanNormal\can">
+      <UniqueIdentifier>{c8e40b16-c575-43b7-b8c6-c3bb334e2be3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\canbus_driver\CML\CanLib\canevt.h">
+      <Filter>CML\CanLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanLib\canlib.h">
+      <Filter>CML\CanLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanLib\canstat.h">
+      <Filter>CML\CanLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanLib\obsolete.h">
+      <Filter>CML\CanLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanLib\predef.h">
+      <Filter>CML\CanLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanLib\std.h">
+      <Filter>CML\CanLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_MDNode.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Network.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Node.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Path.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_PDO.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Reference.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_SDO.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Settings.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Threads.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Trajectory.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_TrjScurve.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Utils.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\copley_internal.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CopleyCAN.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CopleyCanDevice.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\piso_can_h.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\Vci2.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\XatXXReg.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Amp.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_AmpDef.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_AmpStruct.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Array.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Can.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_CanOpen.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_CiA301.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_CiA401.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_CiA401Def.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_CiA401Stc.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_CiA402.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_CiA402Def.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_CiA402Stc.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Copley.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_CopleyIO.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Device.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Equipment.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Error.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_ErrorCodes.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_EtherCAT.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_EventMap.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_File.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Filter.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Firmware.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Geometry.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_IO.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_Linkage.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\CML_LinkEqpt.h">
+      <Filter>CML\CanDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\nsp\application_network_framwork.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\nsp\endpoint.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\nsp\exception.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\nsp\log.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\nsp\network_handler.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\nsp\old.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\nsp\os_util.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\nsp\serialize.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\nsp\singleton.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\nsp\swnet.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\nsp\task_scheduler.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\nsp\toolkit.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\canbus_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\canbus_kvaser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\canbus_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\driver_angle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\driver_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\driver_curtis.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\driver_dio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\driver_elmo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\driver_moons.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\object_switcher.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\canbus_driver\CML\CanDriver\can\can_kvaser.h">
+      <Filter>CML\CanDriver\can</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\EventMap.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\File.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\Filter.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\Firmware.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\Geometry.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\IOmodule.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\Linkage.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\LinkEqpt.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\LSS.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\MDNode.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\Network.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\Node.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\Path.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\PDO.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\Reference.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\SDO.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\Threads.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\TrjScurve.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\Utils.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\Amp.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\AmpFile.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\AmpFW.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\AmpParam.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\AmpPDO.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\AmpPVT.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\AmpStruct.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\AmpUnits.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\AmpVersion.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\Can.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\CanOpen.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\CiA301.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\CiA401.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\CiA401Stc.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\CiA402.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\CiA402Stc.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\CML.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\CopleyIO.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\CopleyIOFile.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\CopleyNode.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\Device.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\ecatdc.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\Equipment.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\Error.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\EtherCAT.cpp">
+      <Filter>CML\CanNormal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\package\nsp\encrypt.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\package\nsp\endpoint.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\package\nsp\log.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\package\nsp\network_handler.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\package\nsp\os_util.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\package\nsp\swnet.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\package\nsp\toolkit.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\canbus_base.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\canbus_driver_main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\canbus_kvaser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\canbus_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\driver_angle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\driver_base.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\driver_curtis.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\driver_dio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\driver_elmo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\driver_moons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\can\can_kvaser.cpp">
+      <Filter>CML\CanNormal\can</Filter>
+    </ClCompile>
+    <ClCompile Include="..\canbus_driver\CML\CanNormal\threads\Threads_w32.cpp">
+      <Filter>CML\CanNormal\can</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\canbus_driver\canbus_driver.def">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

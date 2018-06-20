@@ -1,0 +1,57 @@
+14:04:22 0388 info 21F1 # 
+****************************************************************************
+*                            application startup                           *
+****************************************************************************
+14:04:22 0388 info 21F1 # loadXml /home/anderson/work/svn/grace/trunk/agvinfo/agvinfo_server/agv_config.xml
+14:04:22 0389 info 21F1 # loadXml err
+14:04:22 0389 info 21F1 # loadXml end
+14:04:22 0406 info 21F1 # loadXml /home/anderson/work/svn/grace/trunk/agvinfo/agvinfo_server/agv_info.xml
+14:04:22 0406 info 21F1 # loadXml end
+14:04:22 0407 info 21F1 # success to begin tcp listen:0.0.0.0:9100
+14:04:22 0407 info 21F1 # success to bind udp listen:9100
+14:13:54 0624 info 21F6 # 127.0.0.1 established.
+14:15:07 0252 info 21F8 # 127.0.0.1 disconnected.
+14:15:43 0867 info 21F6 # 127.0.0.1 established.
+14:15:48 0758 info 21F9 # 127.0.0.1 disconnected.
+14:16:10 0060 info 21F6 # 127.0.0.1 established.
+14:16:41 0196 info 21F7 # update_macinfo online 98:90:96:DD:5E:F9
+14:16:42 0549 info 21F4 # post_notify_agvinfo_update. 127.0.0.1
+14:16:52 0551 info 21F4 # 127.0.0.1 check_heart_beat.
+14:17:01 0781 info 21FB # 127.0.0.1 disconnected.
+14:17:24 0400 info 21F6 # 127.0.0.1 established.
+14:18:22 0569 info 21F4 # 127.0.0.1 check_heart_beat.
+14:18:52 0575 info 21F4 # 127.0.0.1 check_heart_beat.
+14:19:01 0702 info 21FC # 127.0.0.1 disconnected.
+14:19:16 0473 info 2206 # delete_macinfo offline 98:90:96:DD:5E:F9
+14:19:34 0146 info 21F7 # update_macinfo online 98:90:96:DD:5E:F9
+14:20:02 0476 info 2206 # delete_macinfo offline 98:90:96:DD:5E:F9
+14:20:38 0871 info 21F7 # update_macinfo online 2E:78:EF:E7:C9:63
+14:21:40 0482 info 2206 # delete_macinfo offline 2E:78:EF:E7:C9:63
+14:22:05 0025 info 21F7 # update_macinfo online 2E:78:EF:E7:C9:63
+14:26:25 0252 info 21F7 # update_macinfo online 98:90:96:DD:5E:F9
+14:27:20 0507 info 2206 # delete_macinfo offline 98:90:96:DD:5E:F9
+14:27:22 0507 info 2206 # delete_macinfo offline 2E:78:EF:E7:C9:63
+14:27:48 0155 info 21F7 # update_macinfo online 2E:78:EF:E7:C9:63
+14:28:10 0511 info 2206 # delete_macinfo offline 2E:78:EF:E7:C9:63
+14:28:32 0031 info 21F7 # update_macinfo online 2E:78:EF:E7:C9:63
+14:29:14 0516 info 2206 # delete_macinfo offline 2E:78:EF:E7:C9:63
+14:29:33 0743 info 21F7 # update_macinfo online 2E:78:EF:E7:C9:63
+14:30:14 0520 info 2206 # delete_macinfo offline 2E:78:EF:E7:C9:63
+14:30:35 0168 info 21F7 # update_macinfo online 2E:78:EF:E7:C9:63
+14:41:22 0569 info 2206 # delete_macinfo offline 2E:78:EF:E7:C9:63
+14:41:41 0547 info 21F7 # update_macinfo online 2E:78:EF:E7:C9:63
+14:42:52 0574 info 2206 # delete_macinfo offline 2E:78:EF:E7:C9:63
+14:43:12 0907 info 21F7 # update_macinfo online 2E:78:EF:E7:C9:63
+14:44:26 0579 info 2206 # delete_macinfo offline 2E:78:EF:E7:C9:63
+14:44:44 0821 info 21F7 # update_macinfo online 2E:78:EF:E7:C9:63
+14:47:02 0590 info 2206 # delete_macinfo offline 2E:78:EF:E7:C9:63
+14:47:22 0256 info 21F7 # update_macinfo online 2E:78:EF:E7:C9:63
+14:48:06 0633 info 21F7 # update_macinfo online 98:90:96:DD:5E:F9
+14:48:24 0597 info 2206 # delete_macinfo offline 2E:78:EF:E7:C9:63
+14:48:47 0139 info 21F7 # update_macinfo online 2E:78:EF:E7:C9:63
+14:51:44 0612 info 2206 # delete_macinfo offline 2E:78:EF:E7:C9:63
+14:51:48 0612 info 2206 # delete_macinfo offline 98:90:96:DD:5E:F9
+14:52:07 0764 info 21F7 # update_macinfo online 2E:78:EF:E7:C9:63
+14:56:45 0485 info 21F7 # update_macinfo online 98:90:96:DD:5E:F9
+15:01:38 0657 info 2206 # delete_macinfo offline 2E:78:EF:E7:C9:63
+15:01:38 0669 info 21F7 # update_macinfo online 2E:78:EF:E7:C9:63

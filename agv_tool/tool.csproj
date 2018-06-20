@@ -1,0 +1,847 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{86E5A710-3FD7-4307-88C0-B6507EEE5D81}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Tool</RootNamespace>
+    <AssemblyName>AGVTools</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>2.0.14.0</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>8D14A457E912512DA762620EB8CC90A0F7ECAB07</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>tool_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Assets\AGV图标.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Drawing, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>BtnRemote\Microsoft.Expression.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="CarHouse\CarEdit.xaml.cs">
+      <DependentUpon>CarEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CarHouse\CarProduce.xaml.cs">
+      <DependentUpon>CarProduce.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CarHouse\CartHousePage.xaml.cs">
+      <DependentUpon>CartHousePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\CommBtn.xaml.cs">
+      <DependentUpon>CommBtn.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Other\WinVCUReboot.xaml.cs">
+      <DependentUpon>WinVCUReboot.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessConfig\ConfigProcess.xaml.cs">
+      <DependentUpon>ConfigProcess.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessConfig\WinProcessDetail.xaml.cs">
+      <DependentUpon>WinProcessDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessConfig\ProcessObjInfo.cs" />
+    <Compile Include="ProcessConfig\ProcessListConverter.cs" />
+    <Compile Include="ProcessConfig\WinAppendProcess.xaml.cs">
+      <DependentUpon>WinAppendProcess.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Other\WinMSG.xaml.cs">
+      <DependentUpon>WinMSG.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Other\WinNTP.xaml.cs">
+      <DependentUpon>WinNTP.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessConfig\WinSelectAGV.xaml.cs">
+      <DependentUpon>WinSelectAGV.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Proto\ProtoBackup.cs" />
+    <Compile Include="Proto\ProtoDeleteFiles.cs" />
+    <Compile Include="Proto\ProtoDownLoadFiles.cs" />
+    <Compile Include="Proto\ProtoFileList.cs" />
+    <Compile Include="Proto\ProtoFolderList.cs" />
+    <Compile Include="Proto\ProtoId.cs" />
+    <Compile Include="Proto\ProtoMSG.cs" />
+    <Compile Include="Proto\ProtoMuteStatus.cs" />
+    <Compile Include="Proto\ProtoProcessDetail.cs" />
+    <Compile Include="Proto\ProtoRobotList.cs" />
+    <Compile Include="Proto\ProtoSendFiles.cs" />
+    <Compile Include="Proto\ProtoSystemTime.cs" />
+    <Compile Include="Proto\ProtoVCUEnable.cs" />
+    <Compile Include="RobotsHome\LockFileStatusConverter.cs" />
+    <Compile Include="RobotsHome\WinPackageInfo.xaml.cs">
+      <DependentUpon>WinPackageInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RobotsHome\WinShellProcessPerc.xaml.cs">
+      <DependentUpon>WinShellProcessPerc.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RobotsHome\UnLockFileStatusConverter.cs" />
+    <Compile Include="RobotsHome\VCUStatusConverter.cs" />
+    <Compile Include="XControl\FolderTypeImage.xaml.cs">
+      <DependentUpon>FolderTypeImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="XControl\GridLineDecorator.cs" />
+    <Compile Include="XControl\GridViewColumnEx.cs" />
+    <Compile Include="FileHandle\FileHandle.cs" />
+    <Compile Include="FileHandle\FileOperator.cs" />
+    <Compile Include="ProcessManager\ProcessManager.xaml.cs">
+      <DependentUpon>ProcessManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessManager\ProcessStateConverter.cs" />
+    <Compile Include="ProcessManager\ProcessStatusColor.cs" />
+    <Compile Include="P2PConfig\DifferTypeConverter.cs" />
+    <Compile Include="P2PConfig\WidCompareList.xaml.cs">
+      <DependentUpon>WidCompareList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Proto\ProtoProcessStatus.cs" />
+    <Compile Include="Proto\ProtoProcessTable.cs" />
+    <Compile Include="Proto\ProtoSerialize.cs" />
+    <Compile Include="RobotsHome\NetStateConverter.cs" />
+    <Compile Include="RobotsHome\ProcessStateConverter.cs" />
+    <Compile Include="Setting\ConfigRead.cs" />
+    <Compile Include="Setting\SystemSettings.xaml.cs">
+      <DependentUpon>SystemSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TransferPanel\FileTransferPage.xaml.cs">
+      <DependentUpon>FileTransferPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelectAGV\RobotOnlineInfo.cs" />
+    <Compile Include="SelectAGV\SelectAGV.xaml.cs">
+      <DependentUpon>SelectAGV.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TransferPanel\TaskDetailinfo.cs" />
+    <Compile Include="TransferPanel\TaskFileDetailInfo.cs" />
+    <Compile Include="TransferPanel\TransColorConverter.cs" />
+    <Compile Include="TransferPanel\FileTransferDetailInfo.xaml.cs">
+      <DependentUpon>FileTransferDetailInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TransferPanel\TransStatusConverter.cs" />
+    <Compile Include="UpdateBin\CoreStatusConverter.cs" />
+    <Compile Include="UpdateBin\UpdateBin.xaml.cs">
+      <DependentUpon>UpdateBin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="XControl\ImageButton.xaml.cs" />
+    <Compile Include="Components\MsgBox.xaml.cs">
+      <DependentUpon>MsgBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\WaitWindow.xaml.cs">
+      <DependentUpon>WaitWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="P2PConfig\FileDetailInfo.cs" />
+    <Compile Include="P2PConfig\List2List.xaml.cs">
+      <DependentUpon>List2List.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RobotsHome\RobotInfo.cs" />
+    <Compile Include="XControl\NineImage.cs" />
+    <Compile Include="XControl\SortListView.cs" />
+    <Compile Include="XControl\RotatePanel.cs" />
+    <Compile Include="XControl\XButton.cs" />
+    <Compile Include="ListViewPage.cs" />
+    <Compile Include="Net\NetInterface.cs" />
+    <Compile Include="Net\ProtoDefine.cs" />
+    <Compile Include="P2PConfig\FileClassify.cs" />
+    <Compile Include="P2PConfig\P2PConfig.xaml.cs">
+      <DependentUpon>P2PConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RobotsHome\RobotsHome.xaml.cs">
+      <DependentUpon>RobotsHome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="XControl\XCheckBox.cs" />
+    <Compile Include="XControl\XComboBox.cs" />
+    <Compile Include="XControl\XProgressBar.cs" />
+    <Compile Include="XControl\XTabControl.cs" />
+    <Compile Include="XControl\XTabItem.cs" />
+    <Compile Include="XControl\XTabItemImage.cs" />
+    <Compile Include="XControl\XTipsMessage.xaml.cs">
+      <DependentUpon>XTipsMessage.xaml</DependentUpon>
+    </Compile>
+    <Page Include="CarHouse\CarEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CarHouse\CarProduce.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CarHouse\CartHousePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\CommBtn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\ControlStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Other\WinVCUReboot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProcessConfig\ConfigProcess.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProcessConfig\WinProcessDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProcessConfig\WinAppendProcess.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Other\WinMSG.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Other\WinNTP.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProcessConfig\WinSelectAGV.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RobotsHome\WinPackageInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RobotsHome\WinShellProcessPerc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XControl\FolderTypeImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProcessManager\ProcessManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="P2PConfig\WidCompareList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Setting\SystemSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TransferPanel\FileTransferPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectAGV\SelectAGV.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TransferPanel\FileTransferDetailInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UpdateBin\UpdateBin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XControl\ImageButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Components\MsgBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\WaitWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="P2PConfig\List2List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XControl\RotatePanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XControl\XButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="P2PConfig\P2PConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RobotsHome\RobotsHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XControl\XCheckBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XControl\XComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XControl\XNetDiskTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XControl\XProgressBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XControl\XTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XControl\XTabItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XControl\XTabItemImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XControl\XThunderTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XControl\XTipsMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="tool_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\tool_bar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\home.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\connect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\disconnect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\apply.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\开始连接disabled.png" />
+    <Resource Include="Assets\开始连接hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\上一页active.png" />
+    <Resource Include="Assets\上一页hover.png" />
+    <Resource Include="Assets\下一页active.png" />
+    <Resource Include="Assets\下一页hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\FolderOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\FileIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\FolderNo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\FolderOpen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\close_highlight.png" />
+    <Resource Include="Assets\close_normal.png" />
+    <Resource Include="Assets\close_press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\button_hover.png" />
+    <Resource Include="Assets\button_normal.png" />
+    <Resource Include="Assets\button_pushed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\enter.png" />
+    <Resource Include="Assets\mover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\max_highlight.png" />
+    <Resource Include="Assets\max_normal.png" />
+    <Resource Include="Assets\max_press.png" />
+    <Resource Include="Assets\min_highlight.png" />
+    <Resource Include="Assets\min_normal.png" />
+    <Resource Include="Assets\min_press.png" />
+    <Resource Include="Assets\restore_highlight.png" />
+    <Resource Include="Assets\restore_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\reboot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\checkbox_hightlight.png" />
+    <Resource Include="Assets\checkbox_normal.png" />
+    <Resource Include="Assets\checkbox_pushed.png" />
+    <Resource Include="Assets\checkbox_tick_highlight.png" />
+    <Resource Include="Assets\checkbox_tick_normal.png" />
+    <Resource Include="Assets\checkbox_tick_pushed.png" />
+    <Resource Include="Assets\halfcheckbox_tick_highlight.png" />
+    <Resource Include="Assets\halfcheckbox_tick_normal.png" />
+    <Resource Include="Assets\halfcheckbox_tick_pushed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\ComboBoxList_bkg.png" />
+    <Resource Include="Assets\ComboBox_down.png" />
+    <Resource Include="Assets\ComboBox_highlight.png" />
+    <Resource Include="Assets\ComboBox_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\text_hover.png" />
+    <Resource Include="Assets\text_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\ProgressBkg.png" />
+    <Resource Include="Assets\ProgressFore.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\上一页normal.png" />
+    <Resource Include="Assets\下一页normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\快速传输left_active.png" />
+    <Resource Include="Assets\快速传输left_disabled.png" />
+    <Resource Include="Assets\快速传输left_hover.png" />
+    <Resource Include="Assets\快速传输left_nomal.png" />
+    <Resource Include="Assets\快速传输right_active.png" />
+    <Resource Include="Assets\快速传输right_disabled.png" />
+    <Resource Include="Assets\快速传输right_hover.png" />
+    <Resource Include="Assets\快速传输right_nomal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\文件夹关闭.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\文件夹打开.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\文件夹关闭min.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\tab_hover.png" />
+    <Resource Include="Assets\tab_normal.png" />
+    <Resource Include="Assets\tab_pushed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\AGV图标.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\TabBG.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\TabIco.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\SetingActive.png" />
+    <Resource Include="Assets\SettingHover.png" />
+    <Resource Include="Assets\SettingNormal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\传输列表.png" />
+    <Resource Include="Assets\车辆管理.png" />
+    <Resource Include="Assets\配置管理.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\刷新.png" />
+    <Resource Include="Assets\刷新hover.png" />
+    <Resource Include="Assets\刷新press.png" />
+    <Resource Include="Assets\应用到多车.png" />
+    <Resource Include="Assets\应用到多车hover.png" />
+    <Resource Include="Assets\应用到多车press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\删除.png" />
+    <Resource Include="Assets\删除hover.png" />
+    <Resource Include="Assets\删除press.png" />
+    <Resource Include="Assets\新增.png" />
+    <Resource Include="Assets\新增hover.png" />
+    <Resource Include="Assets\新增press.png" />
+    <Resource Include="Assets\编辑.png" />
+    <Resource Include="Assets\编辑hover.png" />
+    <Resource Include="Assets\编辑press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\取消.png" />
+    <Resource Include="Assets\取消hover.png" />
+    <Resource Include="Assets\取消press.png" />
+    <Resource Include="Assets\确定.png" />
+    <Resource Include="Assets\确定hover.png" />
+    <Resource Include="Assets\确定press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\AGV图标-平台.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\保存.png" />
+    <Resource Include="Assets\保存hover.png" />
+    <Resource Include="Assets\保存press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\拉取车上数据.png" />
+    <Resource Include="Assets\拉取车上数据hover.png" />
+    <Resource Include="Assets\拉取车上数据press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\启动进程.png" />
+    <Resource Include="Assets\启动进程disabled.png" />
+    <Resource Include="Assets\启动进程hover.png" />
+    <Resource Include="Assets\启动进程press.png" />
+    <Resource Include="Assets\开始连接.png" />
+    <Resource Include="Assets\开始连接press.png" />
+    <Resource Include="Assets\重启电脑.png" />
+    <Resource Include="Assets\重启电脑disabled.png" />
+    <Resource Include="Assets\重启电脑hover.png" />
+    <Resource Include="Assets\重启电脑press.png" />
+    <Resource Include="Assets\重启进程.png" />
+    <Resource Include="Assets\重启进程disabled.png" />
+    <Resource Include="Assets\重启进程hover.png" />
+    <Resource Include="Assets\重启进程press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\断开连接.png" />
+    <Resource Include="Assets\断开连接disabled.png" />
+    <Resource Include="Assets\断开连接hover.png" />
+    <Resource Include="Assets\断开连接press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\停止进程.png" />
+    <Resource Include="Assets\停止进程disabled.png" />
+    <Resource Include="Assets\停止进程hover.png" />
+    <Resource Include="Assets\停止进程press.png" />
+    <Resource Include="Assets\重启工控机.png" />
+    <Resource Include="Assets\重启工控机disabled.png" />
+    <Resource Include="Assets\重启工控机hover.png" />
+    <Resource Include="Assets\重启工控机press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\icon停止进程.png" />
+    <Resource Include="Assets\icon停止进程disabled.png" />
+    <Resource Include="Assets\icon停止进程hover.png" />
+    <Resource Include="Assets\icon停止进程press.png" />
+    <Resource Include="Assets\icon启动进程.png" />
+    <Resource Include="Assets\icon启动进程disabled.png" />
+    <Resource Include="Assets\icon启动进程hover.png" />
+    <Resource Include="Assets\icon启动进程press.png" />
+    <Resource Include="Assets\icon开始连接.png" />
+    <Resource Include="Assets\icon开始连接disabled.png" />
+    <Resource Include="Assets\icon开始连接hover.png" />
+    <Resource Include="Assets\icon开始连接press.png" />
+    <Resource Include="Assets\icon断开连接.png" />
+    <Resource Include="Assets\icon断开连接disabled.png" />
+    <Resource Include="Assets\icon断开连接hover.png" />
+    <Resource Include="Assets\icon断开连接press.png" />
+    <Resource Include="Assets\icon重启电脑.png" />
+    <Resource Include="Assets\icon重启电脑disabled.png" />
+    <Resource Include="Assets\icon重启电脑hover.png" />
+    <Resource Include="Assets\icon重启电脑press.png" />
+    <Resource Include="Assets\icon重启进程.png" />
+    <Resource Include="Assets\icon重启进程disabled.png" />
+    <Resource Include="Assets\icon重启进程hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\icon重启进程press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\icon下载.png" />
+    <Resource Include="Assets\icon下载disabled.png" />
+    <Resource Include="Assets\icon下载hover.png" />
+    <Resource Include="Assets\icon下载press.png" />
+    <Resource Include="Assets\icon升级.png" />
+    <Resource Include="Assets\icon升级disabled.png" />
+    <Resource Include="Assets\icon升级hover.png" />
+    <Resource Include="Assets\icon升级press.png" />
+    <Resource Include="Assets\icon重启.png" />
+    <Resource Include="Assets\icon重启disabled.png" />
+    <Resource Include="Assets\icon重启hover.png" />
+    <Resource Include="Assets\icon重启press.png" />
+    <Resource Include="Assets\icon重新获取.png" />
+    <Resource Include="Assets\icon重新获取disabled.png" />
+    <Resource Include="Assets\icon重新获取hover.png" />
+    <Resource Include="Assets\icon重新获取press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\固件升级.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\选择目标文件.png" />
+    <Resource Include="Assets\选择目标文件hover.png" />
+    <Resource Include="Assets\选择目标文件press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\shell自更新.png" />
+    <Resource Include="Assets\shell自更新disabled.png" />
+    <Resource Include="Assets\shell自更新hover.png" />
+    <Resource Include="Assets\shell自更新press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\iconshell自更新.png" />
+    <Resource Include="Assets\iconshell自更新disabed.png" />
+    <Resource Include="Assets\iconshell自更新hover.png" />
+    <Resource Include="Assets\iconshell自更新press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\返回.png" />
+    <Resource Include="Assets\返回disabled.png" />
+    <Resource Include="Assets\返回hover.png" />
+    <Resource Include="Assets\返回press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\iconntp服务地址.png" />
+    <Resource Include="Assets\iconntp服务地址disabled.png" />
+    <Resource Include="Assets\iconntp服务地址hover.png" />
+    <Resource Include="Assets\iconntp服务地址press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\icon执行脚本.png" />
+    <Resource Include="Assets\icon执行脚本disabled.png" />
+    <Resource Include="Assets\icon执行脚本hover.png" />
+    <Resource Include="Assets\icon执行脚本press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\NTP服务地址.png" />
+    <Resource Include="Assets\NTP服务地址disabled.png" />
+    <Resource Include="Assets\NTP服务地址hover.png" />
+    <Resource Include="Assets\NTP服务地址press.png" />
+    <Resource Include="Assets\执行脚本.png" />
+    <Resource Include="Assets\执行脚本disabled.png" />
+    <Resource Include="Assets\执行脚本hover.png" />
+    <Resource Include="Assets\执行脚本press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\进程状态管理.png" />
+    <Resource Include="Assets\进程管理.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\新增进程.png" />
+    <Resource Include="Assets\新增进程disabled.png" />
+    <Resource Include="Assets\新增进程hover.png" />
+    <Resource Include="Assets\新增进程press.png" />
+    <Resource Include="Assets\查看.png" />
+    <Resource Include="Assets\查看disabled.png" />
+    <Resource Include="Assets\查看hover.png" />
+    <Resource Include="Assets\查看press.png" />
+    <Resource Include="Assets\编辑disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\delete.png" />
+    <Resource Include="Assets\deletedisabled.png" />
+    <Resource Include="Assets\deletehover.png" />
+    <Resource Include="Assets\deletepress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\down.png" />
+    <Resource Include="Assets\downdisabled.png" />
+    <Resource Include="Assets\downhover.png" />
+    <Resource Include="Assets\downpress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\up.png" />
+    <Resource Include="Assets\updisabled.png" />
+    <Resource Include="Assets\uphover.png" />
+    <Resource Include="Assets\uppress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\icon加锁.png" />
+    <Resource Include="Assets\icon加锁hover.png" />
+    <Resource Include="Assets\icon加锁press.png" />
+    <Resource Include="Assets\icon解锁.png" />
+    <Resource Include="Assets\icon解锁hover.png" />
+    <Resource Include="Assets\icon解锁press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\icon锁disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\加锁.png" />
+    <Resource Include="Assets\加锁hover.png" />
+    <Resource Include="Assets\加锁press.png" />
+    <Resource Include="Assets\解锁.png" />
+    <Resource Include="Assets\解锁hover.png" />
+    <Resource Include="Assets\解锁press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\icon自主驱动升级.png" />
+    <Resource Include="Assets\icon自主驱动升级disabled.png" />
+    <Resource Include="Assets\icon自主驱动升级hover.png" />
+    <Resource Include="Assets\icon自主驱动升级press.png" />
+    <Resource Include="Assets\自主驱动升级.png" />
+    <Resource Include="Assets\自主驱动升级disabled.png" />
+    <Resource Include="Assets\自主驱动升级hover.png" />
+    <Resource Include="Assets\自主驱动升级press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\一键更新.png" />
+    <Resource Include="Assets\一键更新disabled.png" />
+    <Resource Include="Assets\一键更新hover.png" />
+    <Resource Include="Assets\一键更新press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\icon备份.png" />
+    <Resource Include="Assets\icon备份disabled.png" />
+    <Resource Include="Assets\icon备份hover.png" />
+    <Resource Include="Assets\icon备份press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\备份.png" />
+    <Resource Include="Assets\备份disabled.png" />
+    <Resource Include="Assets\备份hover.png" />
+    <Resource Include="Assets\备份press.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

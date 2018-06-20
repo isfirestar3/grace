@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <agv_file_path>
+    <local_standard_path>D:\standard</local_standard_path>
+    <local_remote_path>D:\remote</local_remote_path>
+  </agv_file_path>
+  <PublishTime>2017.09.06 </PublishTime>
+  <BlockSize>4</BlockSize>
+  <dhcp_addr ipv4="192.168.0.201" port="9100" />
+  <backups_file>
+    <item path="/etc/agv/var/" />
+    <item path="/etc/agv/custom_setting_pickingagv.xml" />
+    <item path="/etc/agv/misc.xml" />
+    <item path="/etc/agv/custom_setting_cartagv.xml" />
+    <item path="/gzrobot/Deviation.ini" />
+    <item path="/gzrobot/Visual2dCodeLoc.ini" />
+  </backups_file>
+</root>

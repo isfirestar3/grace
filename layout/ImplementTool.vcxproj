@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4F378D00-CE72-428C-A09B-2BF2AE242076}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ImplementTool</RootNamespace>
+    <ProjectName>LayoutDesigner</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(QTDIR)\include;$(ProjectDir)..\sdk\rapidxml;$(ProjectDir)\CommonKit;$(ProjectDir);$(ProjectDir)\algorithm;$(ProjectDir)..\sdk\var\;$(ProjectDir)..\private;$(ProjectDir)..\sdk\nsp\icom\;$(ProjectDir)..\sdk\nsp\;$(ProjectDir)..\sdk\misc\;$(ProjectDir)\include;$(ProjectDir)\curve;$(ProjectDir)..\private\proto\;$(ProjectDir)\common</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(QTDIR)\lib\Qt5Cored.lib;$(QTDIR)\lib\Qt5Guid.lib;$(QTDIR)\lib\Qt5Widgetsd.lib;$(ProjectDir)..\sdk\lib\PathSearchd.lib;$(ProjectDir)..\sdk\lib\motion_netd.lib;$(ProjectDir)..\sdk\lib\libnsp.a;$(ProjectDir)..\sdk\lib\agv_interfaced.lib;$(ProjectDir)..\sdk\lib\traffic_managed.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ProgramDatabaseFile>$(ProjectDir)..\sdk\bin\</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(OutDir)$(ProjectName).exe" "$(ProjectDir)..\debug\"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(QTDIR)\include;$(ProjectDir)..\sdk\rapidxml;$(ProjectDir)\CommonKit;$(ProjectDir);$(ProjectDir)\algorithm;$(ProjectDir)..\sdk\var\;$(ProjectDir)..\private;$(ProjectDir)..\sdk\nsp\icom\;$(ProjectDir)..\sdk\nsp\;$(ProjectDir)..\sdk\misc\;$(ProjectDir)\include;$(ProjectDir)\curve;$(ProjectDir)..\private\proto\;$(ProjectDir)\common</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(QTDIR)\lib\Qt5Cored.lib;$(QTDIR)\lib\Qt5Guid.lib;$(QTDIR)\lib\Qt5Widgetsd.lib;$(ProjectDir)..\sdk\lib\PathSearchd.lib;$(ProjectDir)..\sdk\lib\motion_netd.lib;$(ProjectDir)..\sdk\lib\libnsp.a;$(ProjectDir)..\sdk\lib\agv_interfaced.lib;$(ProjectDir)..\sdk\lib\traffic_managed.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ProgramDatabaseFile>$(ProjectDir)..\sdk\bin\</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(OutDir)$(ProjectName).exe" "$(ProjectDir)..\debug\"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(QTDIR)\include;$(ProjectDir)..\sdk\rapidxml;$(ProjectDir)\CommonKit;$(ProjectDir);$(ProjectDir)\algorithm;$(ProjectDir)..\sdk\var\;$(ProjectDir)..\private;$(ProjectDir)..\sdk\nsp\icom\;$(ProjectDir)..\sdk\nsp\;$(ProjectDir)..\sdk\misc\;$(ProjectDir)\include;$(ProjectDir)\curve;$(ProjectDir)..\private\proto\;$(ProjectDir)\common</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>$(QTDIR)\lib\Qt5Core.lib;$(QTDIR)\lib\Qt5Gui.lib;$(QTDIR)\lib\Qt5Widgets.lib;$(ProjectDir)..\sdk\lib\PathSearch.lib;$(ProjectDir)..\sdk\lib\motion_net.lib;$(ProjectDir)..\sdk\lib\libnsp.a;$(ProjectDir)..\sdk\lib\agv_interface.lib;$(ProjectDir)..\sdk\lib\traffic_manage.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateMapFile>true</GenerateMapFile>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(OutDir)$(ProjectName).exe" "$(SolutionDir)..\RTM\"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(QTDIR)\include;$(ProjectDir)..\sdk\rapidxml;$(ProjectDir)\CommonKit;$(ProjectDir);$(ProjectDir)\algorithm;$(ProjectDir)..\sdk\var\;$(ProjectDir)..\private;$(ProjectDir)..\sdk\nsp\icom\;$(ProjectDir)..\sdk\nsp\;$(ProjectDir)..\sdk\misc\;$(ProjectDir)\include;$(ProjectDir)\curve;$(ProjectDir)..\private\proto\;$(ProjectDir)\common</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>$(QTDIR)\lib\Qt5Core.lib;$(QTDIR)\lib\Qt5Gui.lib;$(QTDIR)\lib\Qt5Widgets.lib;$(ProjectDir)..\sdk\lib\PathSearch.lib;$(ProjectDir)..\sdk\lib\motion_net.lib;$(ProjectDir)..\sdk\lib\libnsp.a;$(ProjectDir)..\sdk\lib\agv_interface.lib;$(ProjectDir)..\sdk\lib\traffic_manage.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateMapFile>true</GenerateMapFile>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(OutDir)$(ProjectName).exe" "$(SolutionDir)..\RTM\"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\sdk\nsp\encrypt.cpp" />
+    <ClCompile Include="..\sdk\nsp\endpoint.cpp" />
+    <ClCompile Include="..\sdk\nsp\log.cpp" />
+    <ClCompile Include="..\sdk\nsp\network_handler.cpp" />
+    <ClCompile Include="..\sdk\nsp\os_util.cpp" />
+    <ClCompile Include="..\sdk\nsp\swnet.cpp" />
+    <ClCompile Include="..\sdk\nsp\toolkit.cpp" />
+    <ClCompile Include="algorithm\Geometry.cpp" />
+    <ClCompile Include="algorithm\PosandTrack.cpp" />
+    <ClCompile Include="algorithm\search_path.cpp" />
+    <ClCompile Include="AlignItem.cpp" />
+    <ClCompile Include="AnchorInfoWnd.cpp" />
+    <ClCompile Include="AnchorItem.cpp" />
+    <ClCompile Include="AnchorItemManage.cpp" />
+    <ClCompile Include="CommonKit\net_interface.cpp" />
+    <ClCompile Include="CommonKit\rw_config_file.cpp" />
+    <ClCompile Include="CommonKit\rw_layout_data.cpp" />
+    <ClCompile Include="common\waitdialog.cpp" />
+    <ClCompile Include="ConnectVehicleWnd.cpp" />
+    <ClCompile Include="CtrlPointInfoWnd.cpp" />
+    <ClCompile Include="CtrlPointItem.cpp" />
+    <ClCompile Include="curve\GenerateVariable.cpp" />
+    <ClCompile Include="curve\GenerateVariable180.cpp" />
+    <ClCompile Include="curve\Matrix.cpp" />
+    <ClCompile Include="DataManage.cpp" />
+    <ClCompile Include="DrawMapWid.cpp" />
+    <ClCompile Include="EdgeInfoWnd.cpp" />
+    <ClCompile Include="EdgeItem.cpp" />
+    <ClCompile Include="EdgeItemManage.cpp" />
+    <ClCompile Include="EdgeItemMgr.cpp" />
+    <ClCompile Include="EdgeListShowWnd.cpp" />
+    <ClCompile Include="EdgesEditWnd.cpp" />
+    <ClCompile Include="generateemapdialog.cpp" />
+    <ClCompile Include="LocationOfCurve.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainWnd.cpp" />
+    <ClCompile Include="main_resource.cpp" />
+    <ClCompile Include="MapScene.cpp" />
+    <ClCompile Include="MapView.cpp" />
+    <ClCompile Include="MessageBox.cpp" />
+    <ClCompile Include="moc_MapScene.cpp" />
+    <ClCompile Include="NodeInfoWnd.cpp" />
+    <ClCompile Include="NodeItem.cpp" />
+    <ClCompile Include="NodeItemManage.cpp" />
+    <ClCompile Include="NodeItemMgr.cpp" />
+    <ClCompile Include="NodesEditWnd.cpp" />
+    <ClCompile Include="OneKeyAdjustDialog.cpp" />
+    <ClCompile Include="OperateCtrlWnd.cpp" />
+    <ClCompile Include="OptInfoWnd.cpp" />
+    <ClCompile Include="polygonitem.cpp" />
+    <ClCompile Include="PolygonVertexItem.cpp" />
+    <ClCompile Include="QRcodeItem.cpp" />
+    <ClCompile Include="QRcodeInfoWnd.cpp" />
+    <ClCompile Include="QRcodeItemManage.cpp" />
+    <ClCompile Include="SegmentPosWnd.cpp" />
+    <ClCompile Include="SelectWopWnd.cpp" />
+    <ClCompile Include="ShowNavPathWnd.cpp" />
+    <ClCompile Include="TargetInfoWnd.cpp" />
+    <ClCompile Include="TargetItem.cpp" />
+    <ClCompile Include="TargetItemManage.cpp" />
+    <ClCompile Include="TerminalPointItem.cpp" />
+    <ClCompile Include="VehicleInfoWnd.cpp" />
+    <ClCompile Include="VehicleItem.cpp" />
+    <ClCompile Include="VehicleItemManage.cpp" />
+    <ClCompile Include="viewportwidget.cpp" />
+    <ClCompile Include="WopAttrWnd.cpp" />
+    <ClCompile Include="WopsEditWnd.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\algorithm\AlgorithmDefine.hpp" />
+    <ClInclude Include="..\..\algorithm\ComputeLinks.hpp" />
+    <ClInclude Include="..\..\var\navigation.h" />
+    <ClInclude Include="..\..\var\operation.h" />
+    <ClInclude Include="..\..\var\optpar.h" />
+    <ClInclude Include="..\..\var\vehicle.h" />
+    <ClInclude Include="..\package\inc\motion_net\asio.hpp" />
+    <ClInclude Include="..\package\inc\motion_net\proto_ack_typedef.h" />
+    <ClInclude Include="..\private\proto_typedef.h" />
+    <ClInclude Include="..\rapidxml\rapidxml.hpp" />
+    <ClInclude Include="..\rapidxml\rapidxml_iterators.hpp" />
+    <ClInclude Include="..\rapidxml\rapidxml_print.hpp" />
+    <ClInclude Include="..\rapidxml\rapidxml_utils.hpp" />
+    <ClInclude Include="..\sdk\nsp\application_network_framwork.hpp" />
+    <ClInclude Include="..\sdk\nsp\endpoint.h" />
+    <ClInclude Include="..\sdk\nsp\exception.hpp" />
+    <ClInclude Include="..\sdk\nsp\icom\avltree.h" />
+    <ClInclude Include="..\sdk\nsp\icom\clist.h" />
+    <ClInclude Include="..\sdk\nsp\icom\compiler.h" />
+    <ClInclude Include="..\sdk\nsp\icom\hash.h" />
+    <ClInclude Include="..\sdk\nsp\icom\logger.h" />
+    <ClInclude Include="..\sdk\nsp\icom\nis.h" />
+    <ClInclude Include="..\sdk\nsp\icom\nisdef.h" />
+    <ClInclude Include="..\sdk\nsp\icom\object.h" />
+    <ClInclude Include="..\sdk\nsp\icom\posix_atomic.h" />
+    <ClInclude Include="..\sdk\nsp\icom\posix_ifos.h" />
+    <ClInclude Include="..\sdk\nsp\icom\posix_naos.h" />
+    <ClInclude Include="..\sdk\nsp\icom\posix_string.h" />
+    <ClInclude Include="..\sdk\nsp\icom\posix_thread.h" />
+    <ClInclude Include="..\sdk\nsp\icom\posix_time.h" />
+    <ClInclude Include="..\sdk\nsp\icom\posix_wait.h" />
+    <ClInclude Include="..\sdk\nsp\log.h" />
+    <ClInclude Include="..\sdk\nsp\network_handler.h" />
+    <ClInclude Include="..\sdk\nsp\old.hpp" />
+    <ClInclude Include="..\sdk\nsp\os_util.hpp" />
+    <ClInclude Include="..\sdk\nsp\serialize.hpp" />
+    <ClInclude Include="..\sdk\nsp\singleton.hpp" />
+    <ClInclude Include="..\sdk\nsp\swnet.h" />
+    <ClInclude Include="..\sdk\nsp\task_scheduler.hpp" />
+    <ClInclude Include="..\sdk\nsp\toolkit.h" />
+    <ClInclude Include="algorithm\Geometry.h" />
+    <ClInclude Include="algorithm\PosandTrack.h" />
+    <ClInclude Include="algorithm\search_path.h" />
+    <ClInclude Include="AlignItem.h" />
+    <ClInclude Include="AnchorInfoWnd.h" />
+    <ClInclude Include="AnchorItem.h" />
+    <ClInclude Include="AnchorItemManage.h" />
+    <ClInclude Include="BasicDefine.h" />
+    <ClInclude Include="CommonKit\net_interface.h" />
+    <ClInclude Include="CommonKit\pack_opt_param.hpp" />
+    <ClInclude Include="CommonKit\rw_config_file.h" />
+    <ClInclude Include="CommonKit\rw_layout_data.h" />
+    <ClInclude Include="CommonKit\StringTool.hpp" />
+    <ClInclude Include="common\common_impls.hpp" />
+    <ClInclude Include="common\waitdialog.h" />
+    <ClInclude Include="common\watcherwaiter.hpp" />
+    <ClInclude Include="ConnectVehicleWnd.h" />
+    <ClInclude Include="CtrlPointInfoWnd.h" />
+    <ClInclude Include="CtrlPointItem.h" />
+    <ClInclude Include="curve\curve_factory.hpp" />
+    <ClInclude Include="curve\curve_product.hpp" />
+    <ClInclude Include="curve\GenerateVariable.h" />
+    <ClInclude Include="curve\GenerateVariable180.h" />
+    <ClInclude Include="curve\GlobalVariables.h" />
+    <ClInclude Include="curve\Matrix.h" />
+    <ClInclude Include="DataManage.h" />
+    <ClInclude Include="DrawMapWid.h" />
+    <ClInclude Include="EdgeInfoWnd.h" />
+    <ClInclude Include="EdgeItem.h" />
+    <ClInclude Include="EdgeItemManage.h" />
+    <ClInclude Include="EdgeItemMgr.h" />
+    <ClInclude Include="EdgeListShowWnd.h" />
+    <ClInclude Include="EdgesEditWnd.h" />
+    <ClInclude Include="generateemapdialog.h" />
+    <ClInclude Include="LocationOfCurve.h" />
+    <ClInclude Include="MainWnd.h" />
+    <ClInclude Include="MapScene.h" />
+    <ClInclude Include="MapView.h" />
+    <ClInclude Include="MessageBox.h" />
+    <ClInclude Include="NodeInfoWnd.h" />
+    <ClInclude Include="NodeItem.h" />
+    <ClInclude Include="NodeItemManage.h" />
+    <ClInclude Include="NodeItemMgr.h" />
+    <ClInclude Include="NodesEditWnd.h" />
+    <ClInclude Include="OneKeyAdjustDialog.h" />
+    <ClInclude Include="OperateCtrlWnd.h" />
+    <ClInclude Include="OptInfoWnd.h" />
+    <ClInclude Include="polygonitem.h" />
+    <ClInclude Include="PolygonVertexItem.h" />
+    <ClInclude Include="QRcodeItem.h" />
+    <ClInclude Include="QRcodeInfoWnd.h" />
+    <ClInclude Include="QRcodeItemManage.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="SegmentPosWnd.h" />
+    <ClInclude Include="SelectWopWnd.h" />
+    <ClInclude Include="ShowNavPathWnd.h" />
+    <ClInclude Include="TargetInfoWnd.h" />
+    <ClInclude Include="TargetItem.h" />
+    <ClInclude Include="TargetItemManage.h" />
+    <ClInclude Include="TerminalPointItem.h" />
+    <ClInclude Include="VehicleInfoWnd.h" />
+    <ClInclude Include="VehicleItem.h" />
+    <ClInclude Include="VehicleItemManage.h" />
+    <ClInclude Include="viewportwidget.h" />
+    <ClInclude Include="WopAttrWnd.h" />
+    <ClInclude Include="WopsEditWnd.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="common\waitdialog.ui" />
+    <None Include="generateemapdialog.ui" />
+    <None Include="ImplementTool.qrc" />
+    <None Include="OneKeyAdjustDialog.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="images\icon48x48.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="images\layout.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

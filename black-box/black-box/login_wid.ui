@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>login_wid</class>
+ <widget class="QDialog" name="login_wid">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>351</width>
+    <height>77</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>login_wid</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="styleSheet">
+      <string notr="true">	border-style: none;
+	border: 0px;
+	min-height:32px;
+    min-width:130px;
+	border-radius: 8px;
+	
+color: rgb(0, 0, 0);
+	
+background-color: rgb(207, 207, 207);
+font: 16pt &quot;微软雅黑&quot;;</string>
+     </property>
+     <property name="text">
+      <string>It's connecting，please wait …</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

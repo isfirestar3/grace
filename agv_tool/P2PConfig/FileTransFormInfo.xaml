@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="Tool.P2PConfig.FileTransFormInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Tool.P2PConfig" 
+             xmlns:comm="clr-namespace:Tool.CommView"
+             xmlns:XControl="clr-namespace:Tool.XControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="700">
+
+    <Grid >
+        <comm:SortListView x:Name="TransformListView" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" AllowDrop="True" SelectionMode="Extended" >
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <comm:GridViewColumnEx Header="任务序号" WidthScale="0.15"  GridViewLength="{Binding ElementName=TransformListView, Path=ViewLength}" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </comm:GridViewColumnEx>
+                        <comm:GridViewColumnEx Header="目标IP" WidthScale="0.35" GridViewLength="{Binding ElementName=TransformListView, Path=ViewLength}" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </comm:GridViewColumnEx>
+
+                        <comm:GridViewColumnEx Header="进度状态" WidthScale="0.3" GridViewLength="{Binding ElementName=TransformListView, Path=ViewLength}" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </comm:GridViewColumnEx>
+
+                        <comm:GridViewColumnEx Header="详情" WidthScale="0.18" GridViewLength="{Binding ElementName=TransformListView, Path=ViewLength}" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </comm:GridViewColumnEx>
+
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </comm:SortListView>
+    </Grid>
+</UserControl>

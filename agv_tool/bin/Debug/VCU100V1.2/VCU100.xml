@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<firmware>
+	<modules_type>VCU100</modules_type>
+	<!--upload时使用该字段-->
+	<firmware_length>528384</firmware_length>
+	<firmware_path>D:\grace_src\trunk\manage\agv_runtime_parameters\bin\Debug\VCU100V1.2\VCU100V1.2.bin</firmware_path>
+	<!--固件类型，0：boot固件，1：主程序固件，2：用户程序固件-->
+	<firmware_type>1</firmware_type>
+	<!--发送目标文件到指定端口-->
+	<frimware_endpoint>192.168.0.2:16386</frimware_endpoint>
+	<firmware_version>V1.2.0.0</firmware_version>
+	<!--是否版本控制，0：不控制，1：控制 -->
+	<firmware_version_control>1</firmware_version_control>
+	<!-- 复位等待时间，单位：毫秒-->
+	<reset_wait_time>30000</reset_wait_time>
+	<!-- 每一片写入的延迟时间，单位：毫秒-->
+	<block_write_delay>5000</block_write_delay>
+	<!--模板CPU型号-->
+	<firmware_cpu_type>STM32F767IIT6</firmware_cpu_type>
+</firmware>

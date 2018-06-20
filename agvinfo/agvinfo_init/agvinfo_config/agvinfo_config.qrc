@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/agvinfo_config">
+        <file>image/add_active.png</file>
+        <file>image/add_hover.png</file>
+        <file>image/add_normal.png</file>
+        <file>image/delete_active.png</file>
+        <file>image/delete_hover.png</file>
+        <file>image/delete_normal.png</file>
+        <file>image/edit.png</file>
+    </qresource>
+</RCC>

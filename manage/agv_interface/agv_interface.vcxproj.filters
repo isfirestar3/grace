@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="agv_task_data">
+      <UniqueIdentifier>{66e25a04-34bd-451b-b161-6be927a0b97f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nsp">
+      <UniqueIdentifier>{dbd6fc7a-2918-48b1-a09c-5af234991205}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nsp\icom">
+      <UniqueIdentifier>{bdaf5a89-af18-463a-8c28-e231065aac4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="asio">
+      <UniqueIdentifier>{8ec08383-04e9-46fb-826d-cdd8bf148398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="proto">
+      <UniqueIdentifier>{89f4dab2-722e-4d50-b103-398cef5bee37}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\package\inc\agv_interface\agv_atom_taskdata_base.h">
+      <Filter>agv_task_data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\inc\agv_interface\agv_atom_taskdata_nav.h">
+      <Filter>agv_task_data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\inc\agv_interface\agv_atom_taskdata_opt.h">
+      <Filter>agv_task_data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\inc\agv_interface\agv_task_define.h">
+      <Filter>agv_task_data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\inc\agv_interface\agv_taskdata_base.h">
+      <Filter>agv_task_data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\inc\agv_interface\agv_combine_taskdata_action.h">
+      <Filter>agv_task_data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\inc\agv_interface\agv_combine_taskdata_base.h">
+      <Filter>agv_task_data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\inc\agv_interface\agv_combine_taskdata_goto.h">
+      <Filter>agv_task_data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\package\inc\agv_interface\agv_combine_taskdata_gotoaction.h">
+      <Filter>agv_task_data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\misc\agv_base.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\application_network_framwork.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\endpoint.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\exception.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\log.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\network_handler.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\old.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\os_util.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\serialize.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\singleton.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\swnet.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\task_scheduler.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\toolkit.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\icom\avltree.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\icom\base64.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\icom\clist.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\icom\compiler.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\icom\crc32.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\icom\des.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\icom\logger.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\icom\md5.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\icom\nis.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\icom\nisdef.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\icom\object.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_atomic.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_ifos.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_naos.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_string.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_thread.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_time.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_wait.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="asio.hpp">
+      <Filter>asio</Filter>
+    </ClInclude>
+    <ClInclude Include="asio_manage.h">
+      <Filter>asio</Filter>
+    </ClInclude>
+    <ClInclude Include="net_manager.h">
+      <Filter>asio</Filter>
+    </ClInclude>
+    <ClInclude Include="agv_shell_session.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\private\proto\agv_shell_proto.hpp">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\private\proto\proto_agv_msg.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\private\proto\agv_shell_define.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\private\proto\proto_definion.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\misc\agv_shell_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\misc\agv_shell_common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="task_threadpool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\misc\agv_driver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dhcp_session.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\misc\dhcp_server_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dhcp_notify.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="agv_shell_alive.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="agv_base.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="agv_driver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="layout_info.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="agv_atom_taskdata_base.cpp">
+      <Filter>agv_task_data</Filter>
+    </ClCompile>
+    <ClCompile Include="agv_atom_taskdata_nav.cpp">
+      <Filter>agv_task_data</Filter>
+    </ClCompile>
+    <ClCompile Include="agv_taskdata_base.cpp">
+      <Filter>agv_task_data</Filter>
+    </ClCompile>
+    <ClCompile Include="agv_atom_taskdata_opt.cpp">
+      <Filter>agv_task_data</Filter>
+    </ClCompile>
+    <ClCompile Include="agv_combine_taskdata_goto.cpp">
+      <Filter>agv_task_data</Filter>
+    </ClCompile>
+    <ClCompile Include="agv_combine_taskdata_base.cpp">
+      <Filter>agv_task_data</Filter>
+    </ClCompile>
+    <ClCompile Include="agv_combine_taskdata_action.cpp">
+      <Filter>agv_task_data</Filter>
+    </ClCompile>
+    <ClCompile Include="agv_combine_taskdata_gotoaction.cpp">
+      <Filter>agv_task_data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\encrypt.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\endpoint.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\log.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\network_handler.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\os_util.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\swnet.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\toolkit.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="agv_shell_session.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="asio_manage.cpp">
+      <Filter>asio</Filter>
+    </ClCompile>
+    <ClCompile Include="net_manager.cpp">
+      <Filter>asio</Filter>
+    </ClCompile>
+    <ClCompile Include="agv_shell_base.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="task_threadpool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dhcp_server_base.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dhcp_session.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="agv_shell_alive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,195 @@
+﻿<Page x:Class="Tool.RobotsHome.RobotsHome"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Tool.RobotsHome"
+      xmlns:cvt="clr-namespace:Tool.RobotsHome"
+      xmlns:XControl="clr-namespace:Tool.XControl"
+      mc:Ignorable="d" 
+      d:DesignHeight="420" d:DesignWidth="900"
+      Title="RobotsHome">
+    
+    <Page.Resources>
+        <cvt:NetStateConverter x:Key="cvtNetStatus"/> 
+        <cvt:ProcessStateConverter x:Key="cvtProcessState"/>
+        <cvt:VCUStatusConverter x:Key="cvtVCUStatus"/>
+        <cvt:UnLockFileStatusConverter x:Key="cvtUnLockFileStatus"/>
+        <cvt:LockFileStatusConverter x:Key="cvtLockFileStatus"/>
+    </Page.Resources>
+    
+    <Grid Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45" ></RowDefinition>
+            <RowDefinition Height="9*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="300"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+                <TextBlock Width="45" Margin="15,15,-10,10" Text="IP过滤：" TextAlignment="Center"></TextBlock>
+                <TextBox x:Name="SelectIP" Width="138"   Margin="10,10,10,10" PreviewTextInput="OnPreviewTextInput" TextChanged="OnChangeTextInput" HorizontalContentAlignment="Center"  VerticalContentAlignment="Center"  InputMethod.IsInputMethodEnabled ="False" ></TextBox>
+                <XControl:XCheckBox Margin="0,16,0,0" Click="OnShowOnline"></XControl:XCheckBox>
+                <TextBlock Text="仅显示在线" Margin="0,16,10,0" ></TextBlock>
+            </StackPanel>
+
+
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" >
+                <XControl:XButton NormalImgae="../Assets/开始连接.png"    MouseOverImage="../Assets/开始连接hover.png" PressedImage ="../Assets/开始连接press.png" Cursor="Hand"  Click="OnConnnectBatch" NineGrid="1" Margin="0,0,10,0" ></XControl:XButton>
+                <XControl:XButton NormalImgae="../Assets/断开连接.png"    MouseOverImage="../Assets/断开连接hover.png" PressedImage ="../Assets/断开连接press.png" Cursor="Hand"  Click="OnDisconnnectBatch" NineGrid="1" Margin="0,0,10,0" ></XControl:XButton>
+                <XControl:XButton NormalImgae="../Assets/一键更新.png" MouseOverImage="../Assets/一键更新hover.png" PressedImage ="../Assets/一键更新press.png" Cursor="Hand" Click="OnUpdateShellBatch" NineGrid="1" Margin="0,0,10,0"  Width="80" ></XControl:XButton>
+                <XControl:XButton NormalImgae="../Assets/NTP服务地址.png" MouseOverImage="../Assets/NTP服务地址hover.png" PressedImage ="../Assets/NTP服务地址press.png" Cursor="Hand" Click="OnNTPBatch" NineGrid="1" Margin="0,0,10,0"  Width="90" ></XControl:XButton>
+                <XControl:XButton NormalImgae="../Assets/加锁.png"        MouseOverImage="../Assets/加锁hover.png" PressedImage ="../Assets/加锁press.png" Cursor="Hand" Click="OnLockBatch" NineGrid="1" Margin="0,0,10,0"  Width="60" ></XControl:XButton>
+                <XControl:XButton NormalImgae="../Assets/解锁.png"    MouseOverImage="../Assets/解锁hover.png" PressedImage ="../Assets/解锁press.png" Cursor="Hand" Click="OnUnLockBatch" NineGrid="1" Margin="0,0,10,0"  Width="60" ></XControl:XButton>
+                <XControl:XButton NormalImgae="../Assets/备份.png"    MouseOverImage="../Assets/备份hover.png" PressedImage ="../Assets/备份press.png" Cursor="Hand" Click="OnBackUpBatch" NineGrid="1" Margin="0,0,10,0"  Width="60" ></XControl:XButton>
+            </StackPanel>
+        </Grid>
+       
+        <XControl:GridLineDecorator Grid.Row="1" Margin="0,0,0,0" >
+            <XControl:SortListView x:Name="RobotList" AlternationCount="2" 
+                               VirtualizingStackPanel.IsVirtualizing="True" 
+                               ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                              
+                               ItemContainerStyle="{StaticResource CustomerItemStyle}" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" >
+                <ListView.View >
+                    <GridView  >
+                        <GridView.Columns>
+                            <GridViewColumn x:Name="box" >
+                                <GridViewColumn.Header>
+                                    <XControl:XCheckBox x:Name="AllCheckBox" Click="OnSelectAllRobots" IsChecked="{Binding IsSelected}"></XControl:XCheckBox>
+                                </GridViewColumn.Header>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <XControl:XCheckBox  Tag="{Binding Path=EndPoint}" Click="OnSelectRobots" Margin="5,15,5,11" IsChecked="{Binding IsSelected}" ></XControl:XCheckBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <XControl:GridViewColumnEx Header="编号" WidthScale="0.05" GridViewLength="{Binding ElementName=RobotList, Path=ViewLength}"  >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Id}" TextAlignment="Center" Foreground="#6B7074" FontSize="13" Margin="5,15,5,10"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            
+                            <XControl:GridViewColumnEx Header="MAC" WidthScale="0.11" GridViewLength="{Binding ElementName=RobotList, Path=ViewLength}"  >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding MacAddr}" TextAlignment="Center" Foreground="#6B7074" FontSize="13" Margin="5,15,5,10"  />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            <XControl:GridViewColumnEx Header="IP" WidthScale="0.12" GridViewLength="{Binding ElementName=RobotList, Path=ViewLength}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock  Text="{Binding EndPoint}" TextAlignment="Center" Foreground="#6B7074" FontSize="13"  Margin="5,15,5,10"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            <XControl:GridViewColumnEx Header="配置文件" WidthScale="0.065" GridViewLength="{Binding ElementName=RobotList, Path=ViewLength}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <TextBlock  Text="查看配置" TextAlignment="Center"   FontSize="13"  Margin="5,15,5,10" Cursor="Hand" Tag="{Binding Fts}" IsEnabled="{Binding NetState}" MouseLeftButtonDown="OnClickConfigPage" Style="{StaticResource ConfigStateChange}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            <XControl:GridViewColumnEx Header="连接状态" WidthScale="0.06" GridViewLength="{Binding ElementName=RobotList, Path=ViewLength}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextAlignment="Center" FontSize="13" Margin="5,15,5,10" IsEnabled="{Binding NetState}" Style="{StaticResource NetStateChange}"  />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            <XControl:GridViewColumnEx Header="系统时间" WidthScale="0.14" GridViewLength="{Binding ElementName=RobotList, Path=ViewLength}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding SystemTime}" TextAlignment="Center" Foreground="#6B7074" FontSize="13" Margin="5,15,5,10"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            <XControl:GridViewColumnEx Header="自动重启" WidthScale="0.06" GridViewLength="{Binding ElementName=RobotList, Path=ViewLength}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding VCUStatus,Converter={StaticResource cvtVCUStatus}}" Tag="{Binding NetId}"  TextAlignment="Center"  FontSize="13" Margin="5,15,5,10" IsEnabled="{Binding NetState}" Cursor="Hand" Style="{StaticResource ConfigStateChange}" MouseLeftButtonDown="OnClickConfigVCUEnable"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            <XControl:GridViewColumnEx Header="车载版本" WidthScale="0.06" GridViewLength="{Binding ElementName=RobotList, Path=ViewLength}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding VersionInfo}" TextAlignment="Center" Foreground="#6B7074" FontSize="13" Margin="5,15,5,10"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            
+                            <XControl:GridViewColumnEx Header="配置版本" WidthScale="0.06" GridViewLength="{Binding ElementName=RobotList, Path=ViewLength}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ConfigInfo}" TextAlignment="Center" Foreground="#6B7074" FontSize="13" Margin="5,15,5,10"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            
+                            <XControl:GridViewColumnEx Header="操作" Width="300" GridViewLength="{Binding ElementName=RobotList, Path=ViewLength}">
+                                <GridViewColumn.CellTemplate >
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                            <XControl:ImageButton  Tag="{Binding EndPoint}"    EnterImage="../Assets/icon开始连接hover.png"     PressImage="../Assets/icon开始连接press.png"             ToolTip="连接"          Margin="5,3,5,3"  Width="30" Height="30"    Cursor="Hand" MouseLeftButtonDown="OnConnectHost"     IsEnabled="{Binding NetState,Converter={StaticResource cvtNetStatus}}" Style="{StaticResource ConnectStyle}" ></XControl:ImageButton>
+                                            <XControl:ImageButton  Tag="{Binding NetId}"       EnterImage="../Assets/icon断开连接hover.png"     PressImage="../Assets/icon断开连接press.png"             ToolTip="断开"         Margin="5,3,5,3"  Width="30" Height="30"    Cursor="Hand" MouseLeftButtonDown="OnDisconnectHost"  IsEnabled="{Binding NetState}" Style="{StaticResource DisConnectStyle}" ></XControl:ImageButton>
+                                            <XControl:ImageButton  Tag="{Binding NetId}"       EnterImage="../Assets/iconshell自更新hover.png"  PressImage="../Assets/iconshell自更新press.png"         ToolTip="AGVShell更新"   Margin="5,3,5,3"  Width="30" Height="30"    Cursor="Hand" MouseLeftButtonDown="OnUpdateShell"     IsEnabled="{Binding NetState}" Style="{StaticResource UpdateAGVShellStyle}"></XControl:ImageButton>
+                                            <XControl:ImageButton  Tag="{Binding NetId}"       EnterImage="../Assets/iconntp服务地址hover.png"  PressImage="../Assets/iconntp服务地址press.png"         ToolTip="ntp服务地址"     Margin="5,3,5,3"  Width="30" Height="30"    Cursor="Hand" MouseLeftButtonDown="OnNTP"             IsEnabled="{Binding NetState}" Style="{StaticResource NTPStyle}"></XControl:ImageButton>
+                                            <XControl:ImageButton  Tag="{Binding NetId}"       EnterImage="../Assets/icon备份hover.png"         PressImage="../Assets/icon备份press.png"                ToolTip="备份"     Margin="5,3,5,3"  Width="30" Height="30"    Cursor="Hand" MouseLeftButtonDown="OnBackUpFiles"             IsEnabled="{Binding NetState}" Style="{StaticResource BackUpStyle}"></XControl:ImageButton>
+                                            <XControl:ImageButton  Tag="{Binding NetId}"       EnterImage="../Assets/icon加锁hover.png"         PressImage="../Assets/icon加锁press.png"                 ToolTip="加锁文件"          Margin="5,3,5,3"  Width="30" Height="30"   Cursor="Hand"   MouseLeftButtonDown="OnLockFiles" Style="{StaticResource LockFilesStyle}">
+                                                <XControl:ImageButton.IsEnabled>
+                                                    <MultiBinding Converter="{StaticResource cvtLockFileStatus}">
+                                                        <Binding Path="NetState"/>
+                                                        <Binding Path="IsFileLock"/>
+                                                    </MultiBinding>
+                                                </XControl:ImageButton.IsEnabled>
+                                            </XControl:ImageButton>
+
+                                            <XControl:ImageButton  Tag="{Binding NetId}"       EnterImage="../Assets/icon解锁hover.png"         PressImage="../Assets/icon解锁press.png"             ToolTip="解锁文件"          Margin="5,3,5,3"  Width="30" Height="30"   Cursor="Hand"   MouseLeftButtonDown="OnLockUnFiles" Style="{StaticResource UnLockFilesStyle}">
+                                                <XControl:ImageButton.IsEnabled>
+                                                    <MultiBinding Converter="{StaticResource cvtUnLockFileStatus}">
+                                                        <Binding Path="NetState"/>
+                                                        <Binding Path="IsFileLock"/>
+                                                    </MultiBinding>
+                                                </XControl:ImageButton.IsEnabled>
+                                            </XControl:ImageButton>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </XControl:SortListView>
+        </XControl:GridLineDecorator>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel  Orientation="Horizontal" Margin="10,5,0,0" Height="28" Grid.Column="0" x:Name="PanelRobotNum">
+               
+                <TextBlock Text="{Binding PageCount_}" Width="20" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"></TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="10,5,0,0" Height="30" Grid.Column="1" HorizontalAlignment="Right" >
+                <XControl:XButton NormalImgae="../Assets/上一页normal.png" MouseOverImage="../Assets/上一页hover.png" PressedImage ="../Assets/上一页active.png" Cursor="Hand"  Click="OnPreviousPage" NineGrid="1" Margin="0,0,10,0"></XControl:XButton>
+                <XControl:XButton NormalImgae="../Assets/下一页normal.png" MouseOverImage="../Assets/下一页hover.png" PressedImage ="../Assets/下一页active.png" Cursor="Hand"  Click="OnNextPage" NineGrid="1" Margin="0,0,20,0"></XControl:XButton>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>
+
+      
+      
+       
+    
+    

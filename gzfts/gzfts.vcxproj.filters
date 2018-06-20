@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="nsp">
+      <UniqueIdentifier>{61a0272e-c40e-4fa9-ad9b-f983d6b45706}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="file_handler">
+      <UniqueIdentifier>{944c0612-cbf3-44c0-b86a-7cf0c8fc40b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="proto">
+      <UniqueIdentifier>{a4785101-9581-4ba5-9ef6-ae5bcba2b814}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="long_lnk">
+      <UniqueIdentifier>{8eb7ad13-9d07-4381-b8d8-8a2e85e70122}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="gzfts_api.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="receiver_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sender_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="network_session.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="file_read_handler.cpp">
+      <Filter>file_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="file_write_handler.cpp">
+      <Filter>file_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="network_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="file_manager.cpp">
+      <Filter>file_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="asio_manage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="file_rw_task_thread.cpp">
+      <Filter>file_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="receiver_write_manage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="file_shell_handler.cpp">
+      <Filter>file_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="sender_pull_task.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sender_push_task.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="file_query_catalog_task.cpp">
+      <Filter>file_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\encrypt.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\endpoint.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\log.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\network_handler.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\os_util.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\swnet.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\toolkit.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="long_lnk_sender.cpp">
+      <Filter>long_lnk</Filter>
+    </ClCompile>
+    <ClCompile Include="long_lnk_session.cpp">
+      <Filter>long_lnk</Filter>
+    </ClCompile>
+    <ClCompile Include="long_lnk_receiver.cpp">
+      <Filter>long_lnk</Filter>
+    </ClCompile>
+    <ClCompile Include="sender_pull_long_task.cpp">
+      <Filter>long_lnk</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="receiver_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sender_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="network_session.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="file_read_handler.h">
+      <Filter>file_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="file_write_handler.h">
+      <Filter>file_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="network_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="data_type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="file_manager.h">
+      <Filter>file_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="asio_manage.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="file_rw_task_thread.h">
+      <Filter>file_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="receiver_write_manage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="file_shell_handler.h">
+      <Filter>file_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="sender_pull_task.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sender_push_task.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="file_query_catalog_task.h">
+      <Filter>file_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="proto\proto_definion.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="proto\proto_file_block.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="proto\proto_file_block_ack.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="proto\proto_file_fini_msg.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="proto\proto_file_head_msg.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="proto\proto_msg.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="proto\proto_typedef.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\misc\gzfts_api.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\application_network_framwork.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\endpoint.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\exception.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\log.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\network_handler.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\old.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\os_util.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\serialize.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\singleton.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\swnet.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\task_scheduler.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\toolkit.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="long_lnk_sender.h">
+      <Filter>long_lnk</Filter>
+    </ClInclude>
+    <ClInclude Include="long_lnk_session.h">
+      <Filter>long_lnk</Filter>
+    </ClInclude>
+    <ClInclude Include="long_lnk_receiver.h">
+      <Filter>long_lnk</Filter>
+    </ClInclude>
+    <ClInclude Include="sender_pull_long_task.h">
+      <Filter>long_lnk</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="gzfts.def">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

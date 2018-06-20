@@ -1,0 +1,17 @@
+10:28:35 0809 info 188B # loadXml:/home/anderson/work/svn/grace/trunk/robot/agv_shell/standard/agv_shell.xml
+10:28:35 0809 info 188B # loadXml auto_startup:0
+10:28:35 0809 info 188B # loadXml port:4410
+10:28:35 0809 info 188B # loadXml fts port:4411
+10:28:35 0809 info 188B # loadXml fts fts_long_port port:4412
+10:28:35 0809 info 188B # loadXml fin
+10:28:35 0814 info 188B # success to lock file:/gzrobot/Visual2dCodeLoc.ini
+10:28:35 0818 info 188B # success to lock file:/etc/agv/var/dwheel.xml
+10:28:35 0820 info 188B # success to lock file:/etc/agv/var/swheel.xml
+10:28:35 0820 error 188B # failed to open version file:/gzrobot/version.txt.
+10:28:35 0820 info 188B # agvshell auto startup flag: 0 , upgrade flag:0
+10:28:35 0822 info 188B # agvshell start listening 4410 ...
+10:28:35 0825 info 188B # interface num:2
+10:28:35 0825 info 188B # ndevice name:enp0s25
+10:28:35 0825 info 188B # device ip:192.168.0.29
+10:28:35 0825 info 188B # device mac:68:f7:28:98:5d:74
+10:28:35 0825 error 188B # file:/agvshell/standard/autostart.sh chmod failed, errno:2

@@ -1,0 +1,166 @@
+﻿<Page x:Class="Tool.UpdateBin.UpdateBin"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Tool.UpdateBin"
+      xmlns:XControl ="clr-namespace:Tool.XControl"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1200"
+      Title="UpdateBin">
+
+    <Page.Resources>
+        <local:CoreStatusConverter x:Key="cvtCoreStatus"/>
+    </Page.Resources>
+    
+    <Grid Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45" ></RowDefinition>
+            <RowDefinition Height="9*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid  Grid.Row="0"  HorizontalAlignment="left" Width="1000">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="75"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <XControl:XButton Grid.Column="0" NormalImgae="../Assets/选择目标文件.png" MouseOverImage="../Assets/选择目标文件hover.png" PressedImage ="../Assets/选择目标文件press.png" Cursor="Hand" NineGrid="1" Margin="5" Click="OnSelectTarget" Width="90"> </XControl:XButton>
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.ColumnSpan="2">
+                <TextBlock Text="目标CPU：" Margin="5,15,0,0" ></TextBlock>
+                <TextBlock x:Name="TB_CPU" Width="60" Margin="0,15,15,10" TextAlignment="Center" ></TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="3" Grid.ColumnSpan="2">
+                <TextBlock Text="目标模块：" Margin="5,15,0,0" ></TextBlock>
+                <TextBlock x:Name="TB_Model" Width="60" Margin="0,15,15,10" TextAlignment="Center"></TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="5" Grid.ColumnSpan="2">
+                <TextBlock Text="目标版本号：" Margin="5,15,0,0" ></TextBlock>
+                <TextBlock x:Name="TB_Version" Width="60" Margin="0,15,15,10" TextAlignment="Center"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Column="7" Grid.ColumnSpan="2">
+                <TextBlock Text="BIN文件：" Margin="5,15,0,0" ></TextBlock>
+                <TextBlock x:Name="TB_Bin" Width="60" Margin="0,15,15,10" TextAlignment="Center"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Column="9" Grid.ColumnSpan="2">
+                <TextBlock Text="节点ID：" Margin="5,15,0,0" ></TextBlock>
+                <TextBox x:Name="TB_NodeId" Text="0" Width="60" Margin="0,10,15,10" TextAlignment="Center" VerticalContentAlignment="Center"  PreviewTextInput="OnPreviewTextInput" InputMethod.IsInputMethodEnabled ="False" ></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Column="11" Grid.ColumnSpan="2">
+                <TextBlock Text="总线序号：" Margin="5,15,0,0" ></TextBlock>
+                <XControl:XComboBox  x:Name="ComboxNodeMode" SelectedValuePath="Tag" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="60" MaxDropDownHeight="70" Margin="0,10,0,0" SelectionChanged="OnChangeNodeMode">
+                    <ComboBoxItem Content="0"  Tag="0" IsSelected="True" VerticalContentAlignment="Center"></ComboBoxItem>
+                    <ComboBoxItem Content="1"  Tag="1" VerticalContentAlignment="Center"></ComboBoxItem>
+                </XControl:XComboBox>
+            </StackPanel>
+        </Grid>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" >
+            <XControl:XButton NormalImgae="../Assets/icon下载.png" MouseOverImage="../Assets/icon下载hover.png" PressedImage ="../Assets/icon下载press.png" Cursor="Hand"  Click="OnDownloadBatch" NineGrid="1" Margin="0,0,10,0" Width="30" ToolTip="下载"></XControl:XButton>
+            <XControl:XButton NormalImgae="../Assets/icon升级.png" MouseOverImage="../Assets/icon升级hover.png" PressedImage ="../Assets/icon升级press.png" Cursor="Hand"  Click="OnUpdateBatch" NineGrid="1" Margin="0,0,10,0" Width="30" ToolTip="升级"></XControl:XButton>
+            <XControl:XButton NormalImgae="../Assets/icon重新获取.png" MouseOverImage="../Assets/icon重新获取hover.png" PressedImage ="../Assets/icon重新获取press.png" Cursor="Hand" Click="OnGetInfomtionBatch" NineGrid="1" Margin="0,0,10,0"  Width="30" ToolTip="重新获取"></XControl:XButton>
+            <XControl:XButton NormalImgae="../Assets/icon重启.png" MouseOverImage="../Assets/icon重启hover.png" PressedImage ="../Assets/icon重启press.png" Cursor="Hand"  Click="OnResetProcessBatch" NineGrid="1" Margin="0,0,10,0" Width="30" ToolTip="重启" ></XControl:XButton>
+            <XControl:XButton NormalImgae="../Assets/icon自主驱动升级.png" MouseOverImage="../Assets/icon自主驱动升级hover.png" PressedImage ="../Assets/icon自主驱动升级press.png" Cursor="Hand"  Click="OnUpdateDriverBatch" NineGrid="1" Margin="0,0,10,0" Width="30" ToolTip="自主驱动升级" ></XControl:XButton>
+        </StackPanel>
+        <XControl:GridLineDecorator Grid.Row="1" Margin="0,0,0,0" >
+            <XControl:SortListView x:Name="RobotUpdateList" AlternationCount="2" 
+                               VirtualizingStackPanel.IsVirtualizing="True" 
+                               ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                               ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                               ItemContainerStyle="{StaticResource CustomerItemStyle}" >
+                <ListView.View>
+                    <GridView >
+                        <GridView.Columns>
+                            <GridViewColumn x:Name="box" >
+                                <GridViewColumn.Header>
+                                    <XControl:XCheckBox x:Name="AllCheckBox" Click="OnSelectAllRobots" IsChecked="{Binding IsSelectedBin}"></XControl:XCheckBox>
+                                </GridViewColumn.Header>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <XControl:XCheckBox  Tag="{Binding Path=NetId}" Click="OnSelectRobots" CommandParameter="{Binding Path=Fts}" Margin="5,15,5,11" IsChecked="{Binding IsSelectedBin}" ></XControl:XCheckBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <XControl:GridViewColumnEx Header="编号" WidthScale="0.08" GridViewLength="{Binding ElementName=RobotUpdateList, Path=ViewLength}"  >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Id}" TextAlignment="Center" Foreground="#6B7074" FontSize="13" Margin="5,15,5,10"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            <XControl:GridViewColumnEx Header="IP地址" WidthScale="0.12" GridViewLength="{Binding ElementName=RobotUpdateList, Path=ViewLength}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock  Text="{Binding EndPoint}" TextAlignment="Center" Foreground="#6B7074" FontSize="13"  Margin="5,15,5,10"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            <XControl:GridViewColumnEx Header="型号" WidthScale="0.12" GridViewLength="{Binding ElementName=RobotUpdateList, Path=ViewLength}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <TextBlock  Text="{Binding ModelName}" TextAlignment="Center"   FontSize="13"  Margin="5,15,5,10" Cursor="Hand" ></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            <XControl:GridViewColumnEx Header="当前版本" WidthScale="0.12" GridViewLength="{Binding ElementName=RobotUpdateList, Path=ViewLength}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <TextBlock  Text="{Binding ModelVersion}" TextAlignment="Center"   FontSize="13"  Margin="5,15,5,10" Cursor="Hand" ></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            <XControl:GridViewColumnEx Header="CPU型号" WidthScale="0.12" GridViewLength="{Binding ElementName=RobotUpdateList, Path=ViewLength}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <TextBlock  Text="{Binding ModelCPU}" TextAlignment="Center"   FontSize="13"  Margin="5,15,5,10" Cursor="Hand" ></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+
+                            <XControl:GridViewColumnEx Header="操作进度" WidthScale="0.07" GridViewLength="{Binding ElementName=RobotUpdateList, Path=ViewLength}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock    Text="{Binding ProgressRate,StringFormat={}{0}% }" TextAlignment="Center"  FontSize="13" Margin="5,15,5,10" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            <XControl:GridViewColumnEx Header="状态" WidthScale="0.15" GridViewLength="{Binding ElementName=RobotUpdateList, Path=ViewLength}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock  Text="{Binding BinStatus,Converter={StaticResource cvtCoreStatus}}" TextAlignment="Center"  FontSize="13" Margin="5,15,5,10"   />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+
+                            <XControl:GridViewColumnEx Header="操作" Width="250">
+                                <GridViewColumn.CellTemplate >
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                            <XControl:ImageButton Style="{StaticResource DownLoadStyle}"   Tag="{Binding NetId}"  ToolTip="下载"  Margin="5,3,5,3" EnterImage="../Assets/icon下载hover.png"  PressImage="../Assets/icon下载press.png"   Width="30" Height="30" Cursor="Hand" MouseLeftButtonDown="OnDownLoad"></XControl:ImageButton>
+                                            <XControl:ImageButton Style="{StaticResource UpdateStyle}"   Tag="{Binding Fts}"  ToolTip="升级"  Margin="5,3,5,3" EnterImage="../Assets/icon升级hover.png"  PressImage="../Assets/icon升级press.png"   Width="30" Height="30" Cursor="Hand" MouseLeftButtonDown="OnUpdate"></XControl:ImageButton>
+                                            <XControl:ImageButton Style="{StaticResource RefreshStyle}"   Tag="{Binding NetId}"  ToolTip="重新获取"  Margin="5,3,5,3" EnterImage="../Assets/icon重新获取hover.png"  PressImage="../Assets/icon重新获取press.png"   Width="30" Height="30" Cursor="Hand" MouseLeftButtonDown="OnRefreshInfomtion"></XControl:ImageButton>
+                                            <XControl:ImageButton Style="{StaticResource ResetBinStyle}"   Tag="{Binding NetId}"  ToolTip="重启"  Margin="5,3,5,3" EnterImage="../Assets/icon重启hover.png"  PressImage="../Assets/icon重启press.png"   Width="30" Height="30" Cursor="Hand" MouseLeftButtonDown="OnResetProcess"></XControl:ImageButton>
+                                            <XControl:ImageButton Style="{StaticResource UpdateDriverStyle}"   Tag="{Binding Fts}"  ToolTip="自主驱动升级"  Margin="5,3,5,3" EnterImage="../Assets/icon自主驱动升级hover.png"  PressImage="../Assets/icon自主驱动升级press.png"   Width="30" Height="30" Cursor="Hand" MouseLeftButtonDown="OnUpdateDriver"></XControl:ImageButton>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </XControl:SortListView>
+        </XControl:GridLineDecorator>
+    </Grid>
+</Page>

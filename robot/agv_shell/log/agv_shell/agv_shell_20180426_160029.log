@@ -1,0 +1,20 @@
+16:00:29 0095 info 66CF # agv_shell starting... uptime[26780283]
+16:00:29 0100 info 66CF # loadXml:/home/anderson/work/svn/grace/trunk/robot/agv_shell/standard/agv_shell.xml
+16:00:29 0100 info 66CF # loadXml auto_startup:0
+16:00:29 0100 info 66CF # loadXml port:4410
+16:00:29 0100 info 66CF # loadXml fts port:4411
+16:00:29 0100 info 66CF # loadXml fts fts_long_port port:4412
+16:00:29 0101 info 66CF # loadXml fin
+16:00:29 0103 info 66CF # success to lock file:/gzrobot/Visual2dCodeLoc.ini
+16:00:29 0106 info 66CF # success to lock file:/etc/agv/var/dwheel.xml
+16:00:29 0108 info 66CF # success to lock file:/etc/agv/var/swheel.xml
+16:00:29 0109 error 66CF # failed to open version file:/gzrobot/version.txt.
+16:00:29 0109 error 66CF # failed to open version file:/gzrobot/version_config.txt.
+16:00:29 0109 info 66CF # agvshell auto startup flag: 0 , upgrade flag:0
+16:00:29 0110 info 66CF # agvshell start listening 4410 ...
+16:00:29 0114 info 66CF # interface num:2
+16:00:29 0114 info 66CF # ndevice name:enp0s25
+16:00:29 0114 info 66CF # device ip:192.168.0.29
+16:00:29 0114 info 66CF # device mac:68:f7:28:98:5d:74
+16:00:29 0114 info 66CF # run_process_by_popen start running..
+16:00:29 0114 error 66CF # file:/agvshell/standard/autostart.sh chmod failed, errno:2

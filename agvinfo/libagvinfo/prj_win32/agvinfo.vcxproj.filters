@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="lib_agvinfo_export">
+      <UniqueIdentifier>{993276cd-c825-413f-b306-50ede8b30773}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nsp">
+      <UniqueIdentifier>{b113f497-824c-4818-8e40-66063ffcd468}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nsp\icom">
+      <UniqueIdentifier>{59ad0ea6-66c4-44c2-b50d-49dade269245}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rapidxml">
+      <UniqueIdentifier>{0e14db09-d7b0-4d0f-9fce-d614b5b3b034}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\agv_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\agv_session.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\network_task.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\network_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\motion_ack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\network.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\xml_node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\application_network_framwork.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\endpoint.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\exception.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\log.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\network_handler.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\old.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\os_util.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\serialize.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\singleton.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\swnet.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\task_scheduler.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\toolkit.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\avltree.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\base64.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\clist.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\compiler.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\crc32.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\des.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\logger.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\md5.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\nis.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\nisdef.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\object.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\posix_atomic.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\posix_ifos.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\posix_naos.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\posix_string.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\posix_thread.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\posix_time.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\posix_types.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\nsp\icom\posix_wait.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\rapidxml\rapidxml.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\rapidxml\rapidxml_iterators.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\rapidxml\rapidxml_print.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\rapidxml\rapidxml_utils.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\misc\libagvinfo.h">
+      <Filter>lib_agvinfo_export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\inner_agvinfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\proto_unpacket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\libagvinfo.cpp">
+      <Filter>lib_agvinfo_export</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\agv_session.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\network_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\agv_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\network_task.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\network.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\xml_node.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\SDK\nsp\encrypt.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\SDK\nsp\endpoint.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\SDK\nsp\log.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\SDK\nsp\network_handler.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\SDK\nsp\os_util.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\SDK\nsp\swnet.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\SDK\nsp\toolkit.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="agvinfo.def">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

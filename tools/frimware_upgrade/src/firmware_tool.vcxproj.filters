@@ -1,0 +1,385 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;cxx;c;def</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="ui">
+      <UniqueIdentifier>{389ead07-64b6-4627-b70d-57c6d2b8d722}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{1073c562-a2bb-4eb9-aba7-c2ebe9a1e450}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{93dfdcc2-2264-4fe1-a52c-a1509b0b3e0c}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="net">
+      <UniqueIdentifier>{8de824bd-ec3b-4a60-90cc-9181bc7d3439}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="proto">
+      <UniqueIdentifier>{c5e14412-4f6f-4701-8da7-cbdf28384054}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rapidxml">
+      <UniqueIdentifier>{529e9671-4298-4c6e-b851-8c2aea679641}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="file_handler">
+      <UniqueIdentifier>{1fd8fde8-09a7-4944-8626-7875b2155abe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="nsp">
+      <UniqueIdentifier>{2dcf9d6c-d644-49eb-bc1b-d87745fc93d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{fde7d8ee-6137-4794-9249-50e840679088}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_firmware.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framwork_wid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_framwork_wid.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_framwork_wid.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="network_session.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="network_server_manager.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="network_client_manager.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="proto_head_definition.h">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="net_manager.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="asio_manage.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="config.cpp">
+      <Filter>rapidxml</Filter>
+    </ClCompile>
+    <ClCompile Include="net_task.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="net_task_download.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="net_task_upload.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="file_read_handler.cpp">
+      <Filter>file_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="file_write_handler.cpp">
+      <Filter>file_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="custom_control_delegate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_custom_control_delegate.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_custom_control_delegate.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="download_btns.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_download_btns.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_download_btns.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="net_task_reset.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="upload_btns.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_upload_btns.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_upload_btns.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\encrypt.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\endpoint.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\log.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\network_handler.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\os_util.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\swnet.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\toolkit.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="common\waitdialog.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_waitdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_waitdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="common\waitdialog_p.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="firmware.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="firmware.ui">
+      <Filter>ui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="framwork_wid.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="custom_control_delegate.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="download_btns.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="upload_btns.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="upload_btns.ui">
+      <Filter>ui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="download_btns.ui">
+      <Filter>ui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="common\waitdialog.h">
+      <Filter>common</Filter>
+    </CustomBuild>
+    <CustomBuild Include="common\waitdialog.ui">
+      <Filter>common</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="image\logout.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="image\order.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="image\package-download.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="image\sign-out.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="image\upload3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="image\download.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\image\add.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\image\plus_alt.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\image\delete.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\image\open_file.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\image\reset.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\image\restart.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\image\start.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\image\start_task.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GeneratedFiles\ui_firmware.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="network_session.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="network_server_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="network_client_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="proto_udp_common.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="proto_udp_typedef.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="net_manager.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="asio.hpp">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="asio_manage.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\package\inc\rapidxml\rapidxml.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\package\inc\rapidxml\rapidxml_iterators.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\package\inc\rapidxml\rapidxml_print.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\package\inc\rapidxml\rapidxml_utils.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="config.h">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="net_task.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="net_task_download.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="net_task_upload.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="file_read_handler.h">
+      <Filter>file_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="file_write_handler.h">
+      <Filter>file_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_download_btns.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="net_task_reset.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_upload_btns.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\application_network_framwork.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\endpoint.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\exception.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\log.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\network_handler.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\old.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\os_util.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\serialize.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\singleton.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\swnet.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\task_scheduler.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\toolkit.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="comm_impl.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="basic_def.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\watcherwaiter.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\gdp_singleton.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\FutureResultReceiver.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\watcherdialog.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_waitdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\waitdialog_p.h">
+      <Filter>common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="firmware_tool.rc" />
+  </ItemGroup>
+</Project>

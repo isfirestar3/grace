@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="agv_shell_server.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="agv_shell_session.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="file_read_handler.cpp">
+      <Filter>file_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="asio_manage.cpp">
+      <Filter>manager</Filter>
+    </ClCompile>
+    <ClCompile Include="net_manager.cpp">
+      <Filter>manager</Filter>
+    </ClCompile>
+    <ClCompile Include="udp_client_manager.cpp">
+      <Filter>udp</Filter>
+    </ClCompile>
+    <ClCompile Include="udp_session.cpp">
+      <Filter>udp</Filter>
+    </ClCompile>
+    <ClCompile Include="frimware_task.cpp">
+      <Filter>udp</Filter>
+    </ClCompile>
+    <ClCompile Include="file_write_handler.cpp">
+      <Filter>file_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="keepalive.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="agv_shell.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="agv_shell_common.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="cmd_parse.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="task.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\encrypt.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\endpoint.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\log.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\network_handler.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\os_util.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\swnet.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdk\nsp\toolkit.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="dhcp_udp_session.cpp">
+      <Filter>udp</Filter>
+    </ClCompile>
+    <ClCompile Include="sys_info.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="argvs.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="file_can_read.cpp">
+      <Filter>file_handler</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="nsp">
+      <UniqueIdentifier>{42d034b3-129a-4916-ab7d-7432c899d1a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="proto">
+      <UniqueIdentifier>{674d1f5d-8e78-4345-93e3-372e721219b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net">
+      <UniqueIdentifier>{f9d23aa5-b325-45f7-9bd8-5577b9d5759a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="file_handler">
+      <UniqueIdentifier>{24d738f3-6a1a-4721-90e0-0c447ed8ab42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manager">
+      <UniqueIdentifier>{8c67b98e-b85e-41de-a4dd-bec6857422c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="udp">
+      <UniqueIdentifier>{434eb00a-807b-4b46-ae11-556bf74085c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headfile">
+      <UniqueIdentifier>{79eca262-7792-49e7-893f-5b0ef6102289}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{361efc5a-3198-49e1-a12d-8b5fb8637826}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="agv_session.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="agv_shell_session.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="agv_shell_server.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="proto_head_definition.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="proto_udp_common.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="proto_udp_typedef.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="file_read_handler.h">
+      <Filter>file_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="asio.hpp">
+      <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="asio_manage.h">
+      <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="net_manager.h">
+      <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="udp_client_manager.h">
+      <Filter>udp</Filter>
+    </ClInclude>
+    <ClInclude Include="udp_session.h">
+      <Filter>udp</Filter>
+    </ClInclude>
+    <ClInclude Include="frimware_task.h">
+      <Filter>udp</Filter>
+    </ClInclude>
+    <ClInclude Include="file_write_handler.h">
+      <Filter>file_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="keepalive.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="agv_shell.h">
+      <Filter>headfile</Filter>
+    </ClInclude>
+    <ClInclude Include="agv_shell_common.h">
+      <Filter>headfile</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_parse.h">
+      <Filter>headfile</Filter>
+    </ClInclude>
+    <ClInclude Include="getopt.h">
+      <Filter>headfile</Filter>
+    </ClInclude>
+    <ClInclude Include="task.h">
+      <Filter>headfile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\private\proto\agv_shell_proto.hpp">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\private\proto\proto_agv_msg.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\private\proto\proto_frimware_msg.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\application_network_framwork.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\endpoint.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\exception.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\log.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\network_handler.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\old.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\os_util.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\serialize.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\singleton.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\swnet.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\task_scheduler.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\nsp\toolkit.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="dhcp_udp_session.h">
+      <Filter>udp</Filter>
+    </ClInclude>
+    <ClInclude Include="sys_info.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="argv.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdk\misc\agv_shell_define.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="file_can_read.h">
+      <Filter>file_handler</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

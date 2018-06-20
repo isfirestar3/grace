@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gzCamera", "gzCamera\gzCamera.vcxproj", "{7E9374D6-41BE-4BF3-8E7A-06727680B633}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "canera_text", "..\canera_text\canera_text\canera_text.vcxproj", "{BD2A0590-2CA8-4FB4-8631-A685E3234F08}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E9374D6-41BE-4BF3-8E7A-06727680B633}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7E9374D6-41BE-4BF3-8E7A-06727680B633}.Debug|Win32.Build.0 = Debug|Win32
+		{7E9374D6-41BE-4BF3-8E7A-06727680B633}.Release|Win32.ActiveCfg = Release|Win32
+		{7E9374D6-41BE-4BF3-8E7A-06727680B633}.Release|Win32.Build.0 = Release|Win32
+		{BD2A0590-2CA8-4FB4-8631-A685E3234F08}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BD2A0590-2CA8-4FB4-8631-A685E3234F08}.Debug|Win32.Build.0 = Debug|Win32
+		{BD2A0590-2CA8-4FB4-8631-A685E3234F08}.Release|Win32.ActiveCfg = Release|Win32
+		{BD2A0590-2CA8-4FB4-8631-A685E3234F08}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

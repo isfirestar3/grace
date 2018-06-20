@@ -1,0 +1,11 @@
+LIBRARY	"gzfts"
+
+EXPORTS
+
+fts_create_receiver @1
+fts_destory_receiver @2
+fts_change_configure @3
+fts_pull @4
+fts_push @5
+fts_cancel @6
+fts_catalog_info @7

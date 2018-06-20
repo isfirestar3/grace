@@ -1,0 +1,52 @@
+<RCC>
+    <qresource prefix="/newPrefix">
+        <file>images/open.png</file>
+        <file>images/save.png</file>
+        <file>images/saveas.png</file>
+        <file>images/cursor_hand.png</file>
+        <file>images/pointer.png</file>
+        <file>images/node.png</file>
+        <file>images/curve.png</file>
+        <file>images/line.png</file>
+        <file>images/pen.png</file>
+        <file>images/move.png</file>
+        <file>images/vehicle_small.png</file>
+        <file>images/vehicle.png</file>
+        <file>images/vehicle_gray.png</file>
+        <file>images/finish.png</file>
+        <file>images/edit.png</file>
+        <file>images/start.png</file>
+        <file>images/navigation.png</file>
+        <file>images/clear.png</file>
+        <file>images/preview.png</file>
+        <file>images/stop.png</file>
+        <file>images/suspend.png</file>
+        <file>images/location.png</file>
+        <file>images/anchor.png</file>
+        <file>images/offline.png</file>
+        <file>images/online.png</file>
+        <file>images/operate.png</file>
+        <file>images/link_curve.png</file>
+        <file>images/curve_pen.png</file>
+        <file>images/locnode.png</file>
+        <file>images/spin.png</file>
+        <file>images/show.png</file>
+        <file>images/polygon.png</file>
+        <file>images/array.png</file>
+        <file>images/crab.png</file>
+        <file>images/crab_gray.png</file>
+        <file>images/find.png</file>
+        <file>images/set.png</file>
+        <file>images/vehicle_gray_old.png</file>
+        <file>images/vehicle_old.png</file>
+        <file>images/OneKeyAdjust.png</file>
+        <file>images/resume.png</file>
+        <file>images/deleteMore.png</file>
+        <file>images/editClerr.png</file>
+        <file>images/editEdges.png</file>
+        <file>images/editNodes.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>images/wait.gif</file>
+    </qresource>
+</RCC>

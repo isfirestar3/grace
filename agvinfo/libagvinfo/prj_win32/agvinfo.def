@@ -1,0 +1,21 @@
+LIBRARY
+
+EXPORTS
+
+connect_agvinfo_server @2
+
+disconnect_from_agvinfo @9
+
+load_agvinfo @5
+
+cover_agvinfo @3
+
+get_agvdetail @4
+
+set_agvdetail @8
+
+release_agvinfo @7
+
+release_agvdetail @6
+
+about_something_changed @1LIBRARY

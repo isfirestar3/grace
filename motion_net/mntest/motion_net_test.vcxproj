@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9550E274-599B-4A17-9FAF-85196B46F384}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>motion_net_test</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\sdk\var\;$(SolutionDir)..\sdk\nsp\;$(SolutionDir)..\sdk\misc</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\sdk\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libnsp.d;motion_netd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\sdk\nsp\encrypt.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\endpoint.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\log.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\network_handler.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\os_util.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\swnet.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\toolkit.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\package\inc\motion_net\asio.hpp" />
+    <ClInclude Include="..\..\..\package\inc\motion_net\net_impls.h" />
+    <ClInclude Include="..\..\..\package\inc\motion_net\proto_ack_typedef.h" />
+    <ClInclude Include="..\..\..\package\inc\var\angle_encoder.h" />
+    <ClInclude Include="..\..\..\package\inc\var\bus.h" />
+    <ClInclude Include="..\..\..\package\inc\var\canio.h" />
+    <ClInclude Include="..\..\..\package\inc\var\curtis.h" />
+    <ClInclude Include="..\..\..\package\inc\var\dio.h" />
+    <ClInclude Include="..\..\..\package\inc\var\drive_unit.h" />
+    <ClInclude Include="..\..\..\package\inc\var\elmo.h" />
+    <ClInclude Include="..\..\..\package\inc\var\error.h" />
+    <ClInclude Include="..\..\..\package\inc\var\errtypes.h" />
+    <ClInclude Include="..\..\..\package\inc\var\map.h" />
+    <ClInclude Include="..\..\..\package\inc\var\memnetdev.h" />
+    <ClInclude Include="..\..\..\package\inc\var\moons.h" />
+    <ClInclude Include="..\..\..\package\inc\var\navigation.h" />
+    <ClInclude Include="..\..\..\package\inc\var\netio.h" />
+    <ClInclude Include="..\..\..\package\inc\var\operation.h" />
+    <ClInclude Include="..\..\..\package\inc\var\optpar.h" />
+    <ClInclude Include="..\..\..\package\inc\var\safety.h" />
+    <ClInclude Include="..\..\..\package\inc\var\usrdef.h" />
+    <ClInclude Include="..\..\..\package\inc\var\var.h" />
+    <ClInclude Include="..\..\..\package\inc\var\vartypes.h" />
+    <ClInclude Include="..\..\..\package\inc\var\vehicle.h" />
+    <ClInclude Include="..\..\..\package\inc\var\voice.h" />
+    <ClInclude Include="..\..\..\package\inc\var\wheel.h" />
+    <ClInclude Include="..\..\sdk\nsp\application_network_framwork.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\endpoint.h" />
+    <ClInclude Include="..\..\sdk\nsp\exception.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\icom\avltree.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\base64.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\clist.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\compiler.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\crc32.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\des.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\logger.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\md5.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\nis.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\nisdef.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\object.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_atomic.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_ifos.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_naos.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_string.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_thread.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_time.h" />
+    <ClInclude Include="..\..\sdk\nsp\icom\posix_wait.h" />
+    <ClInclude Include="..\..\sdk\nsp\log.h" />
+    <ClInclude Include="..\..\sdk\nsp\network_handler.h" />
+    <ClInclude Include="..\..\sdk\nsp\old.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\os_util.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\serialize.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\singleton.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\swnet.h" />
+    <ClInclude Include="..\..\sdk\nsp\task_scheduler.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\toolkit.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

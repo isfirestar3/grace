@@ -1,0 +1,7 @@
+<net>
+	<sub ip="10.10.100.152" port="4412" groupid="1" subscribe="no;no"/>
+	<sub ip="10.10.100.153" port="4412" subscribe="no;no"/>
+	<sub ip="10.10.100.154" port="4412" subscribe="Çý¶¯,ÍøÂç,ÏµÍ³;info,warning"/>
+	<sub ip="10.10.100.155" port="4412" groupid="1" subscribe="no;no"/>
+</net>
+

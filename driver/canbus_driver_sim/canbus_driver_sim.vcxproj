@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{5A80E229-CF28-42A6-90F4-ACB0598C5DB7}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>canbus_driver_sim</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)..\..\debug\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)..\..\package\bin\robot\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CANBUS_DRIVER_SIM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\sdk\nsp\;$(ProjectDir)..\..\sdk\nsp\icom\;$(ProjectDir)..\..\sdk\var\;$(ProjectDir)..\canbus_driver_sim</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\sdk\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libnsp.d;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>$(ProjectDir)\canbus_driver.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CANBUS_DRIVER_SIM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\sdk\nsp\;$(ProjectDir)..\..\sdk\nsp\icom\;$(ProjectDir)..\..\sdk\var\;$(ProjectDir)..\canbus_driver_sim</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\package\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libnsp.a;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>$(ProjectDir)\canbus_driver.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\sdk\nsp\encrypt.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\endpoint.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\log.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\network_handler.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\os_util.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\swnet.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\toolkit.cpp" />
+    <ClCompile Include="..\canbus_driver_sim\canbus_base.cpp" />
+    <ClCompile Include="..\canbus_driver_sim\canbus_driver_main.cpp" />
+    <ClCompile Include="..\canbus_driver_sim\canbus_kvaser.cpp" />
+    <ClCompile Include="..\canbus_driver_sim\canbus_manager.cpp" />
+    <ClCompile Include="..\canbus_driver_sim\dllmain.cpp" />
+    <ClCompile Include="..\canbus_driver_sim\driver_angle.cpp" />
+    <ClCompile Include="..\canbus_driver_sim\driver_base.cpp" />
+    <ClCompile Include="..\canbus_driver_sim\driver_cutis.cpp" />
+    <ClCompile Include="..\canbus_driver_sim\driver_dio.cpp" />
+    <ClCompile Include="..\canbus_driver_sim\driver_elmo.cpp" />
+    <ClCompile Include="..\canbus_driver_sim\driver_moons.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\package\inc\var\canio.h" />
+    <ClInclude Include="..\..\sdk\nsp\application_network_framwork.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\endpoint.h" />
+    <ClInclude Include="..\..\sdk\nsp\exception.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\log.h" />
+    <ClInclude Include="..\..\sdk\nsp\network_handler.h" />
+    <ClInclude Include="..\..\sdk\nsp\old.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\os_util.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\serialize.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\singleton.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\swnet.h" />
+    <ClInclude Include="..\..\sdk\nsp\task_scheduler.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\toolkit.h" />
+    <ClInclude Include="..\canbus_driver_sim\canbus_base.h" />
+    <ClInclude Include="..\canbus_driver_sim\canbus_kvaser.h" />
+    <ClInclude Include="..\canbus_driver_sim\canbus_manager.h" />
+    <ClInclude Include="..\canbus_driver_sim\driver_angle.h" />
+    <ClInclude Include="..\canbus_driver_sim\driver_base.h" />
+    <ClInclude Include="..\canbus_driver_sim\driver_cutis.h" />
+    <ClInclude Include="..\canbus_driver_sim\driver_dio.h" />
+    <ClInclude Include="..\canbus_driver_sim\driver_elmo.h" />
+    <ClInclude Include="..\canbus_driver_sim\driver_moons.h" />
+    <ClInclude Include="..\canbus_driver_sim\object_switcher.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\canbus_driver_sim\canbus_driver.def" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

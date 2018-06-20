@@ -1,0 +1,2 @@
+15:30:06 0192 info 5B03 # [1] try connect to host 10.10.100.1:4602
+15:30:06 0197 info 5B18 # [1] session disconnected, target:10.10.100.1:4602

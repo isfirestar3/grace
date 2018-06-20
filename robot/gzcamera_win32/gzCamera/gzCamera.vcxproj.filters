@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="nsp">
+      <UniqueIdentifier>{1ef80aa8-268c-4023-931a-f9bafadeec53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nsp\icom">
+      <UniqueIdentifier>{bc47cf1d-9649-458c-973e-72d7a716dd45}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cache.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handler.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="network.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ncb.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\encrypt.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\endpoint.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\log.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\network_handler.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\os_util.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\swnet.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\toolkit.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="atomic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="turbojpeg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ncb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\application_network_framwork.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\endpoint.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\exception.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\log.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\network_handler.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\old.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\os_util.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\serialize.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\singleton.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\swnet.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\task_scheduler.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\toolkit.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\avltree.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\base64.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\clist.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\compiler.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\crc32.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\des.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\logger.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\md5.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\nis.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\nisdef.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\object.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_atomic.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_ifos.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_naos.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_string.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_thread.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_time.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_wait.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\misc\imgdef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\misc\libgzcamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="gcCamera.def">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,90 @@
+﻿<Page x:Class="Tool.ProcessConfig.ProcessConfig"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Tool.ProcessConfig"
+      xmlns:cvt="clr-namespace:Tool.ProcessConfig"
+      xmlns:XControl="clr-namespace:Tool.XControl"
+      mc:Ignorable="d" 
+      d:DesignHeight="420" d:DesignWidth="900"
+      Title="ProcessConfig">
+
+    <Page.Resources>
+        <cvt:ProcessListConverter x:Key="cvtProcessList"/>
+    </Page.Resources>
+
+    <Grid Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            
+        </Grid.RowDefinitions>
+
+        <XControl:GridLineDecorator Grid.Row="0" Margin="0,0,0,0" >
+            <XControl:SortListView x:Name="RobotList" AlternationCount="2" 
+                               VirtualizingStackPanel.IsVirtualizing="True" 
+                               ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                               ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                               ItemContainerStyle="{StaticResource CustomerItemStyle}"   >
+                <ListView.View >
+                    <GridView  >
+                        <GridView.Columns>
+                            <XControl:GridViewColumnEx Header="编号" WidthScale="0.08" GridViewLength="{Binding ElementName=RobotList, Path=ViewLength}"  >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Id}" TextAlignment="Center" Foreground="#6B7074" FontSize="13" Margin="5,15,5,10"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            
+                            <XControl:GridViewColumnEx Header="Mac" WidthScale="0.15" GridViewLength="{Binding ElementName=RobotList, Path=ViewLength}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding MacAddr}" TextAlignment="Center" Foreground="#6B7074" FontSize="13" Margin="5,15,5,10"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            <XControl:GridViewColumnEx Header="IP" WidthScale="0.12" GridViewLength="{Binding ElementName=RobotList, Path=ViewLength}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock  Text="{Binding EndPoint}" TextAlignment="Center" Foreground="#6B7074" FontSize="13"  Margin="5,15,5,10"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            
+                            <XControl:GridViewColumnEx Header="进程" WidthScale="0.35" GridViewLength="{Binding ElementName=RobotList, Path=ViewLength}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock  TextAlignment="Center" Foreground="#6B7074" FontSize="13" Margin="5,15,5,10">
+                                            <TextBlock.Text>
+                                                <MultiBinding Converter="{StaticResource cvtProcessList}"  
+                                                              ConverterParameter="FormatLastFirst">
+                                                    <Binding Path="EndPoint"/>
+                                                    <Binding Path="ProcessNameNo1"/>
+                                                    <Binding Path="ProcessNameNo2"/>
+                                                    <Binding Path="ProcessNameNo3"/>
+                                                    <Binding Path="ProcessNameNo4"/>
+                                                    <Binding Path="ProcessNameNo5"/>
+                                                    
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            <XControl:GridViewColumnEx Header="操作" Width="50" GridViewLength="{Binding ElementName=RobotList, Path=ViewLength}">
+                                <GridViewColumn.CellTemplate >
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                            <XControl:XButton  Tag="{Binding NetId}"            MouseOverImage="../Assets/查看hover.png"      PressedImage="../Assets/查看press.png"         NormalImgae="../Assets/查看.png"         ToolTip="查看"             Margin="5,3,5,3"  Width="30" Height="30"    Cursor="Hand" Click="OnClickedCheck" ></XControl:XButton>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </XControl:SortListView>
+        </XControl:GridLineDecorator>
+    </Grid>
+</Page>

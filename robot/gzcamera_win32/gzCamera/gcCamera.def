@@ -1,0 +1,11 @@
+LIBRARY "gzCamera"
+
+EXPORTS
+
+camera_start_service @1
+camera_start_service2 @2
+camera_control_firmware @3
+camera_config_parameters @4
+camera_query_status @5
+camera_query_firmware_info @6
+camera_parameter_data @7

@@ -1,0 +1,686 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;cxx;c;def</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{1b80a6da-099b-48bb-b0e6-5a85052485ea}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{5f030b5b-1e48-4329-b136-b1c9dfcc0efb}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Source Files\main_wid">
+      <UniqueIdentifier>{ca56c634-7838-476c-a81f-8146c5f1022a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\specific_monitor">
+      <UniqueIdentifier>{25a9ffd0-b082-48df-aad7-64814188fc1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\specific_monitor\navigation_monitor">
+      <UniqueIdentifier>{331855fc-dca6-48fd-8bbe-273453982d99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\specific_monitor\vehicle_monitor">
+      <UniqueIdentifier>{a49d681f-9e4b-4167-824a-c8177bf01799}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="var">
+      <UniqueIdentifier>{4db30088-b455-4b4a-b0a2-1f72b2540913}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\setting">
+      <UniqueIdentifier>{44f876d3-98f5-4276-ad03-9cc109854d40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{8aa5d906-9a2c-4cfa-aa2c-9b6c98e8605f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nsp">
+      <UniqueIdentifier>{e30ee5ff-5742-4297-a63e-28312e42a049}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nsp\icom">
+      <UniqueIdentifier>{75f9a958-4feb-4337-8a13-0590d3076bd8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\config_xml.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\frm_main_wid.cpp">
+      <Filter>Source Files\main_wid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>Source Files\main_wid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\push_button.cpp">
+      <Filter>Source Files\main_wid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tool_button.cpp">
+      <Filter>Source Files\main_wid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\wid_tool.cpp">
+      <Filter>Source Files\main_wid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\wid_setting.cpp">
+      <Filter>Source Files\setting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\wid_realtime_operation.cpp">
+      <Filter>Source Files\specific_monitor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\wid_realtime_optpar.cpp">
+      <Filter>Source Files\specific_monitor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\wid_realtime_navigation.cpp">
+      <Filter>Source Files\specific_monitor\navigation_monitor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\wid_realtime_vehicle.cpp">
+      <Filter>Source Files\specific_monitor\vehicle_monitor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\wid_specific_monitor.cpp">
+      <Filter>Source Files\specific_monitor</Filter>
+    </ClCompile>
+    <ClCompile Include="realtimemonitorwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\MessageBox.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="common\waitdialog.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="net_task.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="commonackmodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dbg_vars_impls.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dbgvardialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dbgvarmodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="realtimemonitormodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_xml_tools.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="networksettingwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="othersettingwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\headerview.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="common\standarditemmodel.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="connectstatewidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\encrypt.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\endpoint.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\log.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\network_handler.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\os_util.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\swnet.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sdk\nsp\toolkit.cpp">
+      <Filter>nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="view_net.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_commonackmodel.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_commonackmodel.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_connectstatewidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_connectstatewidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_dbgvardialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_dbgvardialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_dbgvarmodel.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_dbgvarmodel.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_networksettingwidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_networksettingwidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_othersettingwidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_othersettingwidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_realtimemonitormodel.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_realtimemonitormodel.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_realtimemonitorwidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_realtimemonitorwidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_frm_main_wid.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_frm_main_wid.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_push_button.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_push_button.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_wid_tool.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_wid_tool.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_wid_setting.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_wid_setting.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_wid_realtime_navigation.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_wid_realtime_navigation.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_wid_realtime_vehicle.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_wid_realtime_vehicle.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_wid_realtime_operation.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_wid_realtime_operation.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_wid_realtime_optpar.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_wid_realtime_optpar.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_wid_specific_monitor.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_wid_specific_monitor.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_headerview.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_headerview.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_waitdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_waitdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_application.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_application.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_standarditemmodel.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_standarditemmodel.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_wid_realtime_monitor.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_wid_realtime_monitor.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\src\wid_realtime_monitor.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\src\wid_realtime_navigation.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\src\wid_realtime_operation.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\src\wid_realtime_optpar.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\src\wid_realtime_vehicle.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\src\wid_setting.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\src\wid_specific_monitor.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\src\wid_tool.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\src\frm_main_wid.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\src\push_button.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="realtimemonitorwidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="realtimemonitorwidget.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="common\waitdialog.h">
+      <Filter>common</Filter>
+    </CustomBuild>
+    <CustomBuild Include="common\waitdialog.ui">
+      <Filter>common</Filter>
+    </CustomBuild>
+    <CustomBuild Include="commonackmodel.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="dbgvardialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="dbgvardialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="dbgvarmodel.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="realtimemonitormodel.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\images\xml_tools.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="networksettingwidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="networksettingwidget.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="application.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="othersettingwidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="othersettingwidget.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="common\headerview.h">
+      <Filter>common</Filter>
+    </CustomBuild>
+    <CustomBuild Include="common\standarditemmodel.h">
+      <Filter>common</Filter>
+    </CustomBuild>
+    <CustomBuild Include="connectstatewidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="connectstatewidget.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\config_xml.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\data_type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\enmu_table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\tool_button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\xml_module.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_realtimemonitorwidget.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\MessageBox.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_waitdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="net_task.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dbg_vars_impls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_dbgvardialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\watcherwaiter.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common_impls.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_networksettingwidget.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_othersettingwidget.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_connectstatewidget.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\avltree.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\base64.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\clist.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\compiler.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\crc32.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\des.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\logger.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\md5.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\nis.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\nisdef.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\object.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_atomic.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_ifos.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_naos.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_string.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_thread.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_time.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\icom\posix_wait.h">
+      <Filter>nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\application_network_framwork.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\endpoint.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\exception.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\log.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\network_handler.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\old.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\os_util.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\serialize.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\singleton.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\swnet.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\task_scheduler.hpp">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\nsp\toolkit.h">
+      <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\var\angle_encoder.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\var\bus.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\var\canio.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\var\dio.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\var\elmo.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\var\moons.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\var\navigation.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\var\operation.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\var\optpar.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\var\safety.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\var\usrdef.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\var\vartypes.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\var\vehicle.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\var\wheel.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="view_net.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\images\sys_close.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\sys_close_hover.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\sys_close_pressed.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\sys_min.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\sys_min_hover.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\sys_min_pressed.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\sys_max.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\sys_max_hover.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\sys_max_pressed.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\wid_tool.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\homepage.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\tree_view.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\binding.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\monitor.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\setting.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\synthesize.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\playback_start.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\playback_start_hover.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\playback_start_pressed.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\playback_stop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\playback_stop_hover.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\playback_pause.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\playback_pause_hover.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\playback_send.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\playback_send_hover.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\network-idle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\network-offline.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\images\bitbug_favicon48x48.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\realtime_viewer.qss">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\images\realtime_viewer.qss">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\images\app.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

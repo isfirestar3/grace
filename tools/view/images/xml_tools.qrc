@@ -1,0 +1,52 @@
+<RCC>
+    <qresource prefix="/wid_qss">
+        <file alias="qss_setting">realtime_viewer.qss</file>
+        <file alias="combox_down">down.png</file>
+    </qresource>
+    <qresource prefix="/wid_sys">
+        <file alias="sys_close">sys_close.png</file>
+        <file alias="sys_close_hover">sys_close_hover.png</file>
+        <file alias="sys_close_pressed">sys_close_pressed.png</file>
+        <file alias="sys_min">sys_min.png</file>
+        <file alias="sys_min_hover">sys_min_hover.png</file>
+        <file alias="sys_min_pressed">sys_min_pressed.png</file>
+        <file alias="sys_max">sys_max.png</file>
+        <file alias="sys_max_hover">sys_max_hover.png</file>
+        <file alias="sys_max_pressed">sys_max_pressed.png</file>
+        <file>wait.gif</file>
+        <file alias="sys_restore">sys_restore.png</file>
+        <file alias="sys_restore_hover">sys_restore_hover.png</file>
+        <file alias="sys_restore_pressed">sys_restore_pressed.png</file>
+    </qresource>
+    <qresource prefix="/wid_tool">
+        <file alias="tool_skin">wid_tool.png</file>
+        <file alias="homepage">homepage.png</file>
+        <file alias="tree_view">tree_view.png</file>
+        <file alias="binding">binding.png</file>
+        <file alias="monitor">monitor.png</file>
+        <file alias="setting">setting.png</file>
+        <file alias="synthesize">synthesize.png</file>
+    </qresource>
+    <qresource prefix="/wid_operate">
+        <file alias="sys_start">playback_start.png</file>
+        <file alias="sys_start_hover">playback_start_hover.png</file>
+        <file alias="sys_start_pressed">playback_start_pressed.png</file>
+        <file alias="sys_stop">playback_stop.png</file>
+        <file alias="sys_stop_hover">playback_stop_hover.png</file>
+        <file alias="sys_stop_pressed">playback_stop_hover.png</file>
+        <file alias="sys_pause">playback_pause.png</file>
+        <file alias="sys_pause_hover">playback_pause_hover.png</file>
+        <file alias="sys_pause_pressed">playback_pause_hover.png</file>
+        <file alias="sys_send">playback_send.png</file>
+        <file alias="sys_send_hover">playback_send_hover.png</file>
+        <file alias="sys_net_connect">network-idle.png</file>
+        <file alias="sys_net_offline">network-offline.png</file>
+        <file alias="choose">choose.png</file>
+        <file alias="choose_hover">choose_hover.png</file>
+        <file alias="choose_pressed">choose_pressed.png</file>
+        <file alias="playback_stop_pressed">playback_stop_pressed.png</file>
+        <file alias="choose_disabled">choose_disabled.png</file>
+        <file alias="sys_start_disabled">playback_start_disabled.png</file>
+        <file alias="sys_stop_disabled">playback_stop_disabled.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8BBAC4AB-C58B-49A7-8760-75A56D00FC50}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>operation_net</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)..\sdk\nsp\;$(SolutionDir)..\private\proto;$(SolutionDir)\operation_net\proto;$(SolutionDir)..\sdk\misc;$(SolutionDir)..\sdk\rapidxml</IncludePath>
+    <OutDir>$(SolutionDir)/bin/debug</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)..\sdk\nsp\;$(SolutionDir)..\private\proto;$(SolutionDir)\operation_net\proto;$(SolutionDir)..\sdk\misc;$(SolutionDir)..\sdk\rapidxml</IncludePath>
+    <OutDir>$(SolutionDir)/bin/release</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OPERATION_NET_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\sdk\rapidxml;$(SolutionDir)../sdk/nsp/icom;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>impls.def</ModuleDefinitionFile>
+      <AdditionalDependencies>agvinfod.lib;libnsp.d;gzftsd.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\sdk\lib</AdditionalLibraryDirectories>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>aa.map</MapFileName>
+      <MapExports>true</MapExports>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OPERATION_NET_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)../sdk/nsp/icom;$(SolutionDir)..\sdk\rapidxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>impls.def</ModuleDefinitionFile>
+      <AdditionalDependencies>agvinfo.lib;libnsp.a;gzfts.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\sdk\lib</AdditionalLibraryDirectories>
+      <GenerateMapFile>true</GenerateMapFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\private\proto\agv_shell_proto.hpp" />
+    <ClInclude Include="..\..\private\proto\proto_agv_msg.h" />
+    <ClInclude Include="..\..\private\proto\proto_frimware_msg.h" />
+    <ClInclude Include="..\..\sdk\misc\agv_shell_common.h" />
+    <ClInclude Include="..\..\sdk\misc\agv_shell_define.h" />
+    <ClInclude Include="..\..\sdk\nsp\application_network_framwork.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\endpoint.h" />
+    <ClInclude Include="..\..\sdk\nsp\exception.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\log.h" />
+    <ClInclude Include="..\..\sdk\nsp\network_handler.h" />
+    <ClInclude Include="..\..\sdk\nsp\old.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\os_util.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\serialize.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\singleton.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\swnet.h" />
+    <ClInclude Include="..\..\sdk\nsp\task_scheduler.hpp" />
+    <ClInclude Include="..\..\sdk\nsp\toolkit.h" />
+    <ClInclude Include="..\..\sdk\rapidxml\rapidxml.hpp" />
+    <ClInclude Include="..\..\sdk\rapidxml\rapidxml_iterators.hpp" />
+    <ClInclude Include="..\..\sdk\rapidxml\rapidxml_print.hpp" />
+    <ClInclude Include="..\..\sdk\rapidxml\rapidxml_utils.hpp" />
+    <ClInclude Include="asio.hpp" />
+    <ClInclude Include="asio_manage.h" />
+    <ClInclude Include="dhcp_manager.h" />
+    <ClInclude Include="err_msg.h" />
+    <ClInclude Include="file_read.h" />
+    <ClInclude Include="frimware_core_task.h" />
+    <ClInclude Include="fts_handler.h" />
+    <ClInclude Include="fts_push_task_group.h" />
+    <ClInclude Include="fts_pull_task_group.h" />
+    <ClInclude Include="impls.h" />
+    <ClInclude Include="net_manager.h" />
+    <ClInclude Include="operation_manager.h" />
+    <ClInclude Include="operation_session.h" />
+    <ClInclude Include="proto_interface.h" />
+    <ClInclude Include="proto_process_status.h" />
+    <ClInclude Include="recv_handler.h" />
+    <ClInclude Include="rw_xml_file.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\sdk\nsp\encrypt.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\endpoint.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\log.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\network_handler.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\os_util.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\swnet.cpp" />
+    <ClCompile Include="..\..\sdk\nsp\toolkit.cpp" />
+    <ClCompile Include="asio_manage.cpp" />
+    <ClCompile Include="dhcp_manager.cpp" />
+    <ClCompile Include="file_read.cpp" />
+    <ClCompile Include="frimware_core_task.cpp" />
+    <ClCompile Include="fts_handler.cpp" />
+    <ClCompile Include="fts_push_task_group.cpp" />
+    <ClCompile Include="fts_pull_task_group.cpp" />
+    <ClCompile Include="impls.cpp" />
+    <ClCompile Include="net_manager.cpp" />
+    <ClCompile Include="operation_manager.cpp" />
+    <ClCompile Include="operation_session.cpp" />
+    <ClCompile Include="recv_handler.cpp" />
+    <ClCompile Include="rw_xml_file.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="impls.def" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

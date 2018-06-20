@@ -1,0 +1,4 @@
+18:49:52 0347 info 53E6 # [1] try connect to host 192.168.0.3:4409
+18:49:52 0348 info 53FB # [1] session successful connected to target host 192.168.0.3:4409
+18:49:52 0350 info 53E9 # [1] session received key, target: 192.168.0.3:4409
+18:49:52 0449 info 53EA # [1] successful login to host 192.168.0.3:4409

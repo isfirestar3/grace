@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="other">
+      <UniqueIdentifier>{a8cedfd7-fc5d-4396-8b19-6fe768fce03f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\nsp">
+      <UniqueIdentifier>{cab866c6-22bf-45da-84e2-72b3ee6c2c63}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="exps.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Floyd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dijkstra.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\encrypt.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\endpoint.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\log.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\network_handler.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\os_util.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\swnet.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\toolkit.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Floyd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dijkstra.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Calculate.hpp">
+      <Filter>other</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\misc\PathSearch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\application_network_framwork.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\endpoint.h">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\exception.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\log.h">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\network_handler.h">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\old.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\os_util.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\serialize.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\singleton.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\swnet.h">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\task_scheduler.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\toolkit.h">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PathSearch.def">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PathSearch.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

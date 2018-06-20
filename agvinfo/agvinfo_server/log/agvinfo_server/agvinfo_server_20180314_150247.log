@@ -1,0 +1,73 @@
+15:02:47 0929 info 103D # 
+****************************************************************************
+*                            application startup                           *
+****************************************************************************
+15:02:47 0929 info 103D # loadXml /home/anderson/work/svn/grace/trunk/agvinfo/agvinfo_server/agv_config.xml
+15:02:47 0930 info 103D # loadXml err
+15:02:47 0930 info 103D # loadXml end
+15:02:47 0930 info 103D # loadXml /home/anderson/work/svn/grace/trunk/agvinfo/agvinfo_server/agv_info.xml
+15:02:47 0930 info 103D # loadXml end
+15:02:47 0931 info 103D # success to begin tcp listen:0.0.0.0:9100
+15:02:47 0932 info 103D # success to bind udp listen:9100
+15:04:55 0733 info 1043 # insert_macinfo unknow 2E:78:EF:E7:C9:63
+15:08:25 0765 info 1042 # 10.10.102.30 established.
+15:08:26 0984 info 1044 # kAgvInfoProto_get_agvinfo deal
+15:08:33 0022 info 1044 # kAgvInfoProto_set_agvinfo deal
+15:08:33 0023 info 1044 # saveXml /home/anderson/work/svn/grace/trunk/agvinfo/agvinfo_server/agv_info.xml
+15:08:33 0023 info 1044 # saveXml end
+15:08:33 0999 info 1040 # post_notify_agvinfo_update. 10.10.102.30
+15:08:34 0003 info 1044 # kAgvInfoProto_get_agvinfo deal
+15:08:34 0330 info 1043 # saveXml /home/anderson/work/svn/grace/trunk/agvinfo/agvinfo_server/agv_info.xml
+15:08:34 0330 info 1043 # saveXml end
+15:08:34 0330 info 1043 # update_macinfo online 2E:78:EF:E7:C9:63
+15:08:36 0000 info 1040 # post_notify_agvinfo_update. 10.10.102.30
+15:08:36 0069 info 1044 # kAgvInfoProto_get_agvinfo deal
+15:09:48 0014 info 1040 # 10.10.102.30 check_heart_beat.
+15:10:48 0026 info 1040 # 10.10.102.30 check_heart_beat.
+15:11:00 0094 info 1043 # insert_macinfo unknow 98:90:96:DD:5E:F9
+15:11:02 0029 info 1040 # post_notify_agvinfo_update. 10.10.102.30
+15:11:02 0035 info 1044 # kAgvInfoProto_get_agvinfo deal
+15:11:38 0050 info 1044 # kAgvInfoProto_set_agvinfo deal
+15:11:38 0051 info 1044 # saveXml /home/anderson/work/svn/grace/trunk/agvinfo/agvinfo_server/agv_info.xml
+15:11:38 0051 info 1044 # saveXml end
+15:11:39 0321 info 1043 # saveXml /home/anderson/work/svn/grace/trunk/agvinfo/agvinfo_server/agv_info.xml
+15:11:39 0321 info 1043 # saveXml end
+15:11:39 0321 info 1043 # update_macinfo online 98:90:96:DD:5E:F9
+15:11:40 0036 info 1040 # post_notify_agvinfo_update. 10.10.102.30
+15:11:40 0040 info 1044 # kAgvInfoProto_get_agvinfo deal
+15:11:57 0974 info 1051 # delete_macinfo offline 98:90:96:DD:5E:F9
+15:11:58 0040 info 1040 # post_notify_agvinfo_update. 10.10.102.30
+15:12:18 0044 info 1040 # 10.10.102.30 check_heart_beat.
+15:12:48 0050 info 1040 # 10.10.102.30 check_heart_beat.
+15:13:18 0056 warning 1040 # 10.10.102.30 will be disconnected.
+15:13:18 0056 error 1040 # failed to check heart beat,the client is endpoint is :10.10.102.30:54394
+15:13:18 0056 info 1040 # 10.10.102.30 disconnected.
+15:15:50 0476 info 1042 # 192.168.0.110 established.
+15:15:50 0477 info 1045 # kAgvInfoProto_get_agvinfo deal
+15:16:48 0100 info 1040 # 192.168.0.110 check_heart_beat.
+15:16:59 0000 info 1045 # 192.168.0.110 disconnected.
+15:17:15 0805 info 1042 # 10.10.102.120 established.
+15:17:15 0805 info 1046 # kAgvInfoProto_get_agvinfo deal
+15:17:48 0112 info 1040 # 10.10.102.120 check_heart_beat.
+15:18:48 0124 info 1040 # 10.10.102.120 check_heart_beat.
+15:19:06 0007 info 1051 # delete_macinfo offline 2E:78:EF:E7:C9:63
+15:19:06 0127 info 1040 # post_notify_agvinfo_update. 10.10.102.120
+15:19:06 0419 info 1043 # update_macinfo online 2E:78:EF:E7:C9:63
+15:19:08 0128 info 1040 # post_notify_agvinfo_update. 10.10.102.120
+15:19:48 0136 info 1040 # 10.10.102.120 check_heart_beat.
+15:20:48 0145 info 1040 # 10.10.102.120 check_heart_beat.
+15:21:18 0150 info 1040 # 10.10.102.120 check_heart_beat.
+15:21:25 0087 info 1043 # update_macinfo online 98:90:96:DD:5E:F9
+15:21:26 0152 info 1040 # post_notify_agvinfo_update. 10.10.102.120
+15:21:36 0204 info 1046 # 10.10.102.120 disconnected.
+15:21:52 0091 info 1042 # 10.10.102.120 established.
+15:21:52 0092 info 1047 # kAgvInfoProto_get_agvinfo deal
+15:22:48 0170 info 1040 # 10.10.102.120 check_heart_beat.
+15:23:18 0176 info 1040 # 10.10.102.120 check_heart_beat.
+15:23:24 0706 info 1042 # 10.10.102.120 established.
+15:23:24 0706 info 1048 # kAgvInfoProto_get_agvinfo deal
+15:23:48 0182 info 1040 # 10.10.102.120 check_heart_beat.
+15:23:57 0772 info 1048 # 10.10.102.120 disconnected.
+15:23:58 0454 info 1047 # 10.10.102.120 disconnected.
+15:24:32 0031 info 1051 # delete_macinfo offline 2E:78:EF:E7:C9:63
+15:24:38 0251 info 1043 # update_macinfo online 2E:78:EF:E7:C9:63

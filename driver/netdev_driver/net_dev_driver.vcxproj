@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1538CFF1-8140-41BC-851B-EF640676E16F}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>net_dev_driver</RootNamespace>
+    <ProjectName>netdev_driver</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)..\nsp\;$(SolutionDir)..\var\;$(SolutionDir)..\comm\;$(SolutionDir)..\proto\;$(IncludePath)</IncludePath>
+    <OutDir>$(ProjectDir)..\..\debug\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)..\..\package\bin\robot\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;NET_DEV_DRIVER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\package\nsp\icom;$(ProjectDir)..\..\package\inc\var\;$(ProjectDir)..\..\package\nsp\;$(ProjectDir)..\netdev_driver</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libnsp.d;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>netdev_dirver.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>../../package\lib</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;NET_DEV_DRIVER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\package\nsp\icom;$(ProjectDir)..\..\package\inc\var\;$(ProjectDir)..\..\package\nsp\;$(ProjectDir)..\../driver/netdev_driver/</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>netdev_dirver.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>../netdev_dirver;../../package\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libnsp.a;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\package\nsp\application_network_framwork.hpp" />
+    <ClInclude Include="..\..\package\nsp\endpoint.h" />
+    <ClInclude Include="..\..\package\nsp\exception.hpp" />
+    <ClInclude Include="..\..\package\nsp\log.h" />
+    <ClInclude Include="..\..\package\nsp\network_handler.h" />
+    <ClInclude Include="..\..\package\nsp\old.hpp" />
+    <ClInclude Include="..\..\package\nsp\os_util.hpp" />
+    <ClInclude Include="..\..\package\nsp\serialize.hpp" />
+    <ClInclude Include="..\..\package\nsp\singleton.hpp" />
+    <ClInclude Include="..\..\package\nsp\swnet.h" />
+    <ClInclude Include="..\..\package\nsp\task_scheduler.hpp" />
+    <ClInclude Include="..\..\package\nsp\toolkit.h" />
+    <ClInclude Include="..\netdev_driver\impl_net_dev.h" />
+    <ClInclude Include="..\netdev_driver\netdriver_base.h" />
+    <ClInclude Include="..\netdev_driver\netdriver_modbus.h" />
+    <ClInclude Include="..\netdev_driver\netdriver_omron_plc.h" />
+    <ClInclude Include="..\netdev_driver\object_switcher.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\package\nsp\encrypt.cpp" />
+    <ClCompile Include="..\..\package\nsp\endpoint.cpp" />
+    <ClCompile Include="..\..\package\nsp\log.cpp" />
+    <ClCompile Include="..\..\package\nsp\network_handler.cpp" />
+    <ClCompile Include="..\..\package\nsp\os_util.cpp" />
+    <ClCompile Include="..\..\package\nsp\swnet.cpp" />
+    <ClCompile Include="..\..\package\nsp\toolkit.cpp" />
+    <ClCompile Include="..\netdev_driver\impl_net_dev.cpp" />
+    <ClCompile Include="..\netdev_driver\netdriver_base.cpp" />
+    <ClCompile Include="..\netdev_driver\netdriver_modbus.cpp" />
+    <ClCompile Include="..\netdev_driver\netdriver_omron_plc.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\netdev_driver\netdev_dirver.def" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

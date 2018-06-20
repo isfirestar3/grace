@@ -1,0 +1,77 @@
+﻿<Page x:Class="Tool.ProcessManager.ProcessManager"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Tool.ProcessManager"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="1200"
+      xmlns:XControl="clr-namespace:Tool.XControl"
+      Title="ProcessManager">
+
+    <Page.Resources>
+        <local:ProcessStateConverter x:Key="cvtProcessState"/>
+        <local:ProcessStatusColorConverter x:Key="cvtProcessStateColor"/>
+        <DataTemplate x:Key="SelectIP">
+            <XControl:XCheckBox  Tag="{Binding NetId}" Margin="5,15,5,11"  Click="OnSelectIP"  IsChecked="{Binding IsSelectedProcess}"></XControl:XCheckBox>
+        </DataTemplate >
+        <DataTemplate x:Key="ID">
+            <TextBlock  Text="{Binding Id}" TextAlignment="Center" Foreground="#6B7074" FontSize="13"   Margin="5,15,5,10"/>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="IP">
+            <TextBlock  Text="{Binding EndPoint}" TextAlignment="Center" Foreground="#6B7074" FontSize="13"   Margin="5,15,5,10"/>
+        </DataTemplate>
+        <DataTemplate x:Key="ProcessNo.1">
+            <TextBlock  Text="{Binding ProcessStatusNo1,Converter={StaticResource cvtProcessState}}" Foreground="{Binding ProcessStatusNo1,Converter={StaticResource cvtProcessStateColor}}" TextAlignment="Center" FontSize="13"  Margin="5,15,5,10"/>
+        </DataTemplate>
+        <DataTemplate x:Key="ProcessNo.2">
+            <TextBlock  Text="{Binding ProcessStatusNo2,Converter={StaticResource cvtProcessState}}" Foreground="{Binding ProcessStatusNo2,Converter={StaticResource cvtProcessStateColor}}" TextAlignment="Center"  FontSize="13"  Margin="5,15,5,10"/>
+        </DataTemplate>
+        <DataTemplate x:Key="ProcessNo.3">
+            <TextBlock  Text="{Binding ProcessStatusNo3,Converter={StaticResource cvtProcessState}}" Foreground="{Binding ProcessStatusNo3,Converter={StaticResource cvtProcessStateColor}}" TextAlignment="Center"  FontSize="13"  Margin="5,15,5,10"/>
+        </DataTemplate>
+        <DataTemplate x:Key="ProcessNo.4">
+            <TextBlock  Text="{Binding ProcessStatusNo4,Converter={StaticResource cvtProcessState}}" Foreground="{Binding ProcessStatusNo4,Converter={StaticResource cvtProcessStateColor}}" TextAlignment="Center"  FontSize="13"  Margin="5,15,5,10"/>
+        </DataTemplate>
+        <DataTemplate x:Key="ProcessNo.5">
+            <TextBlock  Text="{Binding ProcessStatusNo5,Converter={StaticResource cvtProcessState}}" Foreground="{Binding ProcessStatusNo5,Converter={StaticResource cvtProcessStateColor}}" TextAlignment="Center"  FontSize="13"  Margin="5,15,5,10"/>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel   Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" >
+                <TextBlock Text="进程类型:" Margin="20,20,10,0"></TextBlock>
+                <XControl:XCheckBox x:Name="SelectAllProcess" Margin="0,20,10,0" Content="全选" Click="OnSelectAllProcess"> </XControl:XCheckBox>
+                <StackPanel  x:Name="ProcessTypeList"  Margin="20,0,0,0" Orientation="Horizontal" VerticalAlignment="Center">
+                    
+                </StackPanel>
+                
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="120,0,0,0" HorizontalAlignment="Right">
+                <XControl:XButton NormalImgae="../Assets/重启进程.png" MouseOverImage="../Assets/重启进程hover.png" PressedImage ="../Assets/重启进程press.png" Cursor="Hand"  Click="OnResetProcess" NineGrid="1" Margin="0,0,10,0" ></XControl:XButton>
+                <XControl:XButton NormalImgae="../Assets/启动进程.png" MouseOverImage="../Assets/启动进程hover.png" PressedImage ="../Assets/启动进程press.png" Cursor="Hand"  Click="OnStartProcess" NineGrid="1" Margin="0,0,10,0" ></XControl:XButton>
+                <XControl:XButton NormalImgae="../Assets/停止进程.png" MouseOverImage="../Assets/停止进程hover.png" PressedImage ="../Assets/停止进程press.png" Cursor="Hand" Click="OnStopProcess" NineGrid="1" Margin="0,0,10,0"  Width="80" ></XControl:XButton>
+            </StackPanel>
+        </Grid>
+        <XControl:GridLineDecorator Grid.Row="1" Margin="0,0,0,0" >
+            <XControl:SortListView x:Name="ProcessList" AlternationCount="2" VirtualizingStackPanel.IsVirtualizing="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemContainerStyle="{StaticResource CustomerItemStyle}"  >
+                <ListView.View>
+                    <GridView  x:Name="ProcessView"  >
+                        
+                    </GridView>
+                </ListView.View>
+            </XControl:SortListView>
+        </XControl:GridLineDecorator>
+    </Grid>
+</Page>

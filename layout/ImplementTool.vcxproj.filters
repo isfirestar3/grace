@@ -1,0 +1,594 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="rapidxml">
+      <UniqueIdentifier>{7ef9380c-f43b-4263-9660-809fc5b9f361}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CommonKit">
+      <UniqueIdentifier>{5f241ee6-06c2-4a2a-9a19-d37185295aea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="algorithm">
+      <UniqueIdentifier>{cddcf62c-69b9-408d-b5da-207e9e0bc44f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="var">
+      <UniqueIdentifier>{f4904ad2-4003-4673-acc8-8833696358ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="curve">
+      <UniqueIdentifier>{2e814bcf-cb74-4d59-8042-24752d883a3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="proto">
+      <UniqueIdentifier>{e581ff77-371f-44b9-b386-d0ea5660f737}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui">
+      <UniqueIdentifier>{ea4705b3-1d31-432f-b8c5-45430eed5cfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\nsp">
+      <UniqueIdentifier>{ebd36dc6-3501-4e8c-8cfc-43ac1ab9ab12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{ad8d4174-0b08-40c4-98ef-7445eab6ed9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\nsp\icom">
+      <UniqueIdentifier>{aaa8ebe6-2812-4cae-98d6-66c16ee36fc9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawMapWid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MapScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MapView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main_resource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeItemManage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CtrlPointItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EdgeItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EdgeItemManage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TerminalPointItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataManage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VehicleItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VehicleItemManage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WopsEditWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EdgeInfoWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectWopWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetItemManage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetInfoWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShowNavPathWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AlignItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="moc_MapScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeInfoWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonKit\rw_config_file.cpp">
+      <Filter>CommonKit</Filter>
+    </ClCompile>
+    <ClCompile Include="AnchorItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnchorItemManage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnchorInfoWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectVehicleWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CtrlPointInfoWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VehicleInfoWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OptInfoWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonKit\rw_layout_data.cpp">
+      <Filter>CommonKit</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonKit\net_interface.cpp">
+      <Filter>CommonKit</Filter>
+    </ClCompile>
+    <ClCompile Include="OperateCtrlWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="curve\GenerateVariable.cpp">
+      <Filter>curve</Filter>
+    </ClCompile>
+    <ClCompile Include="curve\GenerateVariable180.cpp">
+      <Filter>curve</Filter>
+    </ClCompile>
+    <ClCompile Include="curve\Matrix.cpp">
+      <Filter>curve</Filter>
+    </ClCompile>
+    <ClCompile Include="WopAttrWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SegmentPosWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EdgeListShowWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="algorithm\Geometry.cpp">
+      <Filter>algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="algorithm\PosandTrack.cpp">
+      <Filter>algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="algorithm\search_path.cpp">
+      <Filter>algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="polygonitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PolygonVertexItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="viewportwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OneKeyAdjustDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\encrypt.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\endpoint.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\log.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\network_handler.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\os_util.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\swnet.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\nsp\toolkit.cpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="common\waitdialog.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="generateemapdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeItemMgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EdgeItemMgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LocationOfCurve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QRcodeItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QRcodeInfoWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QRcodeItemManage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NodesEditWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EdgesEditWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MainWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawMapWid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MapScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MapView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicDefine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeItemManage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CtrlPointItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgeItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgeItemManage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TerminalPointItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\rapidxml\rapidxml.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\rapidxml\rapidxml_iterators.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\rapidxml\rapidxml_print.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\rapidxml\rapidxml_utils.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="VehicleItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VehicleItemManage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WopsEditWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgeInfoWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectWopWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algorithm\AlgorithmDefine.hpp">
+      <Filter>algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algorithm\ComputeLinks.hpp">
+      <Filter>algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonKit\StringTool.hpp">
+      <Filter>CommonKit</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetItemManage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetInfoWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShowNavPathWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AlignItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeInfoWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonKit\rw_config_file.h">
+      <Filter>CommonKit</Filter>
+    </ClInclude>
+    <ClInclude Include="AnchorItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnchorItemManage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnchorInfoWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectVehicleWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonKit\rw_layout_data.h">
+      <Filter>CommonKit</Filter>
+    </ClInclude>
+    <ClInclude Include="CtrlPointInfoWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VehicleInfoWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OptInfoWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\var\navigation.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\var\vehicle.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonKit\net_interface.h">
+      <Filter>CommonKit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\var\optpar.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\var\operation.h">
+      <Filter>var</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonKit\pack_opt_param.hpp">
+      <Filter>CommonKit</Filter>
+    </ClInclude>
+    <ClInclude Include="OperateCtrlWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="curve\curve_product.hpp">
+      <Filter>curve</Filter>
+    </ClInclude>
+    <ClInclude Include="curve\GenerateVariable.h">
+      <Filter>curve</Filter>
+    </ClInclude>
+    <ClInclude Include="curve\GenerateVariable180.h">
+      <Filter>curve</Filter>
+    </ClInclude>
+    <ClInclude Include="curve\GlobalVariables.h">
+      <Filter>curve</Filter>
+    </ClInclude>
+    <ClInclude Include="curve\Matrix.h">
+      <Filter>curve</Filter>
+    </ClInclude>
+    <ClInclude Include="curve\curve_factory.hpp">
+      <Filter>curve</Filter>
+    </ClInclude>
+    <ClInclude Include="WopAttrWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SegmentPosWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgeListShowWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="algorithm\Geometry.h">
+      <Filter>algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="algorithm\PosandTrack.h">
+      <Filter>algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="algorithm\search_path.h">
+      <Filter>algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\package\inc\motion_net\asio.hpp">
+      <Filter>CommonKit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\private\proto_typedef.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\package\inc\motion_net\proto_ack_typedef.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="polygonitem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PolygonVertexItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="viewportwidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OneKeyAdjustDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\application_network_framwork.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\endpoint.h">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\exception.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\log.h">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\network_handler.h">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\old.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\serialize.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\singleton.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\swnet.h">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\task_scheduler.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\toolkit.h">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\common_impls.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\waitdialog.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\watcherwaiter.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="generateemapdialog.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeItemMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgeItemMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LocationOfCurve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QRcodeItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QRcodeInfoWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QRcodeItemManage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NodesEditWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgesEditWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\os_util.hpp">
+      <Filter>Resource Files\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\icom\avltree.h">
+      <Filter>Resource Files\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\icom\clist.h">
+      <Filter>Resource Files\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\icom\compiler.h">
+      <Filter>Resource Files\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\icom\hash.h">
+      <Filter>Resource Files\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\icom\logger.h">
+      <Filter>Resource Files\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\icom\nis.h">
+      <Filter>Resource Files\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\icom\nisdef.h">
+      <Filter>Resource Files\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\icom\object.h">
+      <Filter>Resource Files\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\icom\posix_atomic.h">
+      <Filter>Resource Files\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\icom\posix_ifos.h">
+      <Filter>Resource Files\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\icom\posix_naos.h">
+      <Filter>Resource Files\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\icom\posix_string.h">
+      <Filter>Resource Files\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\icom\posix_thread.h">
+      <Filter>Resource Files\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\icom\posix_time.h">
+      <Filter>Resource Files\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\nsp\icom\posix_wait.h">
+      <Filter>Resource Files\nsp\icom</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ImplementTool.qrc">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="OneKeyAdjustDialog.ui">
+      <Filter>Ui</Filter>
+    </None>
+    <None Include="common\waitdialog.ui">
+      <Filter>common</Filter>
+    </None>
+    <None Include="generateemapdialog.ui">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="images\icon48x48.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="images\layout.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

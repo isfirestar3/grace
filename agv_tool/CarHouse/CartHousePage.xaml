@@ -1,0 +1,99 @@
+﻿<Page x:Class="Tool.CarHouse.CartHousePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:XControl ="clr-namespace:Tool.XControl"
+      xmlns:local="clr-namespace:Tool.CarHouse"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="500"
+      Title="CartHousePage">
+
+    <Grid Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition Height="9*"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" >
+            <TextBlock Text="静态IP：" TextAlignment="Center" Margin="0,15,0,0"></TextBlock>
+            <RadioButton   x:Name="RDYes" Width="40"    Grid.Row="1" Grid.Column="1" Margin="0,0,0,0" VerticalContentAlignment="Center" Checked="OnChangeMode" IsChecked="True"></RadioButton>
+            <TextBlock Text="动态IP"  TextAlignment="Center" Margin="0,15,0,0" Grid.Row="1" Grid.Column="2"></TextBlock>
+            <RadioButton   x:Name="RDNo" Width="60"    Grid.Row="1" Grid.Column="3" Margin="0,0,0,0"  VerticalContentAlignment="Center"  Checked="OnChangeMode" ></RadioButton>
+            <XControl:XButton x:Name="BtnAdd" NormalImgae="../Assets/新增.png" MouseOverImage="../Assets/新增hover.png" PressedImage ="../Assets/新增press.png" Cursor="Hand"   NineGrid="1" Margin="0,0,10,0" Click="OnAddCars"></XControl:XButton>
+            <XControl:XButton x:Name="BtnDel" NormalImgae="../Assets/删除.png" MouseOverImage="../Assets/删除hover.png"        PressedImage ="../Assets/删除press.png" Cursor="Hand"  NineGrid="1" Margin="0,0,10,0"  Width="60" Click="OnDelCars" ></XControl:XButton>
+        </StackPanel>
+        <XControl:GridLineDecorator Grid.Row="1" Margin="0,0,0,0" >
+            <XControl:SortListView x:Name="RobotManageListView" AlternationCount="2" 
+                               VirtualizingStackPanel.IsVirtualizing="True" 
+                               ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                               ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                               ItemContainerStyle="{StaticResource CustomerItemStyle}" 
+                                   GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler"
+                               MouseDoubleClick="OnClickManageRobotList" PreviewMouseLeftButtonDown="OnPreviewMouseLeftButtonDown">
+                <ListView.View>
+                    <GridView  >
+                        <GridView.Columns>
+                            <GridViewColumn x:Name="box" >
+                                <GridViewColumn.Header>
+                                    <XControl:XCheckBox x:Name="AllCheckBox" Click="OnSelectAllRobots" IsChecked="{Binding IsSelected}"></XControl:XCheckBox>
+                                </GridViewColumn.Header>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <XControl:XCheckBox  Tag="{Binding Path=EndPoint}" Click="OnSelectRobots" Margin="5,15,5,11" IsChecked="{Binding IsSelected}" ></XControl:XCheckBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <XControl:GridViewColumnEx Header="编号" WidthScale="0.15" GridViewLength="{Binding ElementName=RobotManageListView, Path=ViewLength}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Id}" TextAlignment="Center" Foreground="#6B7074" FontSize="13" Margin="5,15,5,10"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+
+                            <XControl:GridViewColumnEx Header="MAC" WidthScale="0.2" GridViewLength="{Binding ElementName=RobotManageListView, Path=ViewLength}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding MacAddr}" TextAlignment="Center" Foreground="#6B7074" FontSize="13" Margin="5,15,5,10"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+
+                            <XControl:GridViewColumnEx Header="IP" WidthScale="0.2" GridViewLength="{Binding ElementName=RobotManageListView, Path=ViewLength}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock  Text="{Binding EndPoint}" TextAlignment="Center" Foreground="#6B7074" FontSize="13"  Margin="5,15,5,10"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            <XControl:GridViewColumnEx Header="调取配置文件" WidthScale="0.15" GridViewLength="{Binding ElementName=RobotManageListView, Path=ViewLength}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <TextBlock  Text="查看配置文件" TextAlignment="Center"   FontSize="13"  Margin="5,15,5,10" Cursor="Hand" Tag="{Binding Fts}" IsEnabled="{Binding NetState}"  MouseLeftButtonDown="OnClickConfigPage" Style="{StaticResource ConfigStateChange}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                            <XControl:GridViewColumnEx Header="连接状态" WidthScale="0.15" GridViewLength="{Binding ElementName=RobotManageListView, Path=ViewLength}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextAlignment="Center"  FontSize="13" Margin="5,15,5,10" IsEnabled="{Binding NetState}" Style="{StaticResource NetStateChange}"  />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </XControl:GridViewColumnEx>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem x:Name="MenuEdit" Header="编辑" Click="OnMenuEditFile">
+                        </MenuItem>
+                        <MenuItem x:Name="MenuDel" Header="删除" Click="OnMenuDelFile">
+                        </MenuItem>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+            </XControl:SortListView>
+        </XControl:GridLineDecorator>
+    </Grid>
+</Page>

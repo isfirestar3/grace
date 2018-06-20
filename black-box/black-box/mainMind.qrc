@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/black-box">
+        <file>icon/black_box32.ico</file>
+        <file>icon/black_box48.ico</file>
+        <file>icon/fail.png</file>
+        <file>icon/success.png</file>
+        <file>icon/warning.png</file>
+        <file>icon/edit.png</file>
+        <file>icon/edit-hover.png</file>
+        <file>icon/edit-press.png</file>
+    </qresource>
+</RCC>

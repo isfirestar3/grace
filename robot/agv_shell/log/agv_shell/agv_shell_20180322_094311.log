@@ -1,0 +1,46 @@
+09:43:11 0459 info 14E6 # loadXml:/home/anderson/work/svn/grace/trunk/robot/agv_shell/standard/agv_shell.xml
+09:43:11 0460 info 14E6 # loadXml auto_startup:0
+09:43:11 0460 info 14E6 # loadXml port:4410
+09:43:11 0460 info 14E6 # loadXml fts port:4411
+09:43:11 0460 info 14E6 # loadXml fts fts_long_port port:4412
+09:43:11 0460 info 14E6 # loadXml fin
+09:43:11 0465 info 14E6 # success to lock file:/gzrobot/Visual2dCodeLoc.ini
+09:43:11 0468 info 14E6 # success to lock file:/etc/agv/var/dwheel.xml
+09:43:11 0470 info 14E6 # success to lock file:/etc/agv/var/swheel.xml
+09:43:11 0470 error 14E6 # failed to open version file:/gzrobot/version.txt.
+09:43:11 0470 info 14E6 # agvshell auto startup flag: 0 , upgrade flag:0
+09:43:11 0471 info 14E6 # agvshell start listening 4410 ...
+09:43:11 0474 info 14E6 # interface num:2
+09:43:11 0474 info 14E6 # ndevice name:enp0s25
+09:43:11 0474 info 14E6 # device ip:192.168.0.29
+09:43:11 0474 info 14E6 # device mac:68:f7:28:98:5d:74
+09:43:11 0475 error 14E6 # file:/agvshell/standard/autostart.sh chmod failed, errno:2
+09:43:14 0475 error 1509 # keep alive send local info to fix ip failed.
+09:43:17 0486 error 1509 # keep alive send package to vcu failed.
+09:43:17 0486 error 1509 # keep alive send local info to fix ip failed.
+09:43:20 0502 error 1509 # keep alive send package to vcu failed.
+09:43:20 0502 error 1509 # keep alive send local info to fix ip failed.
+09:43:23 0508 error 1509 # keep alive send package to vcu failed.
+09:43:23 0508 error 1509 # keep alive send local info to fix ip failed.
+09:43:26 0523 error 1509 # keep alive send package to vcu failed.
+09:43:26 0523 error 1509 # keep alive send local info to fix ip failed.
+09:43:29 0535 error 1509 # keep alive send package to vcu failed.
+09:43:29 0535 error 1509 # keep alive send local info to fix ip failed.
+09:43:32 0547 error 1509 # keep alive send package to vcu failed.
+09:43:32 0547 error 1509 # keep alive send local info to fix ip failed.
+09:43:35 0562 error 1509 # keep alive send package to vcu failed.
+09:43:35 0563 error 1509 # keep alive send local info to fix ip failed.
+09:43:38 0576 error 1509 # keep alive send package to vcu failed.
+09:43:38 0576 error 1509 # keep alive send local info to fix ip failed.
+09:43:41 0585 error 1509 # keep alive send package to vcu failed.
+09:43:41 0585 error 1509 # keep alive send local info to fix ip failed.
+09:43:44 0602 error 1509 # keep alive send package to vcu failed.
+09:43:44 0602 error 1509 # keep alive send local info to fix ip failed.
+09:43:47 0617 error 1509 # keep alive send package to vcu failed.
+09:43:47 0617 error 1509 # keep alive send local info to fix ip failed.
+09:43:50 0634 error 1509 # keep alive send package to vcu failed.
+09:43:50 0634 error 1509 # keep alive send local info to fix ip failed.
+09:43:53 0649 error 1509 # keep alive send package to vcu failed.
+09:43:53 0649 error 1509 # keep alive send local info to fix ip failed.
+09:43:56 0664 error 1509 # keep alive send package to vcu failed.
+09:43:56 0664 error 1509 # keep alive send local info to fix ip failed.

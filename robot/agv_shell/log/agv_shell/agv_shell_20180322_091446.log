@@ -1,0 +1,15 @@
+09:14:46 0817 info 0D44 # loadXml:/home/anderson/work/svn/grace/trunk/robot/agv_shell/standard/agv_shell.xml
+09:14:46 0817 info 0D44 # loadXml e
+09:14:46 0817 info 0D44 # loadXml fin
+09:14:46 0817 error 0D44 # failed to open version file:/gzrobot/version.txt.
+09:14:46 0817 info 0D44 # agvshell auto startup flag: 0 , upgrade flag:0
+09:14:46 0819 info 0D44 # agvshell start listening 4410 ...
+09:14:46 0821 info 0D44 # interface num:2
+09:14:46 0821 info 0D44 # ndevice name:enp0s25
+09:14:46 0821 info 0D44 # device ip:192.168.0.29
+09:14:46 0821 info 0D44 # device ip:192.168.0.29
+09:14:46 0821 info 0D44 # local ip:
+09:14:46 0821 info 0D44 # ndevice name:lo
+09:14:46 0821 info 0D44 # device ip:127.0.0.1
+09:14:46 0821 info 0D44 # device ip:127.0.0.1
+09:14:46 0821 info 0D44 # local ip:

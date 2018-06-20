@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3992473C-44F2-4941-8A74-95B2213AA336}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>gzfts</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)../debug</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GZFTS_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)../sdk/nsp;$(ProjectDir)../sdk/nsp/icom;$(ProjectDir)/proto;$(ProjectDir)../sdk/misc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>gzfts.def</ModuleDefinitionFile>
+      <AdditionalDependencies>libnsp.d;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)../sdk/lib/</AdditionalLibraryDirectories>
+      <ProgramDatabaseFile>$(SolutionDir)..\sdk\bin\</ProgramDatabaseFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(OutDir)$(ProjectName).lib" "$(SolutionDir)..\sdk\lib\$(ProjectName)d.lib"
+copy "$(OutDir)$(ProjectName).dll" "$(SolutionDir)..\sdk\bin"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GZFTS_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)../sdk/nsp;$(ProjectDir)../sdk/nsp/icom;$(ProjectDir)/proto;$(ProjectDir)../sdk/misc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerOutput>All</AssemblerOutput>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>gzfts.def</ModuleDefinitionFile>
+      <AdditionalDependencies>libnsp.a;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)../sdk/lib/</AdditionalLibraryDirectories>
+      <GenerateMapFile>true</GenerateMapFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(OutDir)$(ProjectName).dll" "$(ProjectDir)..\RTM\$(ProjectName).dll"
+copy "$(OutDir)$(ProjectName).lib" "$(ProjectDir)..\sdk\lib\$(ProjectName).lib"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\sdk\nsp\encrypt.cpp" />
+    <ClCompile Include="..\sdk\nsp\endpoint.cpp" />
+    <ClCompile Include="..\sdk\nsp\log.cpp" />
+    <ClCompile Include="..\sdk\nsp\network_handler.cpp" />
+    <ClCompile Include="..\sdk\nsp\os_util.cpp" />
+    <ClCompile Include="..\sdk\nsp\swnet.cpp" />
+    <ClCompile Include="..\sdk\nsp\toolkit.cpp" />
+    <ClCompile Include="asio_manage.cpp" />
+    <ClCompile Include="file_manager.cpp" />
+    <ClCompile Include="file_query_catalog_task.cpp" />
+    <ClCompile Include="file_read_handler.cpp" />
+    <ClCompile Include="file_rw_task_thread.cpp" />
+    <ClCompile Include="file_shell_handler.cpp" />
+    <ClCompile Include="file_write_handler.cpp" />
+    <ClCompile Include="gzfts_api.cpp" />
+    <ClCompile Include="long_lnk_receiver.cpp" />
+    <ClCompile Include="long_lnk_sender.cpp" />
+    <ClCompile Include="long_lnk_session.cpp" />
+    <ClCompile Include="network_session.cpp" />
+    <ClCompile Include="network_manager.cpp" />
+    <ClCompile Include="receiver_manager.cpp" />
+    <ClCompile Include="receiver_write_manage.cpp" />
+    <ClCompile Include="sender_manager.cpp" />
+    <ClCompile Include="sender_pull_long_task.cpp" />
+    <ClCompile Include="sender_pull_task.cpp" />
+    <ClCompile Include="sender_push_task.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\sdk\misc\gzfts_api.h" />
+    <ClInclude Include="..\sdk\nsp\application_network_framwork.hpp" />
+    <ClInclude Include="..\sdk\nsp\endpoint.h" />
+    <ClInclude Include="..\sdk\nsp\exception.hpp" />
+    <ClInclude Include="..\sdk\nsp\log.h" />
+    <ClInclude Include="..\sdk\nsp\network_handler.h" />
+    <ClInclude Include="..\sdk\nsp\old.hpp" />
+    <ClInclude Include="..\sdk\nsp\os_util.hpp" />
+    <ClInclude Include="..\sdk\nsp\serialize.hpp" />
+    <ClInclude Include="..\sdk\nsp\singleton.hpp" />
+    <ClInclude Include="..\sdk\nsp\swnet.h" />
+    <ClInclude Include="..\sdk\nsp\task_scheduler.hpp" />
+    <ClInclude Include="..\sdk\nsp\toolkit.h" />
+    <ClInclude Include="asio_manage.h" />
+    <ClInclude Include="data_type.h" />
+    <ClInclude Include="file_manager.h" />
+    <ClInclude Include="file_query_catalog_task.h" />
+    <ClInclude Include="file_read_handler.h" />
+    <ClInclude Include="file_rw_task_thread.h" />
+    <ClInclude Include="file_shell_handler.h" />
+    <ClInclude Include="file_write_handler.h" />
+    <ClInclude Include="long_lnk_receiver.h" />
+    <ClInclude Include="long_lnk_sender.h" />
+    <ClInclude Include="long_lnk_session.h" />
+    <ClInclude Include="network_session.h" />
+    <ClInclude Include="network_manager.h" />
+    <ClInclude Include="proto\proto_definion.h" />
+    <ClInclude Include="proto\proto_file_block.h" />
+    <ClInclude Include="proto\proto_file_block_ack.h" />
+    <ClInclude Include="proto\proto_file_fini_msg.h" />
+    <ClInclude Include="proto\proto_file_head_msg.h" />
+    <ClInclude Include="proto\proto_msg.h" />
+    <ClInclude Include="proto\proto_typedef.h" />
+    <ClInclude Include="receiver_manager.h" />
+    <ClInclude Include="receiver_write_manage.h" />
+    <ClInclude Include="sender_manager.h" />
+    <ClInclude Include="sender_pull_long_task.h" />
+    <ClInclude Include="sender_pull_task.h" />
+    <ClInclude Include="sender_push_task.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="gzfts.def" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

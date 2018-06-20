@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7F99CAF2-B0D4-41AA-A3E5-76A3977ABA4C}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>motion_template</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Debug\</OutDir>
+    <IntDir>$(SolutionDir)Debug\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Debug\</OutDir>
+    <IntDir>$(SolutionDir)Debug\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Release\</OutDir>
+    <IntDir>$(SolutionDir)Release\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Release</OutDir>
+    <IntDir>$(SolutionDir)Release</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\sdk\nsp\icom\;$(ProjectDir)..\..\..\private\libxml2\libxml;$(ProjectDir)..\..\..\private\libxml2;$(ProjectDir)..\;$(ProjectDir)..\..\..\private;$(ProjectDir)..\..\..\sdk\var\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>false</ExceptionHandling>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\sdk\lib\;$(ProjectDir)..\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libnsp.d;nshost.d;libxml2.lib;getoptd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ProgramDatabaseFile>$(ProjectDir)..\..\..\sdk\bin\</ProgramDatabaseFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(OutDir)$(ProjectName).exe" "$(SolutionDir)..\..\..\debug"
+copy "$(OutDir)$(ProjectName).exe" "$(SolutionDir)..\..\..\sdk\bin"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\private\libxml2\libxml;$(ProjectDir)..\..\..\private\libxml2;$(ProjectDir)..\;$(ProjectDir)..\..\..\sdk\nsp\icom\;$(ProjectDir)..\..\..\private;$(ProjectDir)..\..\..\sdk\var\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>false</ExceptionHandling>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\sdk\lib\;$(ProjectDir)..\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libnsp.a;libxml2.lib;nshost.a;getoptd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ProgramDatabaseFile>$(ProjectDir)..\..\..\package\bin\$(Configuration)\robot\$(TargetName).pdb</ProgramDatabaseFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(OutDir)$(ProjectName).exe" "$(SolutionDir)..\..\..\debug"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\sdk\nsp\icom\;$(ProjectDir)..\..\..\private\libxml2\libxml;$(ProjectDir)..\..\..\private\libxml2;$(ProjectDir)..\;$(ProjectDir)..\..\..\private;$(ProjectDir)..\..\..\sdk\var\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>false</ExceptionHandling>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\sdk\lib\;$(ProjectDir)..\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libnsp.a;libxml2.lib;getopt.lib;nshost.a;%(AdditionalDependencies)</AdditionalDependencies>
+      <ProgramDatabaseFile />
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(OutDir)$(ProjectName).exe" "$(SolutionDir)..\..\..\RTM\"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\private\libxml2;$(ProjectDir)..\;$(ProjectDir)..\..\..\package\nsp\icom;$(ProjectDir)..\..\..\private;$(ProjectDir)..\..\..\package\inc\var;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>false</ExceptionHandling>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\package\lib\;$(ProjectDir)..\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libnsp.a;libxml2.lib;nshost.a;getopt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ProgramDatabaseFile />
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\args.c" />
+    <ClCompile Include="..\encrypt.c" />
+    <ClCompile Include="..\entry.c" />
+    <ClCompile Include="..\fault.c" />
+    <ClCompile Include="..\gesn.c" />
+    <ClCompile Include="..\memdump.c" />
+    <ClCompile Include="..\mnt.c" />
+    <ClCompile Include="..\nav.c" />
+    <ClCompile Include="..\nsp.c" />
+    <ClCompile Include="..\pkthrd.c" />
+    <ClCompile Include="..\PosandTrack.c" />
+    <ClCompile Include="..\protect.c" />
+    <ClCompile Include="..\proto.c" />
+    <ClCompile Include="..\regist_event.c" />
+    <ClCompile Include="..\tst.c" />
+    <ClCompile Include="..\var\angle_encoder.c" />
+    <ClCompile Include="..\var\bus.c" />
+    <ClCompile Include="..\var\canio.c" />
+    <ClCompile Include="..\var\curtis.c" />
+    <ClCompile Include="..\var\dio.c" />
+    <ClCompile Include="..\var\drive_unit.c" />
+    <ClCompile Include="..\var\elmo.c" />
+    <ClCompile Include="..\var\error.c" />
+    <ClCompile Include="..\var\map.c" />
+    <ClCompile Include="..\var\memnetdev.c" />
+    <ClCompile Include="..\var\moons.c" />
+    <ClCompile Include="..\var\navigation.c" />
+    <ClCompile Include="..\var\netio.c" />
+    <ClCompile Include="..\var\operation.c" />
+    <ClCompile Include="..\var\optpar.c" />
+    <ClCompile Include="..\var\safety.c" />
+    <ClCompile Include="..\var\usrdef.c" />
+    <ClCompile Include="..\var\var.c" />
+    <ClCompile Include="..\var\vehicle.c" />
+    <ClCompile Include="..\var\voice.c" />
+    <ClCompile Include="..\var\wheel.c" />
+    <ClCompile Include="..\v_decomp.c" />
+    <ClCompile Include="..\xml_loaded.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\package\inc\var\angle_encoder.h" />
+    <ClInclude Include="..\..\..\package\inc\var\bus.h" />
+    <ClInclude Include="..\..\..\package\inc\var\canio.h" />
+    <ClInclude Include="..\..\..\package\inc\var\curtis.h" />
+    <ClInclude Include="..\..\..\package\inc\var\dio.h" />
+    <ClInclude Include="..\..\..\package\inc\var\drive_unit.h" />
+    <ClInclude Include="..\..\..\package\inc\var\elmo.h" />
+    <ClInclude Include="..\..\..\package\inc\var\error.h" />
+    <ClInclude Include="..\..\..\package\inc\var\errtypes.h" />
+    <ClInclude Include="..\..\..\package\inc\var\map.h" />
+    <ClInclude Include="..\..\..\package\inc\var\memnetdev.h" />
+    <ClInclude Include="..\..\..\package\inc\var\moons.h" />
+    <ClInclude Include="..\..\..\package\inc\var\navigation.h" />
+    <ClInclude Include="..\..\..\package\inc\var\netio.h" />
+    <ClInclude Include="..\..\..\package\inc\var\operation.h" />
+    <ClInclude Include="..\..\..\package\inc\var\optpar.h" />
+    <ClInclude Include="..\..\..\package\inc\var\safety.h" />
+    <ClInclude Include="..\..\..\package\inc\var\usrdef.h" />
+    <ClInclude Include="..\..\..\package\inc\var\var.h" />
+    <ClInclude Include="..\..\..\package\inc\var\vartypes.h" />
+    <ClInclude Include="..\..\..\package\inc\var\vehicle.h" />
+    <ClInclude Include="..\..\..\package\inc\var\voice.h" />
+    <ClInclude Include="..\..\..\package\inc\var\wheel.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\avltree.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\base64.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\clist.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\compiler.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\crc32.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\des.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\logger.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\md5.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\nis.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\nisdef.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\object.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\posix_atomic.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\posix_ifos.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\posix_naos.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\posix_string.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\posix_thread.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\posix_time.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\posix_types.h" />
+    <ClInclude Include="..\..\..\package\nsp\icom\posix_wait.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\c14n.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\catalog.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\chvalid.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\debugXML.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\dict.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\DOCBparser.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\encoding.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\entities.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\globals.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\hash.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\HTMLparser.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\HTMLtree.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\iconv.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\list.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\nanoftp.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\nanohttp.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\parser.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\parserInternals.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\pattern.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\relaxng.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\SAX.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\SAX2.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\schemasInternals.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\schematron.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\threads.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\tree.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\uri.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\valid.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xinclude.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xlink.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xmlautomata.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xmlerror.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xmlexports.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xmlIO.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xmlmemory.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xmlmodule.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xmlreader.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xmlregexp.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xmlsave.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xmlschemas.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xmlschemastypes.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xmlstring.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xmlunicode.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xmlversion.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xmlwriter.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xpath.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xpathInternals.h" />
+    <ClInclude Include="..\..\..\private\libxml2\libxml\xpointer.h" />
+    <ClInclude Include="..\args.h" />
+    <ClInclude Include="..\entry.h" />
+    <ClInclude Include="..\gesn.h" />
+    <ClInclude Include="..\getopt.h" />
+    <ClInclude Include="..\memdump.h" />
+    <ClInclude Include="..\mnt.h" />
+    <ClInclude Include="..\nav.h" />
+    <ClInclude Include="..\nsp.h" />
+    <ClInclude Include="..\pkthrd.h" />
+    <ClInclude Include="..\PosandTrack.h" />
+    <ClInclude Include="..\protect.h" />
+    <ClInclude Include="..\proto.h" />
+    <ClInclude Include="..\regist_event.h" />
+    <ClInclude Include="..\tst.h" />
+    <ClInclude Include="..\version.h" />
+    <ClInclude Include="..\v_decomp.h" />
+    <ClInclude Include="..\xml_loaded.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="motion_template.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
