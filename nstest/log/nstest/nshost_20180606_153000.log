@@ -1,9 +1,0 @@
-15:30:00 0938 trace 5AED # IO Thread Startup.LWP:23277 epfd:7
-15:30:00 0938 trace 5AEA # IO Thread Startup.LWP:23274 epfd:4
-15:30:00 0938 trace 5AEB # IO Thread Startup.LWP:23275 epfd:5
-15:30:00 0938 trace 5AEF # IO Thread Startup.LWP:23279 epfd:8
-15:30:00 0938 trace 5AE9 # IO Thread Startup.LWP:23273 epfd:3
-15:30:00 0938 trace 5AEC # IO Thread Startup.LWP:23276 epfd:6
-15:30:00 0938 trace 5AF0 # IO Thread Startup.LWP:23280 epfd:9
-15:30:00 0938 trace 5AF1 # IO Thread Startup.LWP:23281 epfd:10
-15:30:00 0943 trace 5AEA # link [0x00000001] io close event : 8212

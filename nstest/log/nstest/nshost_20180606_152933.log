@@ -1,9 +1,0 @@
-15:29:33 0654 trace 5A7E # IO Thread Startup.LWP:23166 epfd:3
-15:29:33 0654 trace 5A7F # IO Thread Startup.LWP:23167 epfd:4
-15:29:33 0654 trace 5A81 # IO Thread Startup.LWP:23169 epfd:5
-15:29:33 0654 trace 5A82 # IO Thread Startup.LWP:23170 epfd:6
-15:29:33 0654 trace 5A84 # IO Thread Startup.LWP:23172 epfd:9
-15:29:33 0654 trace 5A85 # IO Thread Startup.LWP:23173 epfd:7
-15:29:33 0654 trace 5A86 # IO Thread Startup.LWP:23174 epfd:8
-15:29:33 0654 trace 5A87 # IO Thread Startup.LWP:23175 epfd:10
-15:29:33 0693 trace 5A7F # link [0x00000001] io close event : 8220
