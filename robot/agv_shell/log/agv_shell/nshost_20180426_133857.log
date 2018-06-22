@@ -1,8 +1,0 @@
-13:38:57 0663 trace 2CD5 # IO Thread Startup.LWP:11477 epfd:4
-13:38:57 0663 trace 2CD6 # IO Thread Startup.LWP:11478 epfd:5
-13:38:57 0663 trace 2CD7 # IO Thread Startup.LWP:11479 epfd:6
-13:38:57 0663 trace 2CD8 # IO Thread Startup.LWP:11480 epfd:7
-13:38:57 0663 trace 2CD9 # IO Thread Startup.LWP:11481 epfd:8
-13:38:57 0663 trace 2CDB # IO Thread Startup.LWP:11483 epfd:11
-13:38:57 0663 trace 2CDD # IO Thread Startup.LWP:11485 epfd:10
-13:38:57 0663 trace 2CDC # IO Thread Startup.LWP:11484 epfd:9
