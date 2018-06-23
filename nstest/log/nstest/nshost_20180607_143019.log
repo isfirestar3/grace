@@ -1,8 +1,0 @@
-14:30:19 0289 trace 3D42 # IO Thread Startup.LWP:15682 epfd:5
-14:30:19 0290 trace 3D47 # IO Thread Startup.LWP:15687 epfd:9
-14:30:19 0290 trace 3D44 # IO Thread Startup.LWP:15684 epfd:7
-14:30:19 0289 trace 3D40 # IO Thread Startup.LWP:15680 epfd:3
-14:30:19 0289 trace 3D43 # IO Thread Startup.LWP:15683 epfd:6
-14:30:19 0290 trace 3D45 # IO Thread Startup.LWP:15685 epfd:8
-14:30:19 0289 trace 3D41 # IO Thread Startup.LWP:15681 epfd:4
-14:30:19 0290 trace 3D48 # IO Thread Startup.LWP:15688 epfd:11

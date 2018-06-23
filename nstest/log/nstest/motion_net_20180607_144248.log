@@ -1,4 +1,0 @@
-14:42:48 0985 info 3ED9 # [1] try connect to host 127.0.0.1:4409
-14:42:48 0985 info 3EEF # [1] session successful connected to target host 127.0.0.1:4409
-14:42:48 0986 info 3EDC # [1] session received key, target: 127.0.0.1:4409
-14:42:49 0086 info 3EDD # [1] successful login to host 127.0.0.1:4409

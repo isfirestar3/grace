@@ -1,8 +1,0 @@
-18:49:52 0346 trace 53F1 # IO Thread Startup.LWP:21489 epfd:3
-18:49:52 0346 trace 53F5 # IO Thread Startup.LWP:21493 epfd:7
-18:49:52 0346 trace 53F2 # IO Thread Startup.LWP:21490 epfd:4
-18:49:52 0346 trace 53F7 # IO Thread Startup.LWP:21495 epfd:8
-18:49:52 0346 trace 53F4 # IO Thread Startup.LWP:21492 epfd:6
-18:49:52 0346 trace 53F3 # IO Thread Startup.LWP:21491 epfd:5
-18:49:52 0346 trace 53F8 # IO Thread Startup.LWP:21496 epfd:9
-18:49:52 0346 trace 53F9 # IO Thread Startup.LWP:21497 epfd:11

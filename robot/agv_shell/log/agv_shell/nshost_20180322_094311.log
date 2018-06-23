@@ -1,8 +1,0 @@
-09:43:11 0470 trace 14F2 # IO Thread Startup.LWP:5362 epfd:4
-09:43:11 0470 trace 14F4 # IO Thread Startup.LWP:5364 epfd:6
-09:43:11 0470 trace 14F3 # IO Thread Startup.LWP:5363 epfd:5
-09:43:11 0470 trace 14F5 # IO Thread Startup.LWP:5365 epfd:7
-09:43:11 0470 trace 14F6 # IO Thread Startup.LWP:5366 epfd:8
-09:43:11 0471 trace 14F7 # IO Thread Startup.LWP:5367 epfd:9
-09:43:11 0471 trace 14F9 # IO Thread Startup.LWP:5369 epfd:10
-09:43:11 0471 trace 14FA # IO Thread Startup.LWP:5370 epfd:11

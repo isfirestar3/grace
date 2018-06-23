@@ -1,3 +1,0 @@
-15:25:51 0021 info 599A # [1] try connect to host 10.10.100.1:5426
-15:25:51 0021 info 59B0 # [1] session successful connected to target host 10.10.100.1:5426
-15:25:51 0031 info 59A6 # [1] session disconnected, target:10.10.100.1:5426

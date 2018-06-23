@@ -1,8 +1,0 @@
-15:35:30 0034 trace 413D # IO Thread Startup.LWP:16701 epfd:3
-15:35:30 0034 trace 4141 # IO Thread Startup.LWP:16705 epfd:7
-15:35:30 0034 trace 413E # IO Thread Startup.LWP:16702 epfd:4
-15:35:30 0034 trace 4143 # IO Thread Startup.LWP:16707 epfd:8
-15:35:30 0034 trace 413F # IO Thread Startup.LWP:16703 epfd:5
-15:35:30 0034 trace 4144 # IO Thread Startup.LWP:16708 epfd:9
-15:35:30 0034 trace 4140 # IO Thread Startup.LWP:16704 epfd:6
-15:35:30 0034 trace 4145 # IO Thread Startup.LWP:16709 epfd:11
