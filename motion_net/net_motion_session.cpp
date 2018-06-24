@@ -1194,7 +1194,7 @@ namespace mn {
 			if (udp_pkt_timed_ && (now - udp_pkt_timed_) > 20000000) {
 				// didn't recv ack packet in 2 seconds, don't need retry connect/login.
 				return 0;
-			} else if (0 == udp_pkt_timed_) {
+			} else if (0 == udp_pkt_timed_ && udp_need_send) {
 				// ack packet didn't recv, don't need retry connect/login.
 				return 0;
 			}
