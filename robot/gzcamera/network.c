@@ -7,6 +7,9 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#include <sys/types.h>
+#include <signal.h>
+
 #include "ncb.h"
 #include "cache.h"
 #include "imgdef.h"
@@ -234,13 +237,19 @@ static void *routine_rcv(void *p) {
     int pic_id;
     int retval = 0;
     struct gzimage_t *image;
+    int times_in_block_full;
 
     log__save("libgzcamera", kLogLevel_Info, kLogTarget_Filesystem, "libgzcamera image data receiver thread startup.");
 
+    times_in_block_full = 0;
     while (1) {
         if (retval >= 0) {
             pic_id = select_cache_memory(kCameraCacheAccess_ReceiverWriteable, &cache_ptr);
             if (pic_id < 0) {
+                if (++times_in_block_full >= 10) {
+                    raise(SIGUSR1);
+                }
+
                 log__save("libgzcamera", kLogLevel_Error, kLogTarget_Filesystem, "failed to get cache node memory for camera data recviver");
                 // 有可能出现的极端情况：接收缓冲区瞬间填满,处理线程响应不及时， 导致一轮 select_cache_memory_dec(kCameraCacheAccess_HandlerReadable, &buffer)) 失败
                 // 此时处理线程等待事件，但是无法得到有效通知
@@ -249,6 +258,8 @@ static void *routine_rcv(void *p) {
                 usleep(10 * 1000);
                 continue;
             }
+
+            times_in_block_full = 0;
         }
 
 #if TRACE_CAMERA_DEBUG
