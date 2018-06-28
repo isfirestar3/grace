@@ -2,6 +2,7 @@
 #include "getopt.h"
 #include "log.h"
 #include "os_util.hpp"
+#include "posix_time.h"
 #include "rapidxml.hpp"
 #include "rapidxml_iterators.hpp"
 #include "rapidxml_print.hpp"
@@ -288,7 +289,14 @@ void start_process_functional(void* p) {
 		}
 	}
 
-    pid_t pid = fork();
+	pid_t pid = -1;
+	char path_stdout[512], path_stderr[512];
+	posix__systime_t nowTime;
+	FILE* stream_stdout = NULL;
+	FILE* stream_stderr = NULL;
+	int status = 0;
+REFORK:
+	pid = fork();
     switch (pid) {
 	case -1:
 		loerror("agv_shell") << "fork failed";
@@ -296,6 +304,19 @@ void start_process_functional(void* p) {
 		break;
 	case 0:
 		//这是在子进程中，调用execlp切换为ps进程   
+		if("Loc" == p_pinfo->process_name_) {
+			//redirect stdout and stderr
+			posix__localtime(&nowTime);
+			posix__sprintf(path_stdout, cchof(path_stdout), "./loc_stdout_%04u%02u%02u_%02u%02u%02u.log", 
+			nowTime.year, nowTime.month, nowTime.day, nowTime.hour, nowTime.minute, nowTime.second);
+			posix__sprintf(path_stderr, cchof(path_stderr), "./loc_stderr_%04u%02u%02u_%02u%02u%02u.log", 
+				nowTime.year, nowTime.month, nowTime.day, nowTime.hour, nowTime.minute, nowTime.second);
+			stream_stdout = freopen( path_stdout, "w", stdout );
+			stream_stderr = freopen( path_stderr, "w", stderr );
+			if(!stream_stdout || !stream_stderr) {
+				exit(SIGUSR1);
+			}
+		}
 		loinfo("agv_shell") << "child " << p_pinfo->name_ << " " << p_pinfo->cmd_ << "  begin...";
 		if (-1 == execv(p_pinfo->name_.c_str(), argv)) {
 			loerror("agv_shell") << "execv failure, errno:" << errno;
@@ -306,7 +327,6 @@ void start_process_functional(void* p) {
 		//这是在父进程中，等待子进程结束 
 		p_pinfo->pid_ = pid;
 		loinfo("agv_shell") << "wait " << p_pinfo->process_name_ << " stop, pid=" << p_pinfo->pid_;
-		int status;
 		waitpid(pid, &status, 0);
 		if( WIFEXITED(status) ) {
 			WEXITSTATUS(status);
@@ -315,6 +335,9 @@ void start_process_functional(void* p) {
 		if( WIFSIGNALED(status) ) {
 			WTERMSIG(status);
 			loinfo("agv_shell") << "process " << p_pinfo->process_name_ << " stopped, WTERMSIG status=" << status;
+			if("Loc" == p_pinfo->process_name_ && (SIGUSR1 == (status & 0x0F))) {
+				goto REFORK;
+			}
 		}
 		p_pinfo->pid_ = 0;
 		loinfo("agv_shell") << "process " << p_pinfo->process_name_ << " stopped, status=" << status;
