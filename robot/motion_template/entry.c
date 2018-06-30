@@ -31,6 +31,27 @@
 #include <time.h>
 
 #include "memdump.h"
+#include "pstorage.h"
+
+#pragma pack(push, 1)
+
+typedef struct {
+    struct list_head link_;
+    void( *func_)(void *functional_object);
+} canio__event_callback_t;
+
+struct p_storage_t {
+    union {
+        struct {
+            upl_t upl;
+            double last_total_odo;
+        }p_storage_feild;
+
+        unsigned char p_storage_occupy[P_STORAGE_FILE_SIZE];
+    };
+};
+
+#pragma pack(pop)
 
 int run__interval_control(posix__waitable_handle_t *waiter, uint64_t begin_tick, uint32_t maximum_delay) {
     uint32_t tsc;
@@ -50,15 +71,6 @@ int run__interval_control(posix__waitable_handle_t *waiter, uint64_t begin_tick,
 
     return interval;
 }
-
-#pragma pack(push, 1)
-
-typedef struct {
-    struct list_head link_;
-    void( *func_)(void *functional_object);
-} canio__event_callback_t;
-
-#pragma pack(pop)
 
 int run__algorithm_traj_control(void *memory_dump_object) {
     int retval = -1;
@@ -89,16 +101,6 @@ int run__algorithm_traj_control(void *memory_dump_object) {
 	ts2 = posix__clock_gettime();
     nav = var__create_navigation_dup(0);
 	ts3 = posix__clock_gettime();
-
-#if 0
-    /* 每一个导航周期， 均对重要内存数据进行详细记录, 这里至少记录了底盘和导航的数据 */
-    if (memory_dump_object) {
-        add_memory_record(memory_dump_object, &veh->manual_velocity_, sizeof (var__vehicle_t) - offsetof(var__vehicle_t, manual_velocity_));
-        add_memory_record(memory_dump_object, &nav->track_status_, sizeof (var__navigation_t) - offsetof(var__navigation_t, track_status_));
-        move_memory_record_tonext(memory_dump_object);
-    }
-#endif
-	
     retval = nav__traj_control(nav, veh, var__get_driveunit(NULL), sim);
 	ts4 = posix__clock_gettime();
 	
@@ -357,6 +359,10 @@ int main(int argc, char **argv) {
     posix__pthread_t navigation_tp, safty_tp, guard_tp;
     posix__waitable_handle_t monitor;
     int retval;
+    struct p_storage_t p_storage_object;
+    int p_storage_retval;
+    var__navigation_t *nav;
+
     static const char startup_message[] = POSIX__EOL
             "****************************************************************************"POSIX__EOL
             "*                            application startup                           *"POSIX__EOL
@@ -426,12 +432,6 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    /* 尝试连接事件服务器 
-    char essnhost[posix__ipv4_length];
-    run__getarg_essnhost(essnhost);
-    gesn__config_server(essnhost, run__getarg_essnport());
-    log__save("motion_template", kLogLevel_Info, kLogTarget_Filesystem | kLogTarget_Stdout, "motion_template process startup.");*/
-
     /* arm 环境需要建立和M核的通道 */
 #if !_WIN32
     nsp__init_gzd_object();
@@ -450,6 +450,25 @@ int main(int argc, char **argv) {
     /* 启动错误检测线程 */
     posix__pthread_create(&guard_tp, &run__guard_proc, NULL);
 
+    /* zeroization save object */
+    memset(&p_storage_object, 0, sizeof(p_storage_object));
+    p_storage_retval = run__load_mapping();
+    if (p_storage_retval >= 0) {
+        run__read_mapping(0, sizeof(p_storage_object), (void*) &p_storage_object);
+        log__save("motion_template", kLogLevel_Info, kLogTarget_Filesystem | kLogTarget_Stdout, 
+                "last upl: [edge:%d] [percent:%.2f] [angle:%.2f]", 
+                p_storage_object.p_storage_feild.upl.edge_id_,
+                p_storage_object.p_storage_feild.upl.percentage_,
+                p_storage_object.p_storage_feild.upl.angle_);
+        /* acquire to load storage data on startup */
+        if (run__if_loadonexec()) {
+            if ((nav = var__get_navigation()) != NULL) {
+                memcpy(&nav->i.upl_, &p_storage_object.p_storage_feild.upl, sizeof(upl_t));
+                var__release_object_reference(nav);
+            }
+        }
+    }
+
     while (1) {
         retval = posix__waitfor_waitable_handle(&monitor, (uint32_t) navigation_timeout_as_fatal);
         if ((ETIMEDOUT == retval) && (navigation_timeout_as_fatal > 0)) {
@@ -460,6 +479,21 @@ int main(int argc, char **argv) {
                 log__save("motion_template", kLogLevel_Warning, kLogTarget_Filesystem | kLogTarget_Stdout, 
 						"navigation loop keepalive test terminated.cause by waitable handle error.");
                 break;
+            }
+        }
+
+        if (p_storage_retval >= 0) {
+            nav = var__get_navigation();
+            if (nav) {
+                memcpy(&p_storage_object.p_storage_feild.upl, &nav->i.upl_, sizeof(upl_t));
+                var__release_object_reference(nav);
+
+                p_storage_retval = run__write_mapping(sizeof(p_storage_object), &p_storage_object);
+
+                /* one time failed, nolonger try */
+                if (p_storage_retval < 0) {
+                    log__save("motion_template", kLogLevel_Warning, kLogTarget_Filesystem | kLogTarget_Stdout, "failed storage upl information to file.");
+                }
             }
         }
     }

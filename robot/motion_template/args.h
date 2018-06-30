@@ -28,5 +28,7 @@ extern
 char *run__getarg_canio_driver(char *file);
 extern
 posix__boolean_t run__if_must_login();
+extern
+posix__boolean_t run__if_loadonexec();
 
 #endif
