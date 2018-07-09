@@ -420,7 +420,6 @@ int main(int argc, char **argv) {
     var__load_var_configure();
     mnt__load_setting();
 
-    /* 开始启动网络服务 */
 #ifndef _WIN32
     nis_checr(&mtecr);
 #endif
@@ -440,14 +439,14 @@ int main(int argc, char **argv) {
 
     posix__pthread_create(&navigation_tp, &run__navigation_proc, &monitor);
 
-    /* 启动安全防护过程 */
+    /* create thread for runtime safty */
     if (safety__init() >= 0) {
         posix__pthread_create(&safty_tp, &run__safety_proc, NULL);
     } else {
         log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout, "failed to init safety thread.");
     }
 
-    /* 启动错误检测线程 */
+    /* create thread for guard and error detect */
     posix__pthread_create(&guard_tp, &run__guard_proc, NULL);
 
     /* zeroization save object */
@@ -467,6 +466,8 @@ int main(int argc, char **argv) {
                 var__release_object_reference(nav);
             }
         }
+    } else {
+        log__save("motion_template", kLogLevel_Warning, kLogTarget_Filesystem | kLogTarget_Stdout, "failed load file mapping for UPL.");
     }
 
     while (1) {
@@ -498,5 +499,9 @@ int main(int argc, char **argv) {
         }
     }
 
+    if (p_storage_retval >= 0) {
+        run__release_mapping();
+    }
+    
     return 0;
 }

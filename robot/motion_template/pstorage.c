@@ -43,19 +43,19 @@ int run__load_mapping() {
     
     do {
 #if _WIN32
-		posix__sprintf(path, cchof(path), "%s\\log\\%s", posix__getpedir(), RECORD_DATA_FILE);
+		posix__sprintf(path, cchof(path), "%s\\%s", posix__getpedir(), RECORD_DATA_FILE);
 #else
-		posix__sprintf(path, cchof(path), "%s/log/%s", posix__getpedir(), RECORD_DATA_FILE);
+		posix__sprintf(path, cchof(path), "%s/%s", posix__getpedir(), RECORD_DATA_FILE);
 #endif
 		fd = open(path, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
         if (fd < 0) {
-            log__save(NULL, kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout,
+            log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout,
                     "failed to open associated file %s for total odo meter mapping.error=%d", path, errno);
             break;
         }
 		
 		if (stat(path, &st) < 0) {
-			log__save(NULL, kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout,
+			log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout,
                     "failed to get file [%s] stat. error=%d", path, errno);
 			break;
 		}
@@ -65,12 +65,16 @@ int run__load_mapping() {
             memset(&empty, 0, sizeof(empty));
 			retval = write(fd, &empty, sizeof(empty));
 			if(retval <= 0) {
+                log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout,
+                    "failed to init mapping file for UPL. error=%d", errno);
                 break;
 			}
 		} 
 
         addr = mmap(NULL, P_STORAGE_FILE_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
         if (MAP_FAILED == addr) {
+            log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout,
+                    "failed to map mapping file into VIRT. error=%d", errno);
             break;
         }
 
@@ -81,7 +85,7 @@ int run__load_mapping() {
 
         /* all ok */
         retval = 0;
-		
+		log__save("motion_template", kLogLevel_Info, kLogTarget_Filesystem | kLogTarget_Stdout,"successful mapped file for UPL, [%s]", path);
     } while (0);
 	
 	if (fd >= 0) {
