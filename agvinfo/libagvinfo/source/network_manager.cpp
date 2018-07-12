@@ -40,6 +40,7 @@ int network_manager::push_task(std::string packet,std::function<int (nsp::proto:
 		task = std::make_shared<network_task>(packet, function_psend);
 	}
 	catch(...){
+		loinfo("libagvinfo") << "create network_task failure";
 		return -1;
 	}
 

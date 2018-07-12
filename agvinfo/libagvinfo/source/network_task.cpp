@@ -2,6 +2,7 @@
 #include "network.h"
 #include "agvinfo_proto.hpp"
 #include "proto_unpacket.h"
+#include "log.h"
 
 network_task::network_task(std::string data, std::function<int(nsp::proto::proto_interface *)> psend)
 :packet_(data),
@@ -26,6 +27,7 @@ int network_task::on_task()
 		}
 	}
 	else if (unpacage.ack_type() != kAgvInfoProto_heart_beat_ack){
+		loinfo("libagvinfo") << "network_task on_task other";
 		nsp::toolkit::singleton<network>::instance()->exec(unpacage.pkt_id(), (void *)packet_.c_str(), packet_.length());
 	}
 	
