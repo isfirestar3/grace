@@ -300,12 +300,14 @@ int agv_manager::load_server_agvinfo(enum load_agvinfo_method method, std::vecto
 			motion_back = *(agv_motion::motion_data *)data;
 		}
 		wait.sig();
+		loinfo("libagvinfo") << "load_agvinfo returned";
 	}), method);
 	
 	if(errcode){
 		return errcode;
 	};
 
+	loinfo("libagvinfo") << "wait load_agvinfo return";
 	wait.wait();
 	wait.reset();
 

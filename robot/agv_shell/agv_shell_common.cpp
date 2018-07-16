@@ -290,10 +290,10 @@ void start_process_functional(void* p) {
 	}
 
 	pid_t pid = -1;
-	char path_stdout[512], path_stderr[512];
+	/*char path_stdout[512], path_stderr[512];
 	posix__systime_t nowTime;
 	FILE* stream_stdout = NULL;
-	FILE* stream_stderr = NULL;
+	FILE* stream_stderr = NULL;*/
 	int status = 0;
 REFORK:
 	pid = fork();
@@ -304,19 +304,19 @@ REFORK:
 		break;
 	case 0:
 		//这是在子进程中，调用execlp切换为ps进程   
-		if("Loc" == p_pinfo->process_name_) {
+		/*if("Loc" == p_pinfo->process_name_) {
 			//redirect stdout and stderr
 			posix__localtime(&nowTime);
-			posix__sprintf(path_stdout, cchof(path_stdout), "./loc_stdout_%04u%02u%02u_%02u%02u%02u.log", 
+			posix__sprintf(path_stdout, cchof(path_stdout), "./log/loc_stdout_%04u%02u%02u_%02u%02u%02u.log", 
 			nowTime.year, nowTime.month, nowTime.day, nowTime.hour, nowTime.minute, nowTime.second);
-			posix__sprintf(path_stderr, cchof(path_stderr), "./loc_stderr_%04u%02u%02u_%02u%02u%02u.log", 
+			posix__sprintf(path_stderr, cchof(path_stderr), "./log/loc_stderr_%04u%02u%02u_%02u%02u%02u.log", 
 				nowTime.year, nowTime.month, nowTime.day, nowTime.hour, nowTime.minute, nowTime.second);
 			stream_stdout = freopen( path_stdout, "w", stdout );
 			stream_stderr = freopen( path_stderr, "w", stderr );
 			if(!stream_stdout || !stream_stderr) {
 				exit(SIGUSR1);
 			}
-		}
+		}*/
 		loinfo("agv_shell") << "child " << p_pinfo->name_ << " " << p_pinfo->cmd_ << "  begin...";
 		if (-1 == execv(p_pinfo->name_.c_str(), argv)) {
 			loerror("agv_shell") << "execv failure, errno:" << errno;
@@ -336,6 +336,7 @@ REFORK:
 			WTERMSIG(status);
 			loinfo("agv_shell") << "process " << p_pinfo->process_name_ << " stopped, WTERMSIG status=" << status;
 			if("Loc" == p_pinfo->process_name_ && (SIGUSR1 == (status & 0x0F))) {
+				loinfo("agv_shell") << "restart " << p_pinfo->process_name_ << " because WTERMSIG status is SIGUSR1.";
 				goto REFORK;
 			}
 		}
