@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+#include <sched.h>
 #include "version.h"
 
 #include "var.h"
@@ -298,6 +300,13 @@ void *run__navigation_proc(void *argv) {
     if (allocate_memory_dump(&memory_dump_object) < 0) {
         memory_dump_object = NULL;
     }
+	
+	cpu_set_t set;
+    CPU_ZERO(&set);
+    CPU_SET(3, &set);
+    if (pthread_setaffinity_np(pthread_self(), sizeof(set), &set) == -1) {
+        log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout,"nav thread bind cpu3 error.");
+    }
 
     log__save("motion_template", kLogLevel_Info, kLogTarget_Filesystem | kLogTarget_Stdout,"navigation loop success startup.");
 
@@ -375,6 +384,12 @@ int main(int argc, char **argv) {
     signal(SIGPIPE, &sighandler);
     /* 为了不随终端关闭， 是否应该增加这个处理？ 能否真正替代 nohup(1)? */
     signal(SIGHUP, SIG_IGN);
+	cpu_set_t set;
+    CPU_ZERO(&set);
+    CPU_SET(0, &set);
+    if (sched_setaffinity(0, sizeof(cpu_set_t), &set) == -1) {
+        log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout,"main bind cpu0 error.");
+    }
 #endif
 
     /* 检查参数并执行异化  */
