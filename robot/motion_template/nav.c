@@ -1668,10 +1668,13 @@ int nav__traj_control_proc(var__navigation_t *nav, var__vehicle_t *veh, const st
         }
         var__end_search();
         var__end_search();
-        if (fabs(nav->i.aim_heading_error_) > nav->stop_tolerance_angle_*3)
-        {
-            b_reached = 0;
+
+        if (nav->acc_ > 0.8) {
+            if (fabs(nav->i.aim_heading_error_) > nav->stop_tolerance_angle_ * 3) {
+                b_reached = 0;
+            }
         }
+        
         if (b_reached) {
             if (nav->i.traj_ref_index_curr_ < nav->traj_ref_.count_ - 1) {
                 if (nav__check_path(nav) != 1)
