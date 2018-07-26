@@ -85,7 +85,7 @@ static double g_average_odo_delay = 0;
 static int g_confidence_err = 0;
 
 static int g_last_traj_idex = -1;
-static upl_t g_last_upl = { -1, 0.0, 0.0 };
+static upl_t g_last_upl = { -1, 0.0, {0.0 }};
 static int g_need_last_upl = 1;
 
 static void nav_pos_interpolated(var__navigation_t *nav, var__vehicle_t *veh) {
