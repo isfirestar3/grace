@@ -46,12 +46,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\code\grace\trunk\robot\motion_template;C:\code\grace\trunk\sdk\var;C:\code\grace\trunk\private\libxml2\libxml;C:\code\grace\trunk\private\libxml2;C:\code\grace\trunk\sdk\nsp\icom;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../robot\motion_template;$(SolutionDir)../../../../../sdk\var;$(SolutionDir)../../../../../private\libxml2\libxml;$(SolutionDir)../../../../../private\libxml2;$(SolutionDir)../../../../../sdk\nsp\icom;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\code\grace\trunk\sdk\lib;C:\code\grace\trunk\robot\motion_template\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)../../../../../sdk\lib;$(SolutionDir)../../../lib</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
       <AdditionalDependencies>libnsp.a;libxml2.lib;getopt.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -64,13 +64,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\code\grace\trunk\robot\motion_template;C:\code\grace\trunk\sdk\var;C:\code\grace\trunk\private\libxml2\libxml;C:\code\grace\trunk\private\libxml2;C:\code\grace\trunk\sdk\nsp\icom;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../motion_template;$(SolutionDir)../../../../../sdk\var;$(SolutionDir)../../../../../private\libxml2\libxml;$(SolutionDir)../../../../../private\libxml2;$(SolutionDir)../../../../../sdk\nsp\icom;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\code\grace\trunk\sdk\lib;C:\code\grace\trunk\robot\motion_template\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)../../../../../sdk\lib;$(SolutionDir)../../../lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>libnsp.d;libxml2.lib;getopt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
