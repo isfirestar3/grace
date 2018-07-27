@@ -14,7 +14,11 @@ CFLAGS+=-I ./ -I ../../sdk/nsp/icom/ -I ../../sdk/var/ -I ../../private/libxml2-
 ifeq ($(build),debug)
 	CFLAGS+=-g
 else
-	CFLAGS+=-O2
+	ifeq ($(build),gdb)
+		CFLAGS+=-ggdb3
+	else
+		CFLAGS+=-O2
+	endif
 endif
 
 ifeq ($(arch),arm)
