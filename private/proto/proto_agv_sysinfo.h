@@ -42,7 +42,7 @@ namespace agv{
 
 			nsp::proto::proto_string_t<char>  name;
 			nsp::proto::proto_crt_t<uint32_t>  pid;
-			nsp::proto::proto_crt_t<uint64_t>  run_time;	//5-03:08:29
+			nsp::proto::proto_string_t<char>  run_time;	//5-03:08:29
 			nsp::proto::proto_crt_t<uint64_t>  vir_mm;		//KB
 			nsp::proto::proto_crt_t<uint64_t>  rss;			//KB
 			nsp::proto::proto_crt_t<uint64_t>  average_cpu;
