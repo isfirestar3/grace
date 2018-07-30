@@ -44,6 +44,7 @@ int update_config_file( std::vector<agv_process_info >& replace_cfg ) {
 	while ( !feof(fp) ) {
 		memset(str_line, 0, MAX_LINE);
 		str_line = fgets(str_line, MAX_LINE, fp);
+		if(!str_line) break;
 		if (replace_flag != 0) ++replace_flag;
 		if (strstr(str_line, "agv_shell")  && strstr(str_line, "port")) {
 			++replace_flag;
@@ -392,7 +393,7 @@ int get_process_config_info(nsp::proto::proto_vector_t<agv::proto::proto_process
 
 int get_process_run_info(nsp::proto::proto_vector_t<agv::proto::proto_process_run_info_t>& process_vec) {
 	agv::proto::proto_process_run_info_t t_prot_proc;
-	std::string command("ps -A -oargs -opid -oetime -osize -orss -o%cpu -o%mem | grep -v ps | grep -v grep | grep -eagv_shell ");
+	std::string command("ps -A -opid -oetime -osize -orss -o%cpu -o%mem -oargs | grep -v ps | grep -v grep | grep -eagv_shell ");
 	std::string process_info_str;
 	std::vector<std::string> v_str;
 	char * pchar = nullptr;
@@ -452,12 +453,12 @@ int get_process_run_info(nsp::proto::proto_vector_t<agv::proto::proto_process_ru
 			split_symbol_string(process_info_str, ' ', v_str);
 			if(v_str.size() <= 0 || v_str[0].empty()) continue;
 			for(auto &it : process_vec) {
-				if(it.pid == atol(v_str[1].c_str())) {
-					it.run_time = atol(v_str[2].c_str());
-					it.vir_mm = atol(v_str[3].c_str());
-					it.rss = atol(v_str[4].c_str());
-					it.average_cpu = atol(v_str[5].c_str());
-					it.average_mem = atol(v_str[6].c_str());
+				if(it.pid == atol(v_str[0].c_str())) {
+					it.run_time = v_str[1];
+					it.vir_mm = atol(v_str[2].c_str());
+					it.rss = atol(v_str[3].c_str());
+					it.average_cpu = atol(v_str[4].c_str());
+					it.average_mem = atol(v_str[5].c_str());
 					break;
 				}
 			}
@@ -1000,8 +1001,8 @@ int global_parameter::check_file(std::string strfilename, const std::string &str
 		loinfo("agv_shell") << strfilename.c_str() << " not log file";
 		return -1;
 	}
-	filetime = strfilename.substr(pos, 14);
-	if (filetime.length() < 14){
+	filetime = strfilename.substr(pos, 15);
+	if (filetime.length() < 15){
 		return -1;
 	}
 

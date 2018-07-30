@@ -29,8 +29,8 @@ enum AgvShellLogsCancel {
 };
 
 enum ModifyFileMutex{
-	UNLOCK_MUTEX,//½âËø
-	LOCK_MUTEX	//¼ÓËø
+	UNLOCK_MUTEX,//è§£é”
+	LOCK_MUTEX	//åŠ é”
 };
 
 agv_shell_session::agv_shell_session() {
@@ -115,7 +115,7 @@ void agv_shell_session::recv_dispatch(const unsigned char *buffer, int cb) {
 		on_backup_files(nsp::proto::shared_for<nsp::proto::proto_logs_file_path>(pos, cb));
 		break;
 	default:
-		loinfo("agv_shell") << "recv_dispatch get package type£º" << type << ", it's invaild type.";
+		loinfo("agv_shell") << "recv_dispatch get package typeï¼š" << type << ", it's invaild type.";
 		break;
 	}
 	
@@ -217,13 +217,13 @@ void agv_shell_session::on_recvdata(const std::string &pkt) {
 }
 
 void agv_shell_session::on_connected(){
-	loinfo("agv_shell") << "the target endpoint: "<< remote_.to_string() <<" is connected£¬the link is " << lnk_;
+	loinfo("agv_shell") << "the target endpoint: "<< remote_.to_string() <<" is connectedï¼Œthe link is " << lnk_;
 }
 
 int agv_shell_session::on_established() {
     loinfo("agv_shell") << "agv_shell_session on_established,target endpoint is "<< remote_.to_string() <<" the link is " << lnk_ ;
 	memset(key_, 0, PROTO_SESSION_KEY_LENGTH);
-	// Éú³ÉÊôÓÚÕâ¸öÁ´½ÓµÄËæ»úÃÜÔ¿ 
+	// ç”Ÿæˆå±äºè¿™ä¸ªé“¾æ¥çš„éšæœºå¯†é’¥ 
 	for (int i = 0; i < PROTO_SESSION_KEY_LENGTH; ++i) {
         key_[i] = rand() % 0xFE;
     }
@@ -237,7 +237,7 @@ int agv_shell_session::on_established() {
 void agv_shell_session::on_disconnected(const HTCPLINK previous) {
 	nsp::toolkit::singleton<agv_shell_server>::instance()->reduce_client_lnk(previous);
 	
-	//¹Ø±Õ¶ÁĞ´ÎÄ¼ş¾ä±ú
+	//å…³é—­è¯»å†™æ–‡ä»¶å¥æŸ„
 	nsp::toolkit::singleton<file_manager>::instance()->close_rw_file_handler(previous);
 	loinfo("agv_shell") << "disconnect from " << remote_.ipv4() << ":" << remote_.port() << " the lnk is " << previous;
 }
@@ -267,7 +267,7 @@ void agv_shell_session::client_login(const std::shared_ptr<nsp::proto::proto_log
 			break;
 		}
 		
-		//TODO: ½ÇÉ«Ğ£Ñé 
+		//TODO: è§’è‰²æ ¡éªŒ 
 		
 		if (nsp::toolkit::encrypt((const unsigned char *)p_login->original_buffer_.data(), p_login->original_buffer_.size(), \
 					(const unsigned char *)this->key_, sizeof ( this->key_), &out, &outcb) >= 0) {
@@ -287,7 +287,7 @@ void agv_shell_session::client_login(const std::shared_ptr<nsp::proto::proto_log
 		}
 	} while (0);
 		
-	// Ó¦´ğ
+	// åº”ç­”
 	ack_login.err_ = retval;
     psend(&ack_login);
 }
@@ -382,7 +382,7 @@ void agv_shell_session::begin_upgrade(const std::shared_ptr<nsp::proto::proto_ms
 		return;
 	}
 
-	//½âÑ¹Ëõ¶¯×÷¿ÉÄÜ»¨·ÑÊ±¼ä³¤£¬ËùÒÔ½âÑ¹Ëõºó²Å·Å¿ªÉı¼¶(±ÜÃâÇ°Ì¨ÔÙ´Î´«Éı¼¶ÎÄ¼ş¹ıÀ´)
+	//è§£å‹ç¼©åŠ¨ä½œå¯èƒ½èŠ±è´¹æ—¶é—´é•¿ï¼Œæ‰€ä»¥è§£å‹ç¼©åæ‰æ”¾å¼€å‡çº§(é¿å…å‰å°å†æ¬¡ä¼ å‡çº§æ–‡ä»¶è¿‡æ¥)
 	nsp::toolkit::singleton<file_manager>::instance()->set_upgrade();
 
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -406,7 +406,7 @@ void agv_shell_session::begin_upgrade(const std::shared_ptr<nsp::proto::proto_ms
 	// do nothing.
 #else
     for (int i=0; i<3; ++i) {
-        // Ğ£ÑéÎÄ¼ş´óĞ¡
+        // æ ¡éªŒæ–‡ä»¶å¤§å°
         struct stat st;
         if (stat(programe_path.c_str(), &st) < 0) {
 			pkt.err_ = -EACCES;
@@ -573,7 +573,7 @@ void agv_shell_session::on_run_script(const std::shared_ptr<nsp::proto::proto_ms
 
 int agv_shell_session::on_update_cmd_list(const std::shared_ptr<nsp::proto::proto_process_list_reponse>& data)
 {
-	nsp::proto::proto_common_stream pkt(PKTTYPE_AGV_SHELL_SET_PROCESS_LIST_ACK);
+	nsp::proto::proto_process_list_reponse_t pkt(PKTTYPE_AGV_SHELL_SET_PROCESS_LIST_ACK);
 	pkt.head_.id_ = data->head_.id_;
 	pkt.head_.err_ = 0;
 	pkt.head_.size_ = pkt.length();
@@ -592,10 +592,9 @@ int agv_shell_session::on_update_cmd_list(const std::shared_ptr<nsp::proto::prot
 		vct_agv.push_back(agv_info);
 	}
 	int res = update_config_file(vct_agv);
-	if (res == 0)pkt.common_stream = "0";
-	else pkt.common_stream = "-1";
+	if (res == 0) pkt.process_list_ = data->process_list_;
 	
-	pkt.pkt_id = data->pkt_id_;
+	pkt.pkt_id_ = data->pkt_id_;
 	pkt.head_.size_ = pkt.length();
 	return psend(&pkt);
 }
@@ -774,7 +773,7 @@ int agv_shell_session::search_file(
 			}
 			continue;
 		}
-		localtime_s(&tm_time, &filedata.time_write);//Ê±¼ä×ª»»
+		localtime_s(&tm_time, &filedata.time_write);//æ—¶é—´è½¬æ¢
 		sprintf(file_modify_time, "%04d%02d%02d_%02d%02d%02d", tm_time.tm_year + 1900, tm_time.tm_mon + 1, tm_time.tm_mday, tm_time.tm_hour, tm_time.tm_min, tm_time.tm_sec);
 		if ( nsp::toolkit::singleton<global_parameter>::instance()->check_file(file_name, file_modify_time, start_time, end_time) != 0){
 			continue;
@@ -880,7 +879,7 @@ int agv_shell_session::on_backup_files(const std::shared_ptr<nsp::proto::proto_l
 	compressed_file += tar_file;
 
 	set_get_file_task(data->task_id, compressed_file);
-	//´òÑ¹Ëõ°ü 
+	//æ‰“å‹ç¼©åŒ… 
 	std::vector<std::string> backup_files;
 	for (const auto iter : data->vct_log_file_name_)
 	{
@@ -890,7 +889,7 @@ int agv_shell_session::on_backup_files(const std::shared_ptr<nsp::proto::proto_l
 			backup_files.push_back(iter);
 		}
 	}
-	//Ñ¹Ëõ³ÉÒ»¸öÎÄ¼ş  client Ö÷¶¯À­È¡ 
+	//å‹ç¼©æˆä¸€ä¸ªæ–‡ä»¶  client ä¸»åŠ¨æ‹‰å– 
 	if(backup_files.size() > 0) {
 		compress_files(backup_files, compressed_file);
 		pkt.vct_log_file_name_.push_back(compressed_file);
@@ -913,7 +912,7 @@ void agv_shell_session::on_backupdemarcate(const std::shared_ptr<nsp::proto::pro
 		pkt.head_.err_ = -EINVAL;
 		pkt.msg_int = -EINVAL;
 		psend(&pkt);
-		loerror("agv_shell") << "failed to build backup demarcate file.";//Î´ÄÜ½âÎö±¸·İ±ê¶¨ÎÄ¼şÊı¾İ°ü
+		loerror("agv_shell") << "failed to build backup demarcate file.";//æœªèƒ½è§£æå¤‡ä»½æ ‡å®šæ–‡ä»¶æ•°æ®åŒ…
 		return;
 	}
 	pkt.head_.id_ = data->head_.id_;
@@ -924,12 +923,12 @@ void agv_shell_session::on_backupdemarcate(const std::shared_ptr<nsp::proto::pro
 	std::string src_path = "";
 	if (tmp.substr(0, 2) == "./")
 	{
-		//Ìæ»»Ïà¶ÔÂ·¾¶
+		//æ›¿æ¢ç›¸å¯¹è·¯å¾„
 		src_path = nsp::os::get_module_directory<char>() + "/standard/" + tmp.substr(2);
 	}
 	int res = run_copye_file_by_popen(src_path, des_path);
 
-	//»Ø°ü
+	//å›åŒ…
 	pkt.msg_int = res;
 	pkt.head_.size_ = pkt.length();
 	psend(&pkt);
