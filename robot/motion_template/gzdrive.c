@@ -169,7 +169,6 @@ struct vcu_common_report {
 
 ////////////////////////////////////        对象和功能结构定义部分     /////////////////////////////////////////////////////////////////////////////
 #define GZD_UDP_PORT                (0x5000)
-//#define GZD_UDP_TARGET            ("10.10.100.169")
 #define GZD_UDP_TARGET              ("192.168.0.2")
 #define GZD_UDP_LOCAL               ("192.168.0.3")
 #define GZD_DEVICE_CONFIG_PORT      (0x4002)

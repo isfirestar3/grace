@@ -32,7 +32,6 @@
 
 #include <time.h>
 
-#include "memdump.h"
 #include "pstorage.h"
 
 #pragma pack(push, 1)
@@ -74,7 +73,7 @@ int run__interval_control(posix__waitable_handle_t *waiter, uint64_t begin_tick,
     return interval;
 }
 
-int run__algorithm_traj_control(void *memory_dump_object) {
+int run__algorithm_traj_control() {
     int retval = -1;
 
     posix__boolean_t sim = run__getarg_simflag();
@@ -280,7 +279,6 @@ void *run__navigation_proc(void *argv) {
     uint64_t begin_tick;
     var__error_handler_t *err;
     static const uint32_t NAVIGATION_INTERVAL = 20;
-    void *memory_dump_object;
 
     if (posix__init_synchronous_waitable_handle(&waiter) < 0) {
         return NULL;
@@ -294,26 +292,25 @@ void *run__navigation_proc(void *argv) {
     }
     navigation_error_as_fatal = err->navigation_error_as_fatal_;
     var__release_object_reference(err);
-
-    /*  创建内存记录对象, 不成功也不影响进程运行 */
-    memory_dump_object = NULL;
-    if (allocate_memory_dump(&memory_dump_object) < 0) {
-        memory_dump_object = NULL;
-    }
 	
+	/* navigation thread binding on CPU-3 */
 	cpu_set_t set;
     CPU_ZERO(&set);
     CPU_SET(3, &set);
     if (pthread_setaffinity_np(pthread_self(), sizeof(set), &set) == -1) {
-        log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout,"nav thread bind cpu3 error.");
-    }
+        log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout,
+			"nav thread bind cpu3 error.");
+    }else{
+		log__save("motion_template", kLogLevel_Info, kLogTarget_Filesystem | kLogTarget_Stdout,
+			"setaffinity_np successful,navigation thread binding on CPU-3");
+	}
 
     log__save("motion_template", kLogLevel_Info, kLogTarget_Filesystem | kLogTarget_Stdout,"navigation loop success startup.");
 
     while (1) {
         begin_tick = posix__gettick();
 
-        if (run__algorithm_traj_control(memory_dump_object) < 0) {
+        if (run__algorithm_traj_control() < 0) {
             log__save("motion_template", kLogLevel_Warning, kLogTarget_Filesystem | kLogTarget_Stdout, "navigation loop executive fault.");
             if (navigation_error_as_fatal) {
                 var__mark_framwork_error(kVarFixedObject_Navigation, var__make_error_code(kVarType_Navigation, kFramworkFatal_NavigationExecutiveFault));
@@ -378,18 +375,21 @@ int main(int argc, char **argv) {
             "****************************************************************************";
 
 #if !_WIN32
-    /* Ctrl + C 控制进程完整安全的退出 
-        signal(SIGINT, &sighandler);
-     */
+    /* Ctrl + C to terminated process add  
+        signal(SIGINT, &sighandler); */
     signal(SIGPIPE, &sighandler);
-    /* 为了不随终端关闭， 是否应该增加这个处理？ 能否真正替代 nohup(1)? */
     signal(SIGHUP, SIG_IGN);
+	
+	/* whole process binding on CPU-0 */
 	cpu_set_t set;
     CPU_ZERO(&set);
     CPU_SET(0, &set);
     if (sched_setaffinity(0, sizeof(cpu_set_t), &set) == -1) {
         log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout,"main bind cpu0 error.");
-    }
+    }else{
+		log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout,
+			"sched_setaffinity successful, process binding on CPU-0.");
+	}
 #endif
 
     /* 检查参数并执行异化  */
