@@ -94,12 +94,12 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="docks_mgr.cpp" />
-    <ClCompile Include="motion_interface.cpp" />
+    <ClInclude Include="..\..\package\inc\motion_interface\docks_mgr.h" />
+    <ClInclude Include="..\..\package\inc\motion_interface\motion_interface.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\sdk\misc\docks_mgr.h" />
-    <ClInclude Include="..\..\sdk\misc\motion_interface.hpp" />
+    <ClCompile Include="docks_mgr.cpp" />
+    <ClCompile Include="motion_interface.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

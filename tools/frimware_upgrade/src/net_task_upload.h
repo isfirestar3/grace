@@ -14,11 +14,8 @@ public:
 public:
 	void on_task();
 	//注册回调函数，参数一：收到数据来自哪个ip地址，参数二：数据属于哪个协议类型，参数三：数据部分,当前完成百分比,参数四：当前一片数据是否成功
-	void regiset_callback(const std::function<void(const std::string&, const int, const std::string& data, const nsp::proto::errorno_t)>& func);
-	
-private:
+	void regiset_callback(const std::function<void(const std::string&, const int type, const int, const nsp::proto::errorno_t)>& func);
 
-	void get_bin_file();
 private:
 	std::string ip_local_;
 	std::string ip_addr_;
@@ -27,9 +24,5 @@ private:
 	unsigned int firmware_length_;
 	std::string file_name_;
 
-	uint8_t	node_id_;
-	uint8_t  bas_serial_number_;
-	int	 is_can_type_;
-
-	std::function<void(const std::string&, const int operate_type, const std::string& , const nsp::proto::errorno_t)> function_callback_;
+	std::function<void(const std::string&, const int type, const int, const nsp::proto::errorno_t)> function_callback_;
 };

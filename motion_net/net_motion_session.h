@@ -60,7 +60,7 @@ namespace mn {
 
 	private:
 		//  receive keep alive packet 
-		int recv_keep_alive(const unsigned char *buffer, int &cb, const nsp::tcpip::endpoint &r_ep);
+		int recv_keep_alive(const unsigned char *buffer, int &cb);
 	};
 
 	class net_motion_session : public nsp::tcpip::tcp_application_client<nsp::proto::nspdef::protocol> {
@@ -76,7 +76,6 @@ namespace mn {
 		// this value should be use by timeout check.
 		std::atomic<uint64_t> tcp_pkt_timed_ { 0 };
 		std::atomic<uint64_t> udp_pkt_timed_ { 0 };
-		int udp_need_send{ 0 };
 		std::atomic<int> login_error_ = { 0 };
 
 		mutable std::recursive_mutex lock_notify_change_;

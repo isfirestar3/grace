@@ -1,9 +1,0 @@
-<root>
-	<vehicles>
-		<vehicle id="1" ip="192.168.1.5" port="4409"/>
-		<vehicle id="2" ip="192.168.1.10" port="409"/>
-		<vehicle id="3" ip="10.10.100.84" port="409"/>
-	</vehicles>
-	<search_type>1</search_type>
-</root>
-

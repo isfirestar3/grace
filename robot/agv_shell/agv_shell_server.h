@@ -3,13 +3,11 @@
 
 #include "agv_shell_session.h"
 #include "frimware_task.h"
+#include "proto_msg.h" //file_status
 #include "task.h"
 #include "task_scheduler.hpp"
 #include "singleton.hpp"
-
-#if !defined AGVSH_PORT     
-#define AGVSH_PORT (4410)           // 依赖菜鸟项目的路由映射， 只能使用这个 TCP:4410 端口
-#endif
+#include "sys_info.h" //sys_info
 
 class agv_shell_server 
 {
@@ -34,11 +32,16 @@ public:
 	int post_frimware_download(const uint32_t link, const std::string& file_path);
 
 	int on_frimware_restart(const uint32_t link, const int frimware_ty, const std::string& target_ep);
-	void on_query_vcu_keep_alive_status(const HTCPLINK link);
-	void on_set_vcu_keep_alive_status(const HTCPLINK link, int status);
-	int post_vcu_keep_alive_status(const HTCPLINK link, const int proto_type, int status);
+	void on_query_vcu_keep_alive_status(const HTCPLINK link, const unsigned char *buffer, int cb);
+	void on_set_vcu_keep_alive_status(const HTCPLINK link, uint32_t id, int status);
+	int post_vcu_keep_alive_status(const HTCPLINK link, int id, const int proto_type, int status, int err);
 	//void on_deal_process_cmd(const HTCPLINK link, int cmd, int process_id); 
 	void on_deal_process_cmd(const HTCPLINK link, const std::shared_ptr<nsp::proto::proto_command_process> p_info);
+	
+	int on_get_sysinfo_fixed(const HTCPLINK link, const unsigned char *buffer, int cb);
+	int on_get_sysinfo_changed(const HTCPLINK link, const unsigned char *buffer, int cb);
+	int post_pkgTsession_bylink(const HTCPLINK link, const void *buffer, int cb);
+	int post_pkgTsession_bylink(const HTCPLINK link, const nsp::proto::proto_interface *package);
 
 	uint16_t get_client_number(){ return vct_lnk_.size(); }
 	void add_client_lnk(const uint32_t link);
@@ -49,10 +52,16 @@ public:
 
 	void close_all();
 	void post_notify_all(const nsp::proto::proto_interface& package);
-	void post_file_mutex(const int status);
-	void post_shell_version(const std::string &shell_version);
+	void post_file_mutex(const uint32_t link, const unsigned char *buffer, int cb);
 
-	void post_tar_backups(const uint32_t lnk, const std::string& des_file);
+	void post_tar_backups(const uint32_t lnk, int id, const std::string& des_file, int err);
+	
+	//blank box
+	void post_write_file_status(const uint32_t link, const int pkt_id, const uint64_t file_id, 
+		const uint32_t block_num, int error_code);
+
+	void post_read_file_status(const uint32_t link, const int pkt_id, const uint64_t file_id, 
+		const uint32_t block_num, const uint32_t off, std::string& data, int error_code);
 
 private:
 	void initlization();
@@ -83,6 +92,8 @@ private:
 	std::thread* alive_check_ = nullptr;
 	std::atomic<int> is_exist_{ 0 };
 	nsp::os::waitable_handle check_wait_;
+	
+	sys_info sys_info_;
 };
 
 

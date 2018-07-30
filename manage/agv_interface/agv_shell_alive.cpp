@@ -97,6 +97,7 @@ void agv_shell_alive::run_check_th()
 					client_session->add_alive_count();
 					iter++;
 				}
+				client_session->post_keeplive_pkt();
 			}
 		}
 	}

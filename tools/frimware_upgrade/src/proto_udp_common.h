@@ -38,13 +38,11 @@ namespace nsp{
 				const unsigned char *build(const unsigned char *bytes, int &cb)
 				{
 					if (!bytes || cb < length())return nullptr;
-					const unsigned char *pos = bytes;
-					//pos = head_.build(pos, cb);
-					memcpy_s(&data_len_, sizeof(data_len_), pos, sizeof(data_len_));
-					pos += sizeof(data_len_);
+					memcpy_s(&data_len_, sizeof(data_len_), bytes, sizeof(data_len_));
+					bytes += sizeof(data_len_);
 					cb -= sizeof(data_len_);
-					data_.assign((char*)pos, cb);
-					return pos;
+					data_.assign((char*)bytes,cb);
+					return bytes;
 				}
 
 				void set_sub_operate(uint8_t value){
@@ -54,69 +52,6 @@ namespace nsp{
 			}common_data;
 		#pragma pack(pop)
 
-#pragma pack(push, 1)
-			typedef struct __can_data : public nsp::proto::proto_interface{
-				uint8_t can_cmd;
-				uint8_t	can_serial_index_0;
-				uint8_t can_serial_index_1;
-				uint8_t can_node_id;
-				uint32_t data_length;
-				std::string data_;//Êý¾Ý¿é
-
-				__can_data(uint8_t cmd, uint16_t serial_index, uint8_t node_id )
-				{
-					can_cmd = cmd;
-					can_serial_index_1 = serial_index & 0x00ff;
-					can_serial_index_0 = serial_index >>8 & 0x00ff;
-					can_node_id = node_id;
-					data_length = 0;
-				}
-
-				__can_data()
-				{
-					can_cmd = 0;
-					can_serial_index_0 = 0;
-					can_serial_index_1 = 0;
-					can_node_id = 0;
-					data_length = 0;
-				}
-
-				const int length() const
-				{
-					return sizeof(can_cmd)+sizeof(can_serial_index_0)+sizeof(can_serial_index_1)+sizeof(can_node_id)+sizeof(data_length)+data_length*sizeof(uint8_t);
-				}
-
-				unsigned char *serialize(unsigned char*bytes)const
-				{
-					*bytes++ = can_cmd;
-					*bytes++ = can_serial_index_0;
-					*bytes++ = can_serial_index_1;
-					*bytes++ = can_node_id;
-					memcpy_s(bytes, sizeof(uint32_t), &data_length, sizeof(uint32_t));
-					bytes += sizeof(uint32_t);
-					for (size_t i = 0; i < data_.size(); i++){
-						memcpy_s(bytes, sizeof(unsigned char), &data_.at(i), sizeof(unsigned char));
-						bytes += sizeof(unsigned char);
-					}
-					return bytes;
-				}
-
-				const unsigned char *build(const unsigned char *bytes, int &cb)
-				{
-					if (!bytes || cb < length())return nullptr;
-
-					can_cmd = *bytes++;
-					can_serial_index_0 = *bytes++;
-					can_serial_index_1 = *bytes++;
-					can_node_id = *bytes++;
-					memcpy_s(&data_length,sizeof(uint32_t),bytes,sizeof(uint32_t));
-					bytes += sizeof(uint32_t);
-					data_.assign((char*)bytes, cb);
-					return bytes;
-				}
-
-			}can_data_t;
-#pragma pack(pop)
 
 			class unpackage{
 			private:

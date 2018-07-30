@@ -5,36 +5,75 @@
 
 namespace nsp{
 	namespace proto{
+#pragma pack(push, 1)
+		typedef struct proto_pre_login_agv : public nsp::proto::proto_interface {
+			proto_pre_login_agv(uint32_t type) :head_(type) {}
+			proto_pre_login_agv(){}
+			~proto_pre_login_agv() {}
 
-		typedef struct proto_login_agv : public nsp::proto::proto_interface {
-			proto_login_agv(uint32_t type) :head(type) {}
-			proto_login_agv(){}
-			~proto_login_agv() {}
-
-			nsp::proto::agv_shell_proto_head head;
-			nsp::proto::proto_crt_t<uint32_t>  login_identify;
+			nsp::proto::proto_head head_;
+			nsp::proto::proto_string_t<char> key_;
 
 			unsigned char *serialize(unsigned char *bytes) const
 			{
 				unsigned char *pos = bytes;
-				pos = head.serialize(pos);
-				pos = login_identify.serialize(pos);
+				pos = head_.serialize(pos);
+				pos = key_.serialize(pos);
 				return pos;
 			}
 
 			const unsigned char *build(const unsigned char *bytes, int &cb)
 			{
 				const unsigned char *pos = bytes;
-				pos = head.build(pos, cb);
-				pos = login_identify.build(pos, cb);
+				pos = head_.build(pos, cb);
+				pos = key_.build(pos, cb);
 				return pos;
 			}
 
 			const int length() const
 			{
-				return sizeof(uint32_t) + head.length();
+				return head_.length() + key_.length();
 			}
-		}proto_login_agv_t;
+		} proto_pre_login_agv_t;
+		
+		typedef struct proto_login_agv : public nsp::proto::proto_interface {
+			proto_login_agv(uint32_t type) :head_(type) {}
+			proto_login_agv(){}
+			~proto_login_agv() {}
+
+			nsp::proto::proto_head head_;
+			nsp::proto::proto_crt_t<int> acct_; // role
+			nsp::proto::proto_crt_t<int> access_;
+			nsp::proto::proto_string_t<char> original_buffer_;
+			nsp::proto::proto_string_t<char> encrypted_md5_;
+
+			unsigned char *serialize(unsigned char *bytes) const
+			{
+				unsigned char *pos = bytes;
+				pos = head_.serialize(pos);
+				pos = acct_.serialize(pos);
+				pos = access_.serialize(pos);
+				pos = original_buffer_.serialize(pos);
+				pos = encrypted_md5_.serialize(pos);
+				return pos;
+			}
+
+			const unsigned char *build(const unsigned char *bytes, int &cb)
+			{
+				const unsigned char *pos = bytes;
+				pos = head_.build(pos, cb);
+				pos = acct_.build(pos, cb);
+				pos = access_.build(pos, cb);
+				pos = original_buffer_.build(pos, cb);
+				pos = encrypted_md5_.build(pos, cb);
+				return pos;
+			}
+
+			const int length() const
+			{
+				return head_.length() + access_.length() + acct_.length() + original_buffer_.length() + encrypted_md5_.length();
+			}
+		} proto_login_agv_t;
 
 		typedef struct proto_msg_int :public nsp::proto::proto_interface {
 
@@ -42,7 +81,7 @@ namespace nsp{
 			proto_msg_int(int type) : head_(type){}
 			~proto_msg_int(){}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_crt_t<int> msg_int_;
 
 			unsigned char * serialize(unsigned char *byte_stream) const
@@ -73,7 +112,7 @@ namespace nsp{
 			proto_msg(int type) : head_(type){}
 			~proto_msg(){}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_string_t<char> msg_;
 
 			unsigned char * serialize(unsigned char *byte_stream) const
@@ -142,7 +181,7 @@ namespace nsp{
 			proto_process_list_reponse(int type) : head_(type) {}
 			~proto_process_list_reponse() {}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_crt_t<int> pkt_id_;
 			nsp::proto::proto_vector_t<proto_process> process_list_;
 
@@ -171,59 +210,13 @@ namespace nsp{
 
 		} proto_process_list_reponse_t;
 
-		typedef struct proto_process_status : public nsp::proto::proto_interface {
-			proto_process_status(uint32_t type) :head(type) {}
-			proto_process_status(){}
-			~proto_process_status() {}
-
-			nsp::proto::agv_shell_proto_head head;
-			nsp::proto::proto_crt_t<char>  cmd_s = (2 >> 8) & 0xFF;
-			nsp::proto::proto_crt_t<char>  status_;
-			nsp::proto::proto_crt_t<char>  agv_shell_reply_;
-			nsp::proto::proto_crt_t<char>  cmd_end = 0;
-			nsp::proto::proto_crt_t<uint64_t> robot_time_;
-			nsp::proto::proto_crt_t<int>		vcu_enable_;
-	
-			unsigned char *serialize(unsigned char *bytes) const
-			{
-				unsigned char *pos = bytes;
-				pos = head.serialize(pos);
-				pos = cmd_s.serialize(pos);
-				pos = status_.serialize(pos);
-				pos = agv_shell_reply_.serialize(pos);
-				pos = cmd_end.serialize(pos);
-				pos = robot_time_.serialize(pos);
-				pos = vcu_enable_.serialize(pos);
-				return pos;
-			}
-
-			const unsigned char *build(const unsigned char *bytes, int &cb)
-			{
-				const unsigned char *pos = bytes;
-				pos = head.build(pos, cb);
-				pos = cmd_s.build(pos, cb);
-				pos = status_.build(pos, cb);
-				pos = agv_shell_reply_.build(pos, cb);
-				pos = cmd_end.build(pos, cb);
-				pos = robot_time_.build(pos, cb);
-				pos = vcu_enable_.build(pos, cb);
-				return pos;
-			}
-
-			const int length() const
-			{
-				return head.length() + cmd_s.length() + status_.length() + agv_shell_reply_.length() + cmd_end.length() + robot_time_.length() + vcu_enable_.length();
-			}
-
-		} proto_process_status_t;
-
 		typedef struct proto_set_keepalive_status : public nsp::proto::proto_interface {
 
 			proto_set_keepalive_status() {};
 			proto_set_keepalive_status(int type) : head_(type) {}
 			~proto_set_keepalive_status() {}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_crt_t<int> keepalive_status_;
 
 			unsigned char * serialize(unsigned char *byte_stream) const
@@ -255,7 +248,7 @@ namespace nsp{
 			proto_keepalive_status_reponse(int type) : head_(type) {}
 			~proto_keepalive_status_reponse() {}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_crt_t<int> status_;
 
 			unsigned char * serialize(unsigned char *byte_stream) const
@@ -286,7 +279,7 @@ namespace nsp{
 			proto_command_process(int type) : head_(type) {}
 			~proto_command_process(){}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_crt_t<int> command_;
 			nsp::proto::proto_crt_t<int> process_id_all_;
 			nsp::proto::proto_vector_t<nsp::proto::proto_string_t<char> > list_param_;
@@ -322,7 +315,7 @@ namespace nsp{
 			proto_common_stream(int type) : head_(type) {}
 			~proto_common_stream() {}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_crt_t<int> pkt_id;
 			nsp::proto::proto_string_t<char> common_stream;
 
@@ -355,7 +348,7 @@ namespace nsp{
 			proto_local_info(int type) : head_(type) {}
 			~proto_local_info() {}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_crt_t<int> agv_port_;
 			nsp::proto::proto_crt_t<int> fts_port_;
 			nsp::proto::proto_string_t<char> mac_addr_;
@@ -426,7 +419,7 @@ namespace nsp{
 			proto_mac_vec(int type) : head_(type) {}
 			~proto_mac_vec() {}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_crt_t<int>  pkt_id;
 			nsp::proto::proto_vector_t<proto_mac_info> vct_mac_;
 
@@ -459,7 +452,7 @@ namespace nsp{
 			proto_log_type(int type) : head_(type) {}
 			~proto_log_type() {}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_string_t<char> log_type_;
 
 			unsigned char * serialize(unsigned char *byte_stream) const
@@ -489,7 +482,7 @@ namespace nsp{
 			proto_log_type_vct(int type) : head_(type) {}
 			~proto_log_type_vct() {}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_vector_t<proto_log_type> vct_log_type_;
 
 			unsigned char * serialize(unsigned char *byte_stream) const
@@ -519,15 +512,17 @@ namespace nsp{
 			proto_log_condition(int type) : head_(type) {}
 			~proto_log_condition() {}
 
-			nsp::proto::agv_shell_proto_head head_;
-			nsp::proto::proto_string_t<char>start_time;
-			nsp::proto::proto_string_t<char>end_time;
+			nsp::proto::proto_head head_;
+			nsp::proto::proto_crt_t<unsigned int> task_id = 0;
+			nsp::proto::proto_string_t<char> start_time;
+			nsp::proto::proto_string_t<char> end_time;
 			nsp::proto::proto_vector_t<proto_log_type> vct_log_type_;
 
 			unsigned char * serialize(unsigned char *byte_stream) const
 			{
 				unsigned char *pos = byte_stream;
 				pos = head_.serialize(pos);
+				pos = task_id.serialize(pos);
 				pos = start_time.serialize(pos);
 				pos = end_time.serialize(pos);
 				pos = vct_log_type_.serialize(pos);
@@ -538,6 +533,7 @@ namespace nsp{
 			{
 				unsigned const char *pos = byte_stream;
 				pos = head_.build(pos, cb);
+				pos = task_id.build(pos, cb);
 				pos = start_time.build(pos, cb);
 				pos = end_time.build(pos,cb);
 				pos = vct_log_type_.build(pos, cb);
@@ -546,21 +542,24 @@ namespace nsp{
 
 			const int length() const
 			{
-				return head_.length() + start_time.length() + end_time.length()+ vct_log_type_.length();
+				return head_.length() + task_id.length() + start_time.length() + end_time.length() + vct_log_type_.length();
 			}
 		}proto_log_condition_t;
+
 		typedef struct proto_logs_file_path : public nsp::proto::proto_interface{
 			proto_logs_file_path() {}
 			proto_logs_file_path(int type) : head_(type) {}
 			~proto_logs_file_path() {}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
+			nsp::proto::proto_crt_t<unsigned int> task_id = 0;
 			nsp::proto::proto_vector_t<nsp::proto::proto_string_t<char> > vct_log_file_name_;
 
 			unsigned char * serialize(unsigned char *byte_stream) const
 			{
 				unsigned char *pos = byte_stream;
 				pos = head_.serialize(pos);
+				pos = task_id.serialize(pos);
 				pos = vct_log_file_name_.serialize(pos);
 				return pos;
 			}
@@ -569,13 +568,14 @@ namespace nsp{
 			{
 				unsigned const char *pos = byte_stream;
 				pos = head_.build(pos, cb);
+				pos = task_id.build(pos, cb);
 				pos = vct_log_file_name_.build(pos, cb);
 				return pos;
 			}
 
 			const int length() const
 			{
-				return head_.length() + vct_log_file_name_.length();
+				return head_.length() + task_id.length() + vct_log_file_name_.length();
 			}
 		}proto_logs_file_path_t;
 		
@@ -584,7 +584,7 @@ namespace nsp{
 			proto_logs_cancel(int type) : head_(type) {}
 			~proto_logs_cancel() {}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 
 			unsigned char * serialize(unsigned char *byte_stream) const
 			{
@@ -611,7 +611,7 @@ namespace nsp{
 			proto_msg_int_sync(int type) : head_(type) {}
 			~proto_msg_int_sync() {}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_crt_t<int> pkt_id;
 			nsp::proto::proto_crt_t<int> msg_int;
 
@@ -646,7 +646,7 @@ namespace nsp{
 			proto_shell_version(int type) : head_(type) {}
 			~proto_shell_version() {}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_string_t<char>version_;
 			
 
@@ -671,5 +671,6 @@ namespace nsp{
 				return head_.length() + version_.length();
 			}
 		}proto_shell_version_t;
+#pragma pack(pop)
 	}
 }

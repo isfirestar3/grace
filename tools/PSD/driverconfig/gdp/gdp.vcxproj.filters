@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;cxx;c;def</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h</Extensions>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{9777d141-4581-4dc9-b154-b6ee02fa08a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\nsp">
+      <UniqueIdentifier>{f348d55b-7706-4846-a3da-c6474cc665c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{e168acfb-9f3a-43e6-964b-099139dccde9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gui">
+      <UniqueIdentifier>{29172735-3ecd-4b1c-bc8b-be566231d3f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\nsp\icom">
+      <UniqueIdentifier>{bf19051c-40ff-43f0-a465-0b9742730a4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{52155016-b66d-4a0c-9fee-620d712a167c}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{8f439dae-3c6c-4175-b618-2354657e4ecb}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Translation Files">
+      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
+      <Extensions>ts</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="gdp_global.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\icom\avltree.h">
+      <Filter>src\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\icom\base64.h">
+      <Filter>src\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\icom\clist.h">
+      <Filter>src\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\icom\compiler.h">
+      <Filter>src\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\icom\crc32.h">
+      <Filter>src\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\icom\des.h">
+      <Filter>src\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\icom\logger.h">
+      <Filter>src\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\icom\md5.h">
+      <Filter>src\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\icom\nis.h">
+      <Filter>src\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\icom\nisdef.h">
+      <Filter>src\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\icom\object.h">
+      <Filter>src\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\icom\posix_atomic.h">
+      <Filter>src\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\icom\posix_ifos.h">
+      <Filter>src\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\icom\posix_naos.h">
+      <Filter>src\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\icom\posix_string.h">
+      <Filter>src\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\icom\posix_thread.h">
+      <Filter>src\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\icom\posix_time.h">
+      <Filter>src\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\icom\posix_wait.h">
+      <Filter>src\nsp\icom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\application_network_framwork.hpp">
+      <Filter>src\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\endpoint.h">
+      <Filter>src\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\exception.hpp">
+      <Filter>src\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\log.h">
+      <Filter>src\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\network_handler.h">
+      <Filter>src\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\old.hpp">
+      <Filter>src\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\os_util.hpp">
+      <Filter>src\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\serialize.hpp">
+      <Filter>src\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\singleton.hpp">
+      <Filter>src\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\swnet.h">
+      <Filter>src\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\task_scheduler.hpp">
+      <Filter>src\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nsp\toolkit.h">
+      <Filter>src\nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_waitdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gui\waitdialog_p.h">
+      <Filter>src\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gui\watcherwaiter.hpp">
+      <Filter>src\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\common_impls.hpp">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\applicationcursor.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gui\messagebox.h">
+      <Filter>src\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gui\watcherdialog.hpp">
+      <Filter>src\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gui\progressbar_p.h">
+      <Filter>src\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\gdp_def.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gui\guitoolkit.h">
+      <Filter>src\gui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Resources\gdp.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\waitdialog.h">
+      <Filter>src\gui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\waitdialog.ui">
+      <Filter>src\gui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\watcherprogressbar.hpp">
+      <Filter>src\gui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\progressbar.h">
+      <Filter>src\gui</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\images\wait.gif">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles\qrc_gdp.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\nsp\encrypt.cpp">
+      <Filter>src\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\nsp\endpoint.cpp">
+      <Filter>src\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\nsp\log.cpp">
+      <Filter>src\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\nsp\network_handler.cpp">
+      <Filter>src\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\nsp\os_util.cpp">
+      <Filter>src\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\nsp\swnet.cpp">
+      <Filter>src\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\nsp\toolkit.cpp">
+      <Filter>src\nsp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\waitdialog.cpp">
+      <Filter>src\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_waitdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_waitdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\waitdialog_p.cpp">
+      <Filter>src\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\applicationcursor.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\messagebox.cpp">
+      <Filter>src\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\progressbar.cpp">
+      <Filter>src\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_progressbar.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_progressbar.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\progressbar_p.cpp">
+      <Filter>src\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\guitoolkit.cpp">
+      <Filter>src\gui</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="gdp_zh.ts">
+      <Filter>Translation Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

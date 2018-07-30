@@ -33,13 +33,14 @@ private:
 	void notify_timeout(std::shared_ptr<agv_motion::motion_ack> &motion);
 
 private:
-	nsp::os::waitable_handle timeout_waiter_;
+	uint32_t pid_ = 1;
 	std::map<uint32_t, std::shared_ptr<agv_motion::motion_ack>> map_callback_;
 	std::mutex mutex_;
 	std::thread * thread_ = nullptr;
 	std::condition_variable condition_;
+	bool thread_exit_ = false;
+	nsp::os::waitable_handle timeout_waiter_;
+
 	std::function<void()> notify_callback_ = nullptr;
-	int thread_exit_ = 0;
-	uint32_t pid_ = 1;
 };
 

@@ -161,29 +161,28 @@ namespace mn {
 		return retval;
 	}
 
-	int net_motion_udp_session::recv_keep_alive(const unsigned char *buffer, int &cb, const nsp::tcpip::endpoint &r_ep) {
+	int net_motion_udp_session::recv_keep_alive(const unsigned char *buffer, int &cb) {
 		nsp::proto::proto_keep_alive_t keep_alive_ack;
 		if (keep_alive_ack.build(buffer, cb) < 0) {
 			return -1;
 		}
 
-		uint32_t robot_id_ = 0;
+		uint32_t robot_id = 0;
 		uint32_t pktid = keep_alive_ack.head_.id_;
 		{
 			std::lock_guard<decltype(mutex_locker_) > guard(mutex_locker_);
 			auto iter_pktid = map_pktid_robotid_.find(pktid);
 			if (iter_pktid != map_pktid_robotid_.end()) {
-				robot_id_ = iter_pktid->second;
-				auto iter_robotid = map_robotid_pktid_.find(robot_id_);
+				robot_id = iter_pktid->second;
+				auto iter_robotid = map_robotid_pktid_.find(robot_id);
 				if (iter_robotid != map_robotid_pktid_.end()) {
 					map_robotid_pktid_.erase(iter_robotid);
 				}
 				map_pktid_robotid_.erase(iter_pktid);
 			}
 		} 
-		if (robot_id_) {
-			mnlog_info << "recv a udp keepalive packet from " << r_ep.to_string();
-			nsp::toolkit::singleton<net_manager>::instance()->set_alive_session(robot_id_);
+		if (robot_id) {
+			nsp::toolkit::singleton<net_manager>::instance()->set_alive_session(robot_id);
 		}
 		return 0;
 	}
@@ -199,7 +198,7 @@ namespace mn {
 		uint32_t type = *(uint32_t *)(buffer + sizeof(uint32_t));
 		switch (type) {
 		case PKTTYPE_KEEPALIVE_UDP_ACK:
-			recv_keep_alive(buffer, cb, r_ep);
+			recv_keep_alive(buffer, cb);
 			break;
 		}
 	}
@@ -277,8 +276,6 @@ namespace mn {
 		encrypt_key_ = pkt->key_;
 		this->net_status_ = kNetworkStatus_Ready;
 		mnlog_info << "session received key, target: " << ep_.to_string();
-		// when status is ready, try to login ... 
-		try_login();
 		return 0;
 	}
 
@@ -596,15 +593,19 @@ namespace mn {
 
 	void net_motion_session::on_recvdata( const std::string &pkt ) {
 		tcp_pkt_timed_ = nsp::os::clock_gettime();
-		nsp::toolkit::singleton<net_manager>::instance()->schedule_async_receive(pkt,
+		nsp::toolkit::singleton<net_manager>::instance()->schedule_async_receive(pkt, 
 			std::bind(&net_motion_session::recv_dispatch, this, std::placeholders::_1, std::placeholders::_2));
 	}
 
 	void net_motion_session::on_connected() {
 		net_status_t exp = kNetworkStatus_Connecting;
-		tcp_pkt_timed_ = nsp::os::clock_gettime();
+		tcp_pkt_timed_ = nsp::os::clock_gettime(); // begin of timedout check 
 		if (net_status_.compare_exchange_strong(exp, kNetworkStatus_Connected)) {
 			mnlog_info << "session successful connected to target host " << remote_.to_string();
+		} else if (kNetworkStatus_Ready != net_status_) {
+			tcp_pkt_timed_ = 0;
+			mnlog_warn << "session wrong status when connected completed.status=" << net_status_;
+			close();
 		} else {
 			mnlog_info << "session successful connected to target host " << remote_.to_string() << ", status is " << net_status_;
 		}
@@ -629,8 +630,7 @@ namespace mn {
 			exp = kNetworkStatus_Actived;
 			if ( net_status_.compare_exchange_strong( exp, kNetworkStatus_Connecting ) ) {
 				mnlog_info << "try connect to host " << ep_.to_string();
-				tcp_pkt_timed_ = nsp::os::clock_gettime(); // begin of timedout check
-				if (connect2(ep_) < 0) {
+				if ( connect2( ep_ ) < 0 ) {
 					close();
 					mnlog_error << "failed to call ns API connect2.this link will be destory,robot:" << this->robot_id_;
 					break;
@@ -654,7 +654,7 @@ namespace mn {
 			nsp::toolkit::singleton<net_manager>::instance()->set_status(robot_id_, kNetworkStatus_Closed, err);
 		}
 		else {
-			mnlog_info << "session successful login to host " << ep_.to_string();
+			mnlog_info << "successful login to host " << ep_.to_string();
 			nsp::toolkit::singleton<net_manager>::instance()->set_status(robot_id_, kNetworkStatus_Established, 0);
 			notify_it((const void*)&net_status_, kNET_STATUS);
 		}
@@ -1151,6 +1151,9 @@ namespace mn {
 
 	// 周期性检查链接状态，并投递心跳包
 	int net_motion_session::keepalive() {
+		uint64_t now;
+		now = nsp::os::clock_gettime();
+
 		if (!enable_keepalive_) {
 			return 0;
 		}
@@ -1167,35 +1170,20 @@ namespace mn {
 				}
 			}
 
-			if (net_status_ < kNetworkStatus_Connected) {
-				nsp::tcpip::endpoint mn_ep;
-				if (kNetworkStatus_Established == net_status_) {
-					// connection is Established, use local ip:port
-					mn_ep = local_;
-				}
-				else {
-					// connection is not Established, use 0.0.0.0:0
-					nsp::tcpip::endpoint::build("0.0.0.0", 0, mn_ep);
-				}
-				if (!udp_need_send) {
-					mnlog_info << "start to send udp keepalive packet to " << ep_.to_string() << ", status is " << net_status_;
-					udp_need_send = 1;
-				}				// send udp keepalive package to target host
-				nsp::toolkit::singleton<net_manager>::instance()->send_alive_packet(robot_id_, mn_ep, ep_);
-			} else {
-				if (udp_need_send) {
-					mnlog_info << "stop to send udp keepalive packet to " << ep_.to_string() << ", status is " << net_status_;
-					udp_need_send = 0;
-				}
-				udp_pkt_timed_ = 0;
+			nsp::tcpip::endpoint mn_ep;
+			if (kNetworkStatus_Established == net_status_) {
+				// connection is Established, use local ip:port
+				mn_ep = local_;
 			}
-			uint64_t now;
-			now = nsp::os::clock_gettime();
-			if (udp_pkt_timed_ && (now - udp_pkt_timed_) > 20000000) {
-				// didn't recv ack packet in 2 seconds, don't need retry connect/login.
-				return 0;
-			} else if (0 == udp_pkt_timed_ && udp_need_send) {
-				// ack packet didn't recv, don't need retry connect/login.
+			else {
+				// connection is not Established, use 0.0.0.0:0
+				nsp::tcpip::endpoint::build("0.0.0.0", 0, mn_ep);
+			}
+			// send udp keepalive package to target host
+			nsp::toolkit::singleton<net_manager>::instance()->send_alive_packet(robot_id_, mn_ep, ep_);
+
+			if ((now - udp_pkt_timed_) > 20000000) {
+				// packet transfer does not exist in 2 seconds, don't need retry connect/login.
 				return 0;
 			}
 
@@ -1249,10 +1237,9 @@ namespace mn {
 			if (now > last_packet_time) {
 				uint64_t dur = now - last_packet_time;
 				// if no any packet transfer during 5 seconds, this link may be dead.
-				if (dur > LAST_PACKET_CHECK_TIMEOUT && kNetworkStatus_Closed != net_status_) {
+				if ( dur > LAST_PACKET_CHECK_TIMEOUT) {
 					mnlog_warn << "no any pakcet transfer during " << dur << " counts,this link " \
-						<< lnk_ << " maybe dead. local=" << local_.to_string() << " remote=" << remote_.to_string() \
-						<< ", status is " << net_status_ << ", now:" << now;
+						<< lnk_ << " maybe dead. local=" << local_.to_string() << " remote=" << remote_.to_string();
 					this->close();
 					return -1;
 				}

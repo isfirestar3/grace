@@ -129,14 +129,14 @@ int motion_interface::common_write_by_id(int id, mn::common_data &vct_write, voi
 			[&](uint32_t robot_id, const void *data) {
             if (!data) {
                 err = -1;
-                loerror("motion_interface") << "net_id:" << __net_id << " post_common_write_request failed,id = " << id;
+                loerror("agvbase") << "AgvBase:" << __net_id << " post_common_write_request failedï¼?dataï¼Œid = " << id;
                 water.sig();
                 return;
             }
 
 			asio_data_ = *(mn::asio_t*)(data);
             if (asio_data_.err_ < 0) {
-                loerror("motion_interface") << "net_id:" << __net_id << " post_common_write_request failedï¼Œasio_data->get_err() < 0,id = " << id;
+                loerror("agvbase") << "AgvBase:" << __net_id << " post_common_write_request failedï¼Œasio_data->get_err() < 0ï¼Œid = " << id;
                 err = -2;
                 water.sig();
                 return;
@@ -146,7 +146,7 @@ int motion_interface::common_write_by_id(int id, mn::common_data &vct_write, voi
         });
         if (iRet < 0)
         {
-            loerror("motion_interface") << "net_id:" << __net_id << " post_common_write_request failed,ret ="<<iRet<<",id = " << id;
+            loerror("agvbase") << "AgvBase:" << __net_id << " post_common_write_request failedï¼Œret < 0ï¼Œid = " << id;
 
             return -1;
         }

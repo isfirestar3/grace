@@ -1,4 +1,5 @@
 #include "file_can_read.h"
+#include "const.h"
 #include "log.h"
 
 file_can_read::file_can_read()

@@ -66,7 +66,7 @@ int init_cache_memory() {
     int i;
     
     if (!camera_cache) {
-        log__save("libgzcamera", kLogLevel_Info, kLogTarget_Filesystem, "allocate cache pool.");
+        log__save("libgzcamera", kLogLevel_Error, kLogTarget_Filesystem, "allocate cache pool.");
         if (NULL == (camera_cache = (struct cache_pool *) malloc(sizeof (struct cache_pool)))) {
             return -ENOMEM;
         }

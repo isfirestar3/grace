@@ -204,7 +204,6 @@ QVariant NodeItem::itemChange(GraphicsItemChange change, const QVariant& value)
 		{
 			if (pEdgeItem)
 			{
-				pEdgeItem->Adjust_CtrlPos_From_NodeChange();
 				pEdgeItem->Adjust();
 			}
 		}

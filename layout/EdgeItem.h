@@ -27,7 +27,6 @@ public:
 	void GetEdgeInfo(EDGEINFO& edgeInfo);
 	void InitMembers();
 	void Adjust();
-	void Adjust_CtrlPos_From_NodeChange();
 	void UpdateCtrlPoint(QPointF ctrlPos1, QPointF ctrlPos2);
 	QPointF InitCtrlPoint1Pos(NodeItem* pStartNode, NodeItem* pEndNode);
 	QPointF InitCtrlPoint2Pos(NodeItem* pStartNode, NodeItem* pEndNode);

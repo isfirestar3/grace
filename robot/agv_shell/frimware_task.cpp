@@ -454,7 +454,7 @@ void frimware_get_info_task::on_task(){
 	
 	//在未请求成功的情况下，做3次请求操作
 	std::string msg;
-	bool error = true;
+	int error = 0;
 	//在can协议获取自主驱动信息时只获取版本信息,型号信息,其他信息一概不需要获取
 	if (frimwre_type_ == CAN_CUSTOM_SOFTWARE)
 	{
@@ -463,10 +463,10 @@ void frimware_get_info_task::on_task(){
 		{
 			if (start_data_foward(ep) == 0)
 			{
-				error = false;
+				error = 0;
 				break;
 			}
-			error = true;
+			error = 1;
 		}
 		/*nsp::toolkit::singleton<agv_shell_server>::instance()->post_frimware_update(link_, 
 			frimwre_type_, error ? FRIMWARE_STATUS::kFailStartForward : FRIMWARE_STATUS::kNormal, 0);*/
@@ -475,24 +475,24 @@ void frimware_get_info_task::on_task(){
 		for (int i = 0; i < 3; i++){
 			if (get_vcu_version(ep) == 0){
 				msg = vcu_version_;
-				error = false;
+				error = 0;
 				break;
 			}
-			error = true;
+			error = 1;
 		}
-		nsp::toolkit::singleton<agv_shell_server>::instance()->post_frimware_info(link_, frimwre_type_, error ?
+		nsp::toolkit::singleton<agv_shell_server>::instance()->post_frimware_info(link_, frimwre_type_, error == 1 ?
 			FRIMWARE_STATUS::kFailReadVCUInfo : FRIMWARE_STATUS::kNormal, VCU_MESSAGE::VCU_Version, msg);
 
 		//获取型号信息
 		for (int i = 0; i < 3; i++){
 			if (get_vcu_type(ep) == 0){
 				msg = vcu_type_;
-				error = false;
+				error = 0;
 				break;
 			}
-			error = true;
+			error = 1;
 		}
-		nsp::toolkit::singleton<agv_shell_server>::instance()->post_frimware_info(link_, frimwre_type_, error ?
+		nsp::toolkit::singleton<agv_shell_server>::instance()->post_frimware_info(link_, frimwre_type_, error == 1 ?
 			FRIMWARE_STATUS::kFailReadVCUInfo : FRIMWARE_STATUS::kNormal, VCU_MESSAGE::VCU_Type, msg);
 	}
 	else
@@ -500,35 +500,35 @@ void frimware_get_info_task::on_task(){
 		for (int i = 0; i < 3; i++){
 			if (get_vcu_type(ep) == 0){
 				msg = vcu_type_;
-				error = false;
+				error = 0;
 				break;
 			}
-			error = true;
+			error = 1;
 		}
-		nsp::toolkit::singleton<agv_shell_server>::instance()->post_frimware_info(link_, frimwre_type_, error ?
+		nsp::toolkit::singleton<agv_shell_server>::instance()->post_frimware_info(link_, frimwre_type_, error == 1 ?
 			FRIMWARE_STATUS::kFailReadVCUInfo : FRIMWARE_STATUS::kNormal, VCU_MESSAGE::VCU_Type, msg);
 
 
 		for (int i = 0; i < 3; i++){
 			if (get_vcu_version(ep) == 0){
 				msg = vcu_version_;
-				error = false;
+				error = 0;
 				break;
 			}
-			error = true;
+			error = 1;
 		}
-		nsp::toolkit::singleton<agv_shell_server>::instance()->post_frimware_info(link_, frimwre_type_, error ?
+		nsp::toolkit::singleton<agv_shell_server>::instance()->post_frimware_info(link_, frimwre_type_, error == 1 ?
 			FRIMWARE_STATUS::kFailReadVCUInfo : FRIMWARE_STATUS::kNormal, VCU_MESSAGE::VCU_Version, msg);
 
 		for (int i = 0; i < 3; i++){
 			if (get_vcu_cpu(ep) == 0){
 				msg = cpu_info_;
-				error = false;
+				error = 0;
 				break;
 			}
-			error = true;
+			error = 1;
 		}
-		nsp::toolkit::singleton<agv_shell_server>::instance()->post_frimware_info(link_, frimwre_type_, error ?
+		nsp::toolkit::singleton<agv_shell_server>::instance()->post_frimware_info(link_, frimwre_type_, error == 1 ?
 			FRIMWARE_STATUS::kFailReadVCUInfo : FRIMWARE_STATUS::kNormal, VCU_MESSAGE::VCU_CPU, msg);
 	}
 
@@ -783,8 +783,9 @@ void frimware_download_task::on_task(){
 
 int frimware_download_task::download_bin_file_from_vcu(const nsp::tcpip::endpoint& vcu_endpoint_, const int block_number)
 {
+	FILE* handle = nullptr;
 	file_write_handler write_handler;
-	if (write_handler.create_file(file_name_, frimware_length_) < 0){
+	if ( !(handle = write_handler.create_file(file_name_, frimware_length_)) ){
 		return -1;
 	}
 
@@ -831,7 +832,7 @@ int frimware_download_task::download_bin_file_from_vcu(const nsp::tcpip::endpoin
 		{
 			loerror("agv_shell") << "failed to post download bin file request.";
 			//发送不成功
-			write_handler.close_file();
+			write_handler.close_file(handle);
 			return -1;
 		}
 		water.wait();
@@ -839,9 +840,9 @@ int frimware_download_task::download_bin_file_from_vcu(const nsp::tcpip::endpoin
 		if (asio_data_.get_err() == nsp::proto::errorno_t::kSuccessful)
 		{
 			//判断写入是否成功，如果成功，则回调至主页面，不成功，直接返回
-			if (write_handler.write_file(file_name_, recv_data.offset_, recv_data.data_context_) < 0){
+			if (write_handler.write_file(handle, recv_data.offset_, recv_data.data_context_) < 0){
 				loerror("agv_shell") << "failed to write download bin file block.";
-				write_handler.close_file();
+				write_handler.close_file(handle);
 				return -1;
 			}
 			current_status_ = FRIMWARE_STATUS::kBusy;
@@ -850,11 +851,11 @@ int frimware_download_task::download_bin_file_from_vcu(const nsp::tcpip::endpoin
 		else{
 			loerror("agv_shell") << "send download bin file block from vcu is timeout.";
 			//如果发现没有收到VCU的回包帧数据，则直接返回，不再发送下面的包
-			write_handler.close_file();
+			write_handler.close_file(handle);
 			return -1;
 		}
 	}
-	write_handler.close_file();
+	write_handler.close_file(handle);
 	return 0;
 }
 

@@ -38,7 +38,6 @@ public:
 public:
     void SetAllocatedAvailabeCallback(const std::function<int (int has_path)> &fn);
 	bool StartTaskPath(std::vector<trail_t> complete_task_path);	// 任务开始开始路径分配
-	bool UpdateTaskPath(std::vector<trail_t> complete_task_path);	// ÈÎÎñÖÐ¸üÐÂÂ·¾¶·ÖÅä
 	void FinishTaskPath();											// 任务介绍结束路径分配
 	bool CancelTaskPath();											// 任务取消，取消路径分配:确保车已经停下来后调用，注意取消后UPL跳
 

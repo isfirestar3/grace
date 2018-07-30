@@ -67,7 +67,6 @@ public:
 
     int login(const std::string &ip, uint16_t port);
     int login(const char *epstr); // string of standard endpoint like 192.168.0.1:1234
-    virtual int on_login();
     int logout();
 
     int update_endpoint(const std::string &ip, uint16_t port);
@@ -80,9 +79,6 @@ public:
     //must be called outside loop
     void update_agv_data();
 
-    template<class T, class ...MEMBERS_T>
-    int subscribe_data(int id, void *begin, T head, MEMBERS_T...members);
-
     virtual int sleep_agv_syn();
     virtual int wakeup_agv_syn();
     virtual int get_agv_sleep_status(int& sleep);//1=sleep  0=wakeup
@@ -94,7 +90,7 @@ public:
     };
     int detour_dock(std::vector<via_dock_info> via_docks);
     int go_on_detour(int dock);//触发继续绕路, 输入参数输入正在wait的dock点
-    int get_detour_blocked_dock();//获取当前正在wait的dock点
+
 public://get data
     int get_current_upl(upl_t& curUpl) const;
     int get_current_traj_idex(int& idex) const;
@@ -201,6 +197,9 @@ private:
 public:
     template<typename T>
     int get_var_info_by_id_syn(int id, T& var);
+	template<typename T>
+    int get_var_info_off_by_id_syn(int id, int off, T& var);
+	int common_read_by_id(int id, mn::common_title& vec_post_common, std::vector<mn::common_data_item>& items);
 
     /*
     可变参数列表 模板函数  通用写
@@ -224,7 +223,7 @@ private:
     //为可变参数模板 特化一个空参数列表函数
 	int common_write_by_id(int id, mn::common_data &, void*);
 	int make_common_writedata(int id, std::vector<mn::common_data_item> &, void*);
-    int subscribe_data(int id, void *begin);
+
 protected:
     template<typename T>int get_var_info_by_id_asyn(int type);
 
@@ -455,9 +454,7 @@ private:
     std::mutex __mtx_map_detour_wait;
     std::map<int, std::shared_ptr<detour_wait_info>> __map_detour_wait;
     int get_cur_detourwait_dockinf(int idx, int size, std::shared_ptr<detour_wait_info>& dwi);
-
-
-    int __detour_blocked_dock = -1;
+    
     int __cache_idex = 0;
     std::vector<trail_t> __cache_path;
 
@@ -470,11 +467,6 @@ private:
     };
     AGVINTERFACE_ERROR __last_interface_error = kAgvInterfaceError_OK;
     std::string __last_interface_error_str;
-
-private:
-    void common_read_ack_subscrbe(uint32_t id, const void *data);
-    mn::common_title __vec_post_common;
-    std::map<int, mn::common_title>  __map_subscribe_data;
 };
 
 template<typename T>
@@ -516,6 +508,91 @@ int agv_base::get_var_info_by_id_syn(int id, T& var)
 	});
 	if (ret < 0){//如果接口调用失败，那么直接返回
         	loerror("agvbase") << "AgvBase:" << __agv_id << " post_common_read_request_by_id failed，ret < 0，id = " << id;
+		return callback_ret;
+	}
+	wait_request.wait();
+
+	return callback_ret;
+}
+
+
+template<typename T>
+int agv_base::get_var_info_off_by_id_syn(int id, int off, T& var)
+{
+	mn::common_title vec_post_common;
+	mn::common_title_item post_common;
+	post_common.varid = id;
+	post_common.offset = off;
+	post_common.length = sizeof(T);
+	vec_post_common.items.push_back(post_common);
+
+	int callback_ret = -1;
+	nsp::os::waitable_handle wait_request(0);
+	mn::common_data* asio_data;
+	int ret = post_common_read_request_by_id(__net_id, vec_post_common, 
+		[&](uint32_t robot_id, const void *data) {
+		if (!data)
+		{
+            loerror("agvbase") << "AgvBase:" << __agv_id << " post_common_read_request_by_id failed，!data，id = " << id;
+			wait_request.sig();
+			return;
+		}
+		 asio_data = (mn::common_data*)data;
+		if (asio_data->err_ < 0)
+		{                                                 
+            loerror("agvbase") << "AgvBase:" << __agv_id << " post_common_read_request_by_id failed，asio_data->get_err() < 0，id = " << id;
+			wait_request.sig();
+			return;
+		}
+		if (((mn::common_data*)data)->items.size() == 0)
+		{
+			wait_request.sig();
+			return;
+		}
+		var = *(T*)(((mn::common_data*)data)->items[0].data.c_str());
+		callback_ret = 0;
+		wait_request.sig();
+	});
+	if (ret < 0){//如果接口调用失败，那么直接返回
+        	loerror("agvbase") << "AgvBase:" << __agv_id << " post_common_read_request_by_id failed，ret < 0，id = " << id;
+		return callback_ret;
+	}
+	wait_request.wait();
+
+	return callback_ret;
+}
+
+int agv_base::common_read_by_id(int id, mn::common_title& vec_post_common, std::vector<mn::common_data_item>& items)
+{
+	int callback_ret = -1;
+	nsp::os::waitable_handle wait_request(0);
+	
+	int ret = post_common_read_request_by_id(__net_id, vec_post_common, 
+		[&](uint32_t robot_id, const void *data) {
+		if (!data)
+		{
+            loerror("agvbase") << "AgvBase:" << __agv_id << " post_common_read_request_by_id failed，!data，id = " << id;
+			wait_request.sig();
+			return;
+		}
+		mn::common_data* asio_data = (mn::common_data*)data;
+		if (asio_data->err_ < 0)
+		{                                                 
+            loerror("agvbase") << "AgvBase:" << __agv_id << " post_common_read_request_by_id failed，asio_data->get_err() < 0，id = " << id;
+			wait_request.sig();
+			return;
+		}
+		if (((mn::common_data*)data)->items.size() == 0)
+		{
+			wait_request.sig();
+			return;
+		}
+		items = ((mn::common_data*)data)->items;
+		callback_ret = 0;
+		wait_request.sig();
+	});
+	if (ret < 0){//如果接口调用失败，那么直接返回
+		loerror("agvbase") << "AgvBase:" << __agv_id << " post_common_read_request_by_id failed，ret < 0，id = " << id;
 		return callback_ret;
 	}
 	wait_request.wait();
@@ -632,31 +709,5 @@ int agv_base::get_var_info_by_id_asyn(int id)
     }
     return 0;
 }
-
-
-template<class T, class ...MEMBERS_T>
-int agv_base::subscribe_data(int id, void *begin, T head, MEMBERS_T...members)
-{
-    auto& it = __map_subscribe_data.find(id);
-    if (it != __map_subscribe_data.end())
-    {
-        __vec_post_common = it->second;
-    }
-
-    mn::common_title_item post_common;
-    post_common.varid = id;
-    post_common.offset = (char*)head - (char*)begin;
-    post_common.length = sizeof(*head);
-    __vec_post_common.items.push_back(post_common);
-    
-    int argc = sizeof...(members);
-    //if (argc > 0)
-    {
-        return subscribe_data(id, begin, members...);
-    }
-
-    return 0;
-}
-
 #endif
 

@@ -219,12 +219,6 @@ void driverconfig::on_import_btn_clicked()
 	}
 
 	ParameterImporter importer(filename);
-
-	if (!importer.openImportFile())
-	{
-		return;
-	}
-
 	bool(ParameterImporter::*func)() = &ParameterImporter::importParameter;
 	const std::function<void(bool)> &retCb = [&](bool ret)->void{
 		if (ret)
@@ -237,7 +231,7 @@ void driverconfig::on_import_btn_clicked()
 		}
 	};
 
-	gdp::core::GdpSingleton<gdp::gui::WatcherDialog>::instance()->run(&importer, func, this, retCb);
+	nsp::toolkit::singleton<gdp::gui::WatcherDialog>::instance()->run(&importer, func, retCb, this);
 }
 
 void driverconfig::on_export_btn_clicked()
@@ -250,12 +244,6 @@ void driverconfig::on_export_btn_clicked()
 	}
 
 	ParameterExporter exporter(filename);
-	
-	if (!exporter.openExportFile())
-	{
-		return;
-	}
-
 	bool(ParameterExporter::*func)() = &ParameterExporter::exportParameter;
 	const std::function<void(bool)> &retCb = [&](bool ret)->void{
 		if (ret)
@@ -268,7 +256,7 @@ void driverconfig::on_export_btn_clicked()
 		}
 	};
 
-	gdp::core::GdpSingleton<gdp::gui::WatcherDialog>::instance()->run(&exporter, func, this, retCb);
+	nsp::toolkit::singleton<gdp::gui::WatcherDialog>::instance()->run(&exporter, func, retCb, this);
 }
 
 void driverconfig::on_btn_control_clicked()

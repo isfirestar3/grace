@@ -4,12 +4,14 @@
 #include "os_util.hpp"
 #include "log.h"
 #include "icom/compiler.h"
+#include "vehicle.h"
 
 #include "icom/posix_thread.h"
 #include "icom/posix_wait.h"
 
 #include <stdint.h>
 #include <thread>
+#include<ctime>
 
 void mn_notify( uint32_t robot_id, const void *data, enum mn::notift_type_t type) {
 
@@ -64,31 +66,132 @@ void wproc(int robot) {
 	}
 }
 
-int proc() {
-	for (int i = 0; i < 50; i++) {
-		int robot = mn::init_net();
-		if (robot < 0) {
-			loerror("nstest") << "failed init_net.";
-			return 1;
-		}
+double random_double(){
+	return rand() / double(RAND_MAX);
+}
 
-		int retval = mn::login_to_host(robot, "127.0.0.1:4409", kControlorType_Localization);
-		if (retval < 0) {
-			loerror("nstest") << robot << " connect failed.";
-			std::this_thread::sleep_for(std::chrono::seconds(2));
+void random_nav_data(var__navigation_t *nav_p ){
+	if (nav_p){
+		nav_p->max_speed_ = random_double();
+		nav_p->creep_speed_ = random_double();
+		nav_p->max_w_ = random_double();
+		nav_p->creep_w_ = random_double();
+		nav_p->slow_down_speed_ = random_double();
+		nav_p->acc_ = random_double();
+		nav_p->dec_ = random_double();
+		nav_p->dec_estop_ = random_double();
+		nav_p->acc_w_ = random_double();
+		nav_p->dec_w_ = random_double();
+		nav_p->creep_distance_ = random_double();
+		nav_p->creep_theta_ = random_double();
+		nav_p->upl_mapping_angle_tolerance_ = random_double();
+	}
+}
+
+void random_vehice(var__vehicle_t *veh_p){
+	if (veh_p){
+
+	}
+}
+
+void * init_data(int type, int &length){
+	void * pbuffer = nullptr;
+	try{
+		if (1== type){
+			pbuffer = (void *)new var__navigation_t;
+			length = sizeof(var__navigation_t);
+		}
+		else{
+			pbuffer = (void *)new var__vehicle_t;
+			length = sizeof(var__vehicle_t);
 		}
 	}
-	return 0;
+	catch(...){
+		loerror("nstest") << "new falure";
+		return nullptr;
+	}
+	return pbuffer;
+}
+
+void write_data(int robot, nsp::os::waitable_handle & w, int type) {
+	uint64_t interval, o_tick, r_tick;
+	int length = 0;
+	void * pbuffer = nullptr;
+	mn::common_data data;
+	mn::common_data_item item;
+	int err = 0;
+	item.offset = 0;
+
+	if (1 == type){
+		item.varid = kVarFixedObject_Navigation;
+	}
+	else{
+		item.varid = kVarFixedObject_Vehide;
+	}
+	
+	if (!(pbuffer =init_data(type, length))){
+		return ;
+	}
+
+	int error = 0;
+	while (true) {
+		if (!error){
+			data.items.clear();
+			if (1 == type){
+				random_nav_data((var__navigation_t *)pbuffer);
+			}
+			else{
+				random_vehice((var__vehicle_t *)pbuffer);
+			}
+			item.data.assign((char *)pbuffer, length);
+			data.items.push_back(item);
+		}
+
+		o_tick = nsp::os::clock_gettime();
+		int retval = mn::post_common_write_request_by_id(robot, data, [&](uint32_t, const void *p){
+			mn::asio_t *asio = (mn::asio_t *)p;
+			err = asio->err_;
+			w.sig();
+		});
+
+		r_tick = nsp::os::clock_gettime();
+		interval = r_tick - o_tick;
+		error = 1;
+		if (retval < 0) {
+			printf("failed interface call.\n");
+			std::this_thread::sleep_for(std::chrono::milliseconds(20));
+			continue;
+		}
+
+		w.wait(-1);
+		w.reset();
+
+		if (err < 0) {
+			printf("failed acknowledge.\n");
+			std::this_thread::sleep_for(std::chrono::milliseconds(20));
+			continue;
+		}
+		
+		printf("%ld %ld %ld\n", r_tick, o_tick, interval);
+		error = 0;
+		// cover to milliseconds
+		interval /= 10000;
+		if (interval < 20) {
+			std::this_thread::sleep_for(std::chrono::milliseconds(20 - interval));
+		}
+		else{
+			loerror("nstest") << "receiver timeout." << interval;
+		}
+	}
 }
 
 int main(int argc, char **argv) {
-	
+
+	printf("%d\n", sizeof(posix__pthread_mutex_t));
+
 	int order_kill = 0;
 	int order_lsvar = 0;
 	char *target_epstr;
-
-	
-
 	nsp::os::waitable_handle w(0);
 
 	if (argc < 2) {
@@ -108,29 +211,12 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	for (int i = 0; i < 2000; i++ ) {
-		int robot = mn::init_net();
-		if (robot < 0) {
-			printf("init failed. %d\n", i);
-			break;
-		}
-
-		int retval = mn::login_to_host(robot, target_epstr, kControlorType_Localization);
-		if (retval < 0) {
-			std::this_thread::sleep_for(std::chrono::seconds(2));
-			printf("login_to_host failed. %d\n", i);
-			continue;
-		}
-	}
-
-	nsp::os::pshang();
-
 	int robot = mn::init_net();
 	if (robot < 0) {
 		return 1;
 	}
 
-	int retval = mn::login_to_host(robot, target_epstr, kControlorType_Localization);
+	int retval = mn::login_to_host(robot, target_epstr, kControlorType_Dispatcher);
 	if (retval < 0) {
 		std::this_thread::sleep_for(std::chrono::seconds(2));
 		return 1;
@@ -161,9 +247,9 @@ int main(int argc, char **argv) {
 		return 0;
 	}
 
+#ifdef comon_read
 	struct mn::common_title_item item;
 	item.varid = kVarFixedObject_Navigation;
-	item.vartype = 2;
 	item.offset = 0;
 	item.length = sizeof(var__navigation_t);
 
@@ -206,5 +292,9 @@ int main(int argc, char **argv) {
 			loerror("nstest") << "receiver timeout." << interval;
 		}	
 	}
+#else
+	srand((unsigned)time(NULL));
+	write_data(robot, w,1);
+#endif
 	return 0;
 }

@@ -224,11 +224,6 @@ struct jerk_t
 	float jerk_;
 };
 
-struct acceleration_t
-{
-	float acceleration_;
-};
-
 struct velocity_t
 {
 	float velocity_;

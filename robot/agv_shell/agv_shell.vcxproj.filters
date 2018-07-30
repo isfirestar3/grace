@@ -25,12 +25,6 @@
     <ClCompile Include="frimware_task.cpp">
       <Filter>udp</Filter>
     </ClCompile>
-    <ClCompile Include="file_write_handler.cpp">
-      <Filter>file_handler</Filter>
-    </ClCompile>
-    <ClCompile Include="keepalive.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
     <ClCompile Include="agv_shell.cpp">
       <Filter>source</Filter>
     </ClCompile>
@@ -76,6 +70,30 @@
     <ClCompile Include="file_can_read.cpp">
       <Filter>file_handler</Filter>
     </ClCompile>
+    <ClCompile Include="fts\file_manager.cpp">
+      <Filter>fts</Filter>
+    </ClCompile>
+    <ClCompile Include="fts\file_read_headler.cpp">
+      <Filter>fts</Filter>
+    </ClCompile>
+    <ClCompile Include="fts\file_rw_task_thread.cpp">
+      <Filter>fts</Filter>
+    </ClCompile>
+    <ClCompile Include="fts\file_shell_handler.cpp">
+      <Filter>fts</Filter>
+    </ClCompile>
+    <ClCompile Include="fts\file_write_handler.cpp">
+      <Filter>fts</Filter>
+    </ClCompile>
+    <ClCompile Include="public.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="mclog.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="session_task_manager.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="nsp">
@@ -101,6 +119,9 @@
     </Filter>
     <Filter Include="source">
       <UniqueIdentifier>{361efc5a-3198-49e1-a12d-8b5fb8637826}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fts">
+      <UniqueIdentifier>{6c38c182-fa4c-473b-a916-a81b2d8622ee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -142,15 +163,6 @@
     </ClInclude>
     <ClInclude Include="frimware_task.h">
       <Filter>udp</Filter>
-    </ClInclude>
-    <ClInclude Include="file_write_handler.h">
-      <Filter>file_handler</Filter>
-    </ClInclude>
-    <ClInclude Include="keepalive.h">
-      <Filter>net</Filter>
-    </ClInclude>
-    <ClInclude Include="agv_shell.h">
-      <Filter>headfile</Filter>
     </ClInclude>
     <ClInclude Include="agv_shell_common.h">
       <Filter>headfile</Filter>
@@ -223,6 +235,33 @@
     </ClInclude>
     <ClInclude Include="file_can_read.h">
       <Filter>file_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="fts\data_type.h">
+      <Filter>fts</Filter>
+    </ClInclude>
+    <ClInclude Include="fts\file_manager.h">
+      <Filter>fts</Filter>
+    </ClInclude>
+    <ClInclude Include="fts\file_read_headler.h">
+      <Filter>fts</Filter>
+    </ClInclude>
+    <ClInclude Include="fts\file_rw_task_thread.h">
+      <Filter>fts</Filter>
+    </ClInclude>
+    <ClInclude Include="fts\file_shell_handler.h">
+      <Filter>fts</Filter>
+    </ClInclude>
+    <ClInclude Include="fts\file_write_handler.h">
+      <Filter>fts</Filter>
+    </ClInclude>
+    <ClInclude Include="fts\proto_msg.h">
+      <Filter>fts</Filter>
+    </ClInclude>
+    <ClInclude Include="session_task_manager.h">
+      <Filter>headfile</Filter>
+    </ClInclude>
+    <ClInclude Include="public.h">
+      <Filter>headfile</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

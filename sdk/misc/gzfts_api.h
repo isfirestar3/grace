@@ -24,8 +24,6 @@ enum transmit_status{
 #define TRANSFER_WINDOW_SIZE		1			//默认窗口大小
 #define TIMEOUT_TRANSFER			5000		//默认链接超时时间5000毫秒
 
-
-#pragma pack(push ,1)
 #if _WIN32
 #define FTS_EXP(type)  extern "C" _declspec(METH) type __stdcall
 struct fts_parameter {
@@ -65,9 +63,6 @@ struct fts_parameter {
 		void *user_data, int user_data_size);
 };
 #endif
-#pragma pack(pop)
-
-
 #endif
 
 FTS_EXP(int) fts_create_receiver(const char *ipaddr_local, uint16_t port_local, const bool is_long_lnk = false);

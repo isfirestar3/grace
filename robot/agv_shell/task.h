@@ -18,11 +18,12 @@ public:
 };
 /***************************************²éÑ¯MºËĞÄÌø×´Ì¬********************************************/
 class query_keepalive_status_task : public base_task {
+	uint32_t pkt_id_;
 	nsp::tcpip::endpoint vcu_endpoint_;
 	std::string vcu_keepalive_status_;//vcu ·µ»Ø×´Ì¬
 	
 public:
-	query_keepalive_status_task(HTCPLINK link);
+	query_keepalive_status_task(HTCPLINK link, uint32_t id);
 	~query_keepalive_status_task();
 	void on_task() override final;
 	
@@ -30,26 +31,27 @@ public:
 
 /***************************************ÉèÖÃMºËĞÄÌø×´Ì¬********************************************/
 class set_keepalive_status_task : public base_task {
+	uint32_t pkt_id_;
 	int status_;//ÉèÖÃ vcu ×´Ì¬
 	nsp::tcpip::endpoint vcu_endpoint_;
 	
 public:
-	set_keepalive_status_task(HTCPLINK link, int status);
+	set_keepalive_status_task(HTCPLINK link, uint32_t id, int status);
 	~set_keepalive_status_task();
 	void on_task() override final;
 	
 };
 
-/***************************************ÉèÖÃMºËĞÄÌø×´Ì¬********************************************/
-class deal_process_cmd_task : public base_task {
+/***************************************´¦Àí½ø³Ì¿ØÖÆÃüÁî********************************************/
+class deal_process_cmd_task {
 	int command_;
 	int process_id_all_;
 	std::vector<std::string > vec_cmd_param_;
 	
 public:
-	deal_process_cmd_task(HTCPLINK link, int cmd, int process_id);
+	deal_process_cmd_task(int cmd, int process_id);
 	~deal_process_cmd_task();
-	void on_task() override final;
+	int process_task();
 	void add_cmd_param(std::string& param);
 	
 };

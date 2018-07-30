@@ -15,9 +15,9 @@ namespace nsp {
 
         template<class T>
         class tcp_application_service : public obtcp {
-            tcp_application_service(HTCPLINK lnk) = delete;
+            tcp_application_service(HTCPLINK lnk) = delete; // 作为监听对象， 不存在使用链接构造这一说法
 
-            // sub class no longer needs to pay attention to any details of the link establishment, this virtual function terminates here
+            // 下层不再需要关注链接建立的任何细节, 这个虚函数到此终止
             virtual void on_accepted(HTCPLINK lnk) override final {
 
                 std::shared_ptr<T> sptr = std::make_shared<T>(lnk);
@@ -29,7 +29,7 @@ namespace nsp {
                 try {
                     sptr->bind_object(shared_from_this());
                     
-                    // The server has the right to refuse to connect during the first session connected.
+                    // 服务端有权在会话初次到达阶段拒绝连接
                     if (sptr->on_established() < 0){
                         throw -ENETRESET;
                     }
@@ -45,7 +45,7 @@ namespace nsp {
                 }
             }
 
-            // As the target of listening, the actual data packet will not appear
+            // 作为监听对象, 一定不会出现收到实际数据包的情况
             virtual void on_recvdata(const std::string &data) override final {
                 abort();
             }
@@ -63,7 +63,7 @@ namespace nsp {
                 close();
             }
 
-            // begin service
+            // 开始服务
             int begin(const endpoint &ep) {
                 return ( (create(ep) >= 0) ? listen() : -1);
             }
@@ -78,7 +78,7 @@ namespace nsp {
                 return begin(ep);
             }
 
-            // Notify the server after the client is closed
+            // 客户端关闭后通知服务端
             void on_client_closed(const HTCPLINK lnk) {
                 std::lock_guard < decltype(client_locker_) > guard(client_locker_);
                 auto iter = client_set_.find(lnk);
@@ -140,7 +140,7 @@ namespace nsp {
 
             }
 
-            // search a client by link
+            // 按链接查找一个客户端
             int search_client_by_link(const HTCPLINK lnk, std::shared_ptr<T> &client) const {
                 std::lock_guard < decltype(client_locker_) > guard(client_locker_);
                 auto iter = client_set_.find(lnk);
@@ -158,7 +158,7 @@ namespace nsp {
 namespace nsp {
     namespace tcpip {
 
-        // pecify the low-level protocol type, use it to define the TCP connection session
+        /*指定底层协议类型， 定义TCP连接会话*/
         template<class T>
         class tcp_application_client : public obtcp {
             std::weak_ptr<tcp_application_service<tcp_application_client<T>>> tcp_application_server_;

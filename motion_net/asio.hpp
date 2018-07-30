@@ -64,7 +64,7 @@ namespace mn {
             tick_ = nsp::os::clock_gettime();
         };
 
-        posix__boolean_t is_timedout(int pktid, uint64_t current_clock) const {
+        posix__boolean_t is_timedout(int pktid, uint64_t current_clock, int do_exec = 1) const {
             do {
                 if (current_clock > tick_) {
                     if ((current_clock - tick_) >= MN_IO_TIMEDOUT) {
@@ -76,6 +76,9 @@ namespace mn {
 
             // these logs means packet has been marked to timedout by checking thread.
             mnlog_warn << "asio timed check fatal,id=" << pktid << " current=" << current_clock << " record=" << tick_;
+			if (do_exec) {
+				commit_asio_error(-ETIMEDOUT);
+			}
             return posix__true;
         }
 

@@ -65,7 +65,6 @@ namespace mn {
 	
 	int packet_pool::async_complete( uint32_t pktid, uint32_t type, const char *completion_data ) {
 		std::shared_ptr<asio_partnet> asio;
-		posix__boolean_t timeo = posix__false;
 
 		{
 			std::lock_guard<decltype(lock_pooled_sequence_)> guard( this->lock_pooled_sequence_ );
@@ -74,10 +73,10 @@ namespace mn {
 				asio = iter->second;
 				pooled_packet_sequence_.erase( iter );
 				uint64_t current_clock = nsp::os::clock_gettime();
-				timeo = asio->is_timedout(pktid, current_clock);
-				if (timeo) {
+				if (asio->is_timedout(pktid, current_clock)) {
 					// these logs means packet has been marked to timedout by async_complete.
 					mnlog_warn << "asyn receive timed check fatal,id=" << pktid << " current=" << current_clock;
+					asio = nullptr;
 				}
 			} else {
 				// these logs means request packet have a response,but can not be found in pool queue.
@@ -87,7 +86,7 @@ namespace mn {
 		}
 		
 		if (asio) {
-			timeo ? asio->commit_asio_error(-ETIMEDOUT) : asio->exec( completion_data );
+			asio->exec( completion_data );
 		}
 		return 0;
 	}
@@ -96,7 +95,7 @@ namespace mn {
 		std::lock_guard<decltype( lock_pooled_sequence_ )> guard( lock_pooled_sequence_ );
 		auto iter = pooled_packet_sequence_.begin();
 		while ( pooled_packet_sequence_.end() != iter ) {
-			if ( iter->second->is_timedout( iter->first, tick ) ) {
+			if ( iter->second->is_timedout( iter->first, tick, 0 ) ) {
 				asio_t asio;
 				asio.err_ = -ETIMEDOUT;
 				nsp::toolkit::singleton<net_manager>::instance()->schedule_timeout_callback(

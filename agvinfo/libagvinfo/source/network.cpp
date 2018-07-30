@@ -16,7 +16,7 @@ network::network()
 
 network::~network()
 {
-	thread_exit_ = 1;
+	thread_exit_ = true;
 	condition_.notify_one();
 	timeout_waiter_.sig();
 	if (thread_){
@@ -42,7 +42,7 @@ int network::write( uint32_t pid, std::shared_ptr<agv_motion::motion_ack> &motio
 		remove(pid);
 		return -3;
 	}
-	loinfo("libagvinfo") << "notify_one";
+
 	condition_.notify_one();
 
 	return 0;
@@ -74,7 +74,6 @@ void network::remove(uint32_t pid)
 
 void network::exec(uint32_t pid,void *data,int length )
 {
-	loinfo("libagvinfo") << "exec";
 	auto iter = map_callback_.end();
 	std::shared_ptr<agv_motion::motion_ack> motion = nullptr;
 	{
@@ -125,7 +124,6 @@ int network::check_time()
 			}
 		}
 	}
-	loinfo("libagvinfo") << "check_time end";
 	return 0;
 }
 

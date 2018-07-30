@@ -18,15 +18,7 @@ int net_task_reset::net_reset(std::string& ip_addr)
 	uint32_t file_size = nsp::toolkit::singleton<file_read_handler>::instance()->get_file_size();
 	motion::asio_data asio_data_;
 	nsp::os::waitable_handle water;
-
-	uint8_t serial_code = 0x00;
-	if (is_can_type_ == 0)
-	{
-		serial_code = 0x10;
-	}
-	serial_code += 0x0F && bas_serial_number_;
-
-	int res = nsp::toolkit::singleton<network_client_manager>::instance()->post_vcu_reset_request(ip_addr,
+	int res = nsp::toolkit::singleton<network_client_manager>::instance()->post_vcu_reset_request(ip_addr, file_size,
 		std::make_shared<motion::asio_block>([&](const void*data){
 		if (!data){
 			water.sig();
@@ -38,7 +30,7 @@ int net_task_reset::net_reset(std::string& ip_addr)
 			return;
 		}
 		water.sig();
-	}),serial_code,node_id_);
+	}));
 
 	if (res < 0)
 	{
@@ -94,18 +86,15 @@ void net_task_reset::get_vcu_type_version_request(FIRMWARE_SOFTWARE_TYPE type, s
 
 	if (asio_data_.get_err() == nsp::proto::errorno_t::kSuccessful)
 	{
-		operate_code operate_type;
-		operate_type.cmd_code = FIRMWARE_COMPLETE_GET_VCU_VERSION;
-
 		if (is_control == 0){
 			int data;
 			memcpy_s(&data, sizeof(data), recv_data.data_context_.c_str(), sizeof(data));
 			char tmp[16];
 			itoa(data, tmp, 10);
-			if (function_get_vcu_callback_)function_get_vcu_callback_(ip_addr, operate_type, tmp, nsp::proto::errorno_t::kSuccessful);
+			if (function_get_vcu_callback_)function_get_vcu_callback_(ip_addr, FIRMWARE_COMPLETE_GET_VCU_VERSION, tmp, nsp::proto::errorno_t::kSuccessful);
 		}
 		else{
-			if (function_get_vcu_callback_)function_get_vcu_callback_(ip_addr, operate_type, recv_data.data_context_.c_str(), nsp::proto::errorno_t::kSuccessful);
+			if (function_get_vcu_callback_)function_get_vcu_callback_(ip_addr, FIRMWARE_COMPLETE_GET_VCU_VERSION, recv_data.data_context_.c_str(), nsp::proto::errorno_t::kSuccessful);
 		}
 
 	}
@@ -114,7 +103,7 @@ void net_task_reset::get_vcu_type_version_request(FIRMWARE_SOFTWARE_TYPE type, s
 	}
 }
 
-void net_task_reset::regiset_get_vcu_callback(const std::function<void(const std::string&, const operate_code operate_type, const std::string&,
+void net_task_reset::regiset_get_vcu_callback(const std::function<void(const std::string&, const int type, const std::string&,
 	const nsp::proto::errorno_t)>& func){
 	if (func){
 		function_get_vcu_callback_ = func;

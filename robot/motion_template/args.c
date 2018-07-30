@@ -21,7 +21,6 @@ struct  {
     int __must_login;
     char __essn_ipv4[posix__ipv4_length];
     uint16_t __essn_port;
-    int __load_on_exec;
 } __startup_parameters;
 
 #pragma pack(pop)
@@ -39,7 +38,6 @@ enum opt_invisible_indx {
 	kInvisibleOptIndex_NoLogin,
     kInvisibleOptIndex_EssnHost,
     kInvisibleOptIndex_EssnPort,
-    kInvisibleOptIndex_LoadOnExec,
 };
 
 static const struct option long_options[] = {
@@ -51,10 +49,9 @@ static const struct option long_options[] = {
     {"service-host", required_argument, NULL, kInvisibleOptIndex_ServiceHost},
     {"service-tcp-port", required_argument, NULL, kInvisibleOptIndex_ServiceTcpPort},
 	{"service-udp-port", required_argument, NULL, kInvisibleOptIndex_ServiceUdpPort },
-	{"no-login", no_argument, NULL, kInvisibleOptIndex_NoLogin },
+	{ "no-login", no_argument, NULL, kInvisibleOptIndex_NoLogin },
     {"essn-host", required_argument, NULL, kInvisibleOptIndex_EssnHost},
     {"essn-port", required_argument, NULL, kInvisibleOptIndex_EssnPort},
-    {"load-on-exec", no_argument, NULL, kInvisibleOptIndex_LoadOnExec},
     {NULL, 0, NULL, 0}
 };
 
@@ -78,7 +75,6 @@ void run__dispay_usage() {
 			"\t\t[--no-login] do not use login pakcet to verifity network connection.\n"
             "\t\t[--essn-host][%%IPV4] specify IPv4 address for essn host\n"
             "\t\t[--essn-port][%%IPV4] specify IPv4 address for essn port\n"
-            "\t\t[--load-on-exec] load storage data from file on process startup\n"
             ;
 
     printf("%s", usage_context);
@@ -133,8 +129,6 @@ int run__check_args(int argc, char **argv) {
     /* 事件服务器默认建立在本地, 并使用4411 端口 */
     posix__strcpy(__startup_parameters.__essn_ipv4, cchof(__startup_parameters.__essn_ipv4), "127.0.0.1");
     __startup_parameters.__essn_port = 4411;
-    /* no need to load storage form file on process startup by default */
-    __startup_parameters.__load_on_exec = 0;
     
     /* 默认的 CANIO 驱动执行文件 */
 #if _WIN32
@@ -147,7 +141,7 @@ int run__check_args(int argc, char **argv) {
     /* 组合长短启动参数， 执行综合判定 */
     posix__sprintf(shortopts, cchof(shortopts), "svhl:%d:%d:%d:%d:%d:%d:%d", 
 		kInvisibleOptIndex_StartupSimOdo, kInvisibleOptIndex_ServiceHost, kInvisibleOptIndex_ServiceTcpPort, kInvisibleOptIndex_ServiceUdpPort, \
-		kInvisibleOptIndex_EssnHost, kInvisibleOptIndex_EssnPort, kInvisibleOptIndex_NoLogin, kInvisibleOptIndex_LoadOnExec );
+		kInvisibleOptIndex_EssnHost, kInvisibleOptIndex_EssnPort, kInvisibleOptIndex_NoLogin );
     opt = getopt_long(argc, argv, shortopts, long_options, &opt_index);
     while (opt != -1) {
         switch (opt) {
@@ -204,9 +198,6 @@ int run__check_args(int argc, char **argv) {
                 break;
             case kInvisibleOptIndex_NoLogin:
                 __startup_parameters.__must_login = 0;
-                break;
-            case kInvisibleOptIndex_LoadOnExec:
-                __startup_parameters.__load_on_exec = 1;
                 break;
             case '?':
                 printf("?\n");
@@ -279,8 +270,4 @@ char *run__getarg_canio_driver(char *file){
 
 posix__boolean_t run__if_must_login() {
     return (posix__boolean_t)__startup_parameters.__must_login;
-}
-
-posix__boolean_t run__if_loadonexec() {
-    return (posix__boolean_t)__startup_parameters.__load_on_exec;
 }
