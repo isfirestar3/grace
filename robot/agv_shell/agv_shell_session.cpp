@@ -1111,16 +1111,18 @@ int agv_shell_session::on_cancel_get_file_task(const std::shared_ptr<nsp::proto:
 	pkt.head_.err_ = release_get_file_task(task_id, file_name);
 
 	loinfo("agv_shell") << "cancel file task_id:" << task_id << " file:" << file_name;
-	// kill processes tar/xz
-	std::string cmd_str = "ps -ef | grep ";
-	cmd_str += file_name;
-	cmd_str += " | grep -v grep | awk '{print $2}' | xargs kill -9 ";
-	system(cmd_str.c_str());
-	// delete xxx.tar file
-	nsp::os::rmfile(file_name);
-	file_name += ".xz";
-	//delete xxx.tar.xz file
-	nsp::os::rmfile(file_name);
+	if(!file_name.empty()){
+		// kill processes tar/xz
+		std::string cmd_str = "ps -ef | grep ";
+		cmd_str += file_name;
+		cmd_str += " | grep -v grep | awk '{print $2}' | xargs kill -9 ";
+		system(cmd_str.c_str());
+		// delete xxx.tar file
+		nsp::os::rmfile(file_name);
+		file_name += ".xz";
+		//delete xxx.tar.xz file
+		nsp::os::rmfile(file_name);
+	}
 
 	return psend(&pkt);
 }
