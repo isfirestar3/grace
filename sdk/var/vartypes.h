@@ -232,7 +232,8 @@ enum nsp__controlor_type_t {
     kControlorType_Dispatcher = (kControlorType_NetworkIdentity << 7),
     kControlorType_Customer = (kControlorType_NetworkIdentity << 8),
     kControlorType_Guest = (kControlorType_NetworkIdentity << 9),
-    kControlorType_MaximumFunctions = kControlorType_Guest,
+    kControlorType_Calibration = (kControlorType_NetworkIdentity << 10),
+    kControlorType_MaximumFunctions = kControlorType_Calibration,
 };
 
 #endif

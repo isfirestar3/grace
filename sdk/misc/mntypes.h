@@ -191,6 +191,13 @@ namespace mn {
 		uint32_t middle_;
 		uint32_t response_;
 	};
+
+	/*
+	returned by post_localization_cfgread_request
+	*/
+	struct loc_data_t : public asio_t {
+		uint8_t data_[128];
+	};
 }
 
 #endif /* !MOTION_NET_DEFINE_H */

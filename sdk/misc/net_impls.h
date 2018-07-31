@@ -88,6 +88,12 @@ namespace mn {
 	// kill mt process
 	EXP(int) post_dbg_segmentfault(uint32_t robot_id, apc_t &apc);
 
+	/////////////////////定位和标定相关接口////////////////////////////////
+	// 返回 loc_data_t
+	EXP(int) post_localization_cfgread_request(uint32_t robot_id, apc_t &apc);
+	// 返回 asio_t
+	EXP(int) post_localization_cfgwrite_request(uint32_t robot_id, const uint8_t *data, uint8_t offset, uint8_t cb, apc_t &apc);
+
 #if __cplusplus > 0
 }
 #endif
