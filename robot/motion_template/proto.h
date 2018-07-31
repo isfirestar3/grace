@@ -231,7 +231,7 @@ struct nsp__report_status_msg {
 
 typedef nsp__packet_head_t nsp__report_status_msg_ack;
 
-/* 操作任务相关协议 */
+/* protocols for operation task */
 typedef struct {
     nsp__packet_head_t head_;
     uint64_t task_id_;
@@ -264,6 +264,13 @@ typedef struct {
 	uint16_t port_;
 }nsp__keepalive_udp_t;
 typedef nsp__keepalive_udp_t nsp__keepalive_udp_ack_t;
+
+typedef struct {
+    nsp__packet_head_t head_;
+    uint8_t blob_[128];
+}nsp__localization_cfgwrite_t;
+typedef nsp__localization_cfgwrite_t nsp__localization_cfgread_ack_t;
+typedef nsp__packet_head_t nsp__localization_cfgwrite_ack_t;
 
 #pragma pack(pop)
 

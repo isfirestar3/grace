@@ -14,6 +14,7 @@
 #include "args.h"
 #include "posix_atomic.h"
 #include "logger.h"
+#include "pstorage.h"
 
 #include <assert.h>
 
@@ -1330,6 +1331,55 @@ void nspi__on_raise_segmentfault(HTCPLINK link) {
 }
 
 static
+int nspi__on_localization_cfgread(HTCPLINK link, const char *data, int cb) {
+    nsp__packet_head_t *request = (nsp__packet_head_t *)data;
+    nsp__localization_cfgread_ack_t ack;
+    enum nsp__controlor_type_t nct;
+    int retval;
+
+    nct = nsp__get_link_type(link);
+    if (nct != kControlorType_Calibration && nct != kControlorType_Localization) {
+        log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout, 
+            "illegal controlor type:0x%08X try method nspi__on_localization_cfgread", nct);
+        retval = -EBADF;
+    }
+
+    ack.head_.id_ = request->id_;
+    ack.head_.size_ = sizeof(ack);
+    ack.head_.type_ = PKTTYPE_LOCALIZATION_CFGREAD_ACK;
+    ack.head_.err_ = retval;
+
+    if (tcp_write(link, ack.head_.size_, &nsp__packet_maker, &ack) < 0) {
+        return -1;
+    }
+    return ack.head_.err_;
+}
+
+static
+int nspi__on_localization_cfgwrite(HTCPLINK link, const char *data, int cb) {
+    nsp__localization_cfgwrite_t *request = (nsp__localization_cfgwrite_t *)data;
+    enum nsp__controlor_type_t nct;
+    nsp__packet_head_t ack;
+    int retval;
+
+    nct = nsp__get_link_type(link);
+    if (nct != kControlorType_Calibration && nct != kControlorType_Localization) {
+        log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout, 
+            "illegal controlor type:0x%08X try method nspi__on_localization_cfgread", nct);
+        retval = -EBADF;
+    } else {
+        retval = mm__setloc(request->blob_);
+    }
+
+    ack.id_ = request->head_.id_;
+    ack.size_ = sizeof(ack);
+    ack.type_ = PKTTYPE_LOCALIZATION_CFGWRITE_ACK;
+    ack.err_ = retval;
+
+    return 0;
+}
+
+static
 int nspi__on_nonsupport(HTCPLINK link, const char *data, int cb) {
     nsp__packet_head_t *head = (nsp__packet_head_t *)data;
     nsp__packet_head_t ack;
@@ -1388,6 +1438,12 @@ int nsp__on_tcp_recvdata(HTCPLINK link, const char *data, int cb) {
             break;
         case PKTTYPE_COMMON_COMPARE_WRITE:
             retval = nspi__on_common_compare_write(link, data, cb);
+            break;
+        case PKTTYPE_LOCALIZATION_CFGREAD:
+            retval = nspi__on_localization_cfgread( link, data, cb );
+            break;
+        case PKTTYPE_LOCALIZATION_CFGWRITE:
+            retval = nspi__on_localization_cfgwrite( link, data, cb );
             break;
         case PKTTYPE_INITIACTIVE_COMMON_READ:
             retval = nspi__regist_cycle_event(link, data, cb);

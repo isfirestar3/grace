@@ -16,5 +16,9 @@ extern
 int mm__getupl(void *upl);
 extern
 int mm__setupl(const void *upl);
+extern
+int mm__getloc(void *loc);
+extern
+int mm__setloc(const void *loc);
 
 #endif

@@ -87,8 +87,6 @@ int main(int argc, char **argv) {
 	int order_lsvar = 0;
 	char *target_epstr;
 
-	
-
 	nsp::os::waitable_handle w(0);
 
 	if (argc < 2) {
@@ -108,33 +106,63 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	for (int i = 0; i < 2000; i++ ) {
-		int robot = mn::init_net();
-		if (robot < 0) {
-			printf("init failed. %d\n", i);
-			break;
-		}
+	// for (int i = 0; i < 2000; i++ ) {
+	// 	int robot = mn::init_net();
+	// 	if (robot < 0) {
+	// 		printf("init failed. %d\n", i);
+	// 		break;
+	// 	}
 
-		int retval = mn::login_to_host(robot, target_epstr, kControlorType_Localization);
-		if (retval < 0) {
-			std::this_thread::sleep_for(std::chrono::seconds(2));
-			printf("login_to_host failed. %d\n", i);
-			continue;
-		}
-	}
+	// 	int retval = mn::login_to_host(robot, target_epstr, kControlorType_Localization);
+	// 	if (retval < 0) {
+	// 		std::this_thread::sleep_for(std::chrono::seconds(2));
+	// 		printf("login_to_host failed. %d\n", i);
+	// 		continue;
+	// 	}
+	// }
 
-	nsp::os::pshang();
+	// nsp::os::pshang();
 
 	int robot = mn::init_net();
 	if (robot < 0) {
 		return 1;
 	}
 
-	int retval = mn::login_to_host(robot, target_epstr, kControlorType_Localization);
+	int retval = mn::login_to_host(robot, target_epstr, kControlorType_Calibration);
+	// int retval = mn::login_to_host(robot, target_epstr, kControlorType_Localization);
 	if (retval < 0) {
 		std::this_thread::sleep_for(std::chrono::seconds(2));
 		return 1;
 	}
+
+	unsigned char data[128];
+	memset(data, 0xAA, 128);
+	mn::post_localization_cfgwrite_request(robot, data, 0, 128, [&](uint32_t, const void *p) {
+		w.sig();
+	});
+	w.wait();
+	w.reset();
+
+	mn::post_localization_cfgread_request(robot, [&](uint32_t, const void *p){
+		mn::asio_t *asio = (mn::asio_t *)p;
+		if (asio->err_ >= 0) {
+			mn::loc_data_t *locdat = (mn::loc_data_t *)p;
+			for (int i = 0; i < 128; i++) {
+				printf("0x%02X ", locdat->data_[i]);
+				if (i > 0 && i % 8 == 0 && i % 16 != 0) {
+					printf("\t");
+				}else{
+					if (i % 16 == 0 && i > 0) {
+						printf("\n");
+					}
+				}
+			}
+		}
+
+		w.sig();
+	});
+	w.wait();
+	return 0;
 
 	// std::thread wth(std::bind(&wproc, robot));
 	mn::register_callback_to_notify(robot, &mn_notify);

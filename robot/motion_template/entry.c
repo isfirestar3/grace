@@ -353,8 +353,8 @@ int main(int argc, char **argv) {
     posix__waitable_handle_t monitor;
     int retval;
     int p_storage_retval;
-    var__navigation_t *nav;
     upl_t p_storage_upl;
+    var__navigation_t *nav;
 
     static const char startup_message[] = POSIX__EOL
             "****************************************************************************"POSIX__EOL
@@ -475,8 +475,7 @@ int main(int argc, char **argv) {
             var__mark_framwork_error(kVarFixedObject_Navigation, var__make_error_code(kVarType_Navigation, kFramworkFatal_WorkerThreadNonResponse));
         } else {
             if (retval < 0) {
-                log__save("motion_template", kLogLevel_Warning, kLogTarget_Filesystem | kLogTarget_Stdout, 
-						"navigation loop keepalive test terminated.cause by waitable handle error.");
+                log__save("motion_template", kLogLevel_Warning, kLogTarget_Filesystem | kLogTarget_Stdout, "navigation loop keepalive test terminated.cause by waitable handle error.");
                 break;
             }
         }

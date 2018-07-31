@@ -34,6 +34,8 @@ struct p_storage_t {
         struct {
             upl_t upl;
             double last_total_odo;
+
+            /* misc of localization program configures */
             unsigned char loc_config[P_STORAGE_LOC_CONFIG];
         }p_storage_feild;
 
@@ -145,4 +147,12 @@ int mm__getupl(void *upl) {
 
 int mm__setupl(const void *upl) {
     return mm__write_mapping(sizeof(upl_t), upl);
+}
+
+int mm__getloc(void *loc){
+    return mm__read_mapping(0, P_STORAGE_LOC_CONFIG, loc);
+}
+
+int mm__setloc(const void *loc) {
+    return mm__write_mapping(P_STORAGE_LOC_CONFIG, loc);
 }
