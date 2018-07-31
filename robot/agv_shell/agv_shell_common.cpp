@@ -719,7 +719,7 @@ int global_parameter::init_white_list()
 
 int global_parameter::modify_file_lock(const int is_lock)
 {
-	int result = 0;
+	int result = -1;
 #ifdef _WIN32
 	if (1 == is_lock)
 	{
@@ -761,10 +761,10 @@ int global_parameter::modify_file_lock(const int is_lock)
 			command = "chattr -i " + iter->file_name;
 			int sys_ret = system(command.c_str());
 			if(sys_ret) {
-				result = -1;
 				loinfo("agv_shell") << "failed to unlock file:" << iter->file_name << " ret:" << sys_ret;
 				continue;
 			}
+			result = 0;
 			loinfo("agv_shell") << "success to unlock file:" << iter->file_name;
 		}
 	}
