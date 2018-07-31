@@ -36,9 +36,29 @@ int agv_shell_base::login_agv_shell(const std::string& ipv4, const uint16_t port
 			loerror("agv_shell_interface") << "failed to connect to target:" << client->get_target_endpoint().to_string() << " the link is " << client->get_link();
 			return -1;
 		}
-		//child class convert to base class
-		client_session_ = std::dynamic_pointer_cast<nsp::tcpip::tcp_application_client<nsp::proto::nspdef::protocol>>(client);
-		alive_th_.add_session(client_session_);
+		
+		// force login synchronous in 5 seconds.
+		for ( int i = 0; i < 50; ++i ) {
+			if ( client->netstatus(mn::kNetworkStatus_Established) ) {
+				//child class convert to base class
+				client_session_ = std::dynamic_pointer_cast<nsp::tcpip::tcp_application_client<nsp::proto::nspdef::protocol>>(client);
+				alive_th_.add_session(client_session_);
+				loinfo("agv_shell_interface") << "sucess login to target:" << client->get_target_endpoint().to_string() << " the link is " << client->get_link();
+				return 0;
+			} else if ( client->netstatus(mn::kNetworkStatus_Ready) ) {
+				if ( client->try_login() < 0 ) {
+					return -1;
+				}
+				std::this_thread::sleep_for( std::chrono::milliseconds( 50 ) );
+			} else {
+				if ( client->netstatus(mn::kNetworkStatus_Closed) ) {
+					loerror( "agv_shell_interface" ) << "failed to connect to remote " << client->get_target_endpoint().to_string();
+					break;
+				}
+				std::this_thread::sleep_for( std::chrono::milliseconds( 50 ) );
+			}
+		}
+		
 	}
 	catch (...)
 	{
@@ -82,7 +102,7 @@ int agv_shell_base::get_agv_shell_process_list(std::vector<process_info>& vct_pr
 		loerror("agv_shell_interface") << "failed to convert bacs class to child class.";
 		return -1;
 	}
-	if (client->is_network_conntected() < 0)
+	if (client->netstatus(mn::kNetworkStatus_Established) < 0)
 	{
 		loerror("agv_shell_interface") << "failed to get agv_shell process list,the target " << client->get_target_endpoint().to_string() 
 			<< " and link is: " << client->get_link() << " network status isn't connected.";
@@ -144,7 +164,7 @@ int agv_shell_base::post_agv_shell_process_cmd(const std::vector<process_command
 		loerror("agv_shell_interface") << "failed to convert bacs class to child class.";
 		return -1;
 	}
-	if (client->is_network_conntected() < 0)
+	if (client->netstatus(mn::kNetworkStatus_Established) < 0)
 	{
 		loerror("agv_shell_interface") << "failed to post agv_shell process cmd,the target "<< client->get_target_endpoint().to_string() 
 			<< " and link is: " << client->get_link() << " network status isn't connected.";
@@ -217,7 +237,7 @@ int agv_shell_base::get_agv_shell_process_status(std::vector<process_status>& vc
 		loerror("agv_shell_interface") << "failed to convert bacs class to child class.";
 		return -1;
 	}
-	if (client->is_network_conntected() < 0)
+	if (client->netstatus(mn::kNetworkStatus_Established) < 0)
 	{
 		loerror("agv_shell_interface") << "failed to get agv_shell process status,the target " << client->get_target_endpoint().to_string()
 			<< " and link is: " << client->get_link() << " network status isn't connected.";

@@ -1,212 +1,183 @@
 #!/bin/bash
 
+sleep 3
+
 patch_name="patch"
-update_file_path="/agvshell/standard/"$patch_name"/"
+update_file_path="/agvshell/standard/"${patch_name}"/"
 if [ $# -gt 0 ]; then
 	update_file_path=$1
 fi
-dest_grobot_path="/gzrobot/"
-dest_agvshell_path="/agvshell/"
-dest_lib_path="/usr/local/lib/"
-dest_etc_path="/etc/agv/"
 
-##create directory
-mkdir -p $dest_grobot_path
-mkdir -p $dest_lib_path
-
-head_agvshell=agv_shell
-head_mt=motion_template
-head_loc=Loc
-head_devition=Deviation
-head_picking=custom_picking
-head_cart=custom_cart
-head_nshost=nshost.so
-head_motion_net=motion_net.so
-head_camera=libgzcamera.so
-head_fts=libgzfts.so
-file_clear_log=clear_log.sh
-file_autostart=autostart.sh
-file_agvshell_config=agv_shell.xml
-file_version=version.txt
-
-#config file
-file_banks=banks.xml
-file_sefety=safety.xml
-file_version_config=version_config.txt
-
-#kill processes
-pkill $head_cart
-pkill $head_picking
-pkill $head_devition
-pkill $head_loc
-pkill $head_mt
-pkill $head_agvshell
-
-sleep 3
 date_today_format=`date "+%Y%m%d_%H%M%S"`
+log_file=/agvshell/log/update_${date_today_format}.log
+mkdir -p "/agvshell/log/"
+echo upgrade begin ---------`date`------------------ >> ${log_file}
 
-function cp_to_gzrobot()
+function fn_update_file()
 {
-    echo "update file:"$update_file_path$1", file_head:"$2 >>/agvshell/log/update_$date_today_format.log
-    readelf -h $update_file_path$1 >>/dev/null
-	#echo $?
-	if [ $? -eq 0 ]; then
-		mv $update_file_path$1 $dest_grobot_path
-		if [[ $dest_grobot_path$1 != $dest_grobot_path$2 ]]; then
-			ln -sf $dest_grobot_path$1 $dest_grobot_path$2
-		#else
-			#echo $1" not include version info"
+	src_file_array=$1
+	dest_path=$2
+	
+	for item in ${src_file_array[*]};do
+		file_name=${update_file_path}${item}
+		link_name=""
+		
+		if [ ! -f "${file_name}" ]; then
+			if [ "${file_name##*.}" != "so" ]; then
+				#is not a so file
+				continue
+			fi
+			#find so file whith version, example: nshost.so -> nshost.so.x.y.z
+			file_name=`ls ${update_file_path}${item}* 2>/dev/null | tail -1`
+			if [ ! -f "${file_name}" ]; then
+				continue
+			fi
+			item="${file_name##*/}"
 		fi
-	fi
+		file_type=`file -b --mime-type ${file_name}`
+		if [ "${file_type}" == "application/x-executable" ]; then
+			#bin/elf files
+			pkill ${file_name}
+			chmod 770 ${file_name} 
+		elif [ "${file_type}" == "text/x-shellscript" ]; then
+			#shell/scirpts files
+			pkill ${file_name}
+			chmod 770 ${file_name} 
+		elif [ "${file_type}" == "application/x-sharedlib" ]; then
+			#lib/so files
+			link_name=${item%%.so*}.so
+		fi
+		
+		err_str=`mv -f ${file_name} ${dest_path} 2>&1`
+		if [ $? -eq 0 ]; then
+			echo "update file:"${file_name}" to:"${dest_path} >> ${log_file}
+		else
+			echo "${err_str}" >> ${log_file}
+		fi
+		
+		if [ "${link_name}" != "" ]; then
+			#creat so link, example: nshost.so.9.6.3 >>> nshost.so
+			if [ ${item} != ${link_name} ]; then
+				ln -sf ${dest_path}${item} ${dest_path}${link_name}
+				echo "create a link file:"${dest_path}${link_name} >> ${log_file}
+			fi
+		fi
+	done
 }
 
-function cp_to_agvshell()
-{
-    echo "update file:"$update_file_path$1", file_head:"$2 >>/agvshell/log/update_$date_today_format.log
-    readelf -h $update_file_path$1 >>/dev/null
-	#echo $?
-	if [ $? -eq 0 ]; then
-		mv $update_file_path$1 $dest_agvshell_path
-		if [[ $dest_agvshell_path$1 != $dest_agvshell_path$2 ]]; then
-			ln -sf $dest_agvshell_path$1 $dest_agvshell_path$2
-		#else
-			#echo $1" not include version info"
-		fi
-	fi
-}
+#set copy dest directory
+dest_gzrobot="/gzrobot/"
+dest_agvshell="/agvshell/"
+dest_standard="/agvshell/standard/"
+dest_lib="/usr/local/lib/"
+dest_etc="/etc/agv/"
 
-function cp_to_lib()
-{
-    echo "update file:"$update_file_path$1", file_head:"$2 >>/agvshell/log/update_$date_today_format.log
-    readelf -h $update_file_path$1 >>/dev/null
-	#echo $?
-	if [ $? -eq 0 ]; then
-		mv $update_file_path$1 $dest_lib_path
-		if [[ $dest_lib_path$1 != $dest_lib_path$2 ]]; then
-			ln -sf $dest_lib_path$1 $dest_lib_path$2
-		#else
-			#echo $1" not include version info"
-		fi
+#set create directory
+mk_path=(
+	${dest_gzrobot}
+	${dest_agvshell}
+	${dest_standard}
+	${dest_lib}
+	${dest_etc}
+)
+#create directory
+for item in ${mk_path[*]};do
+	if [ -d ${item} ]; then
+		continue
 	fi
-}
+	mkdir -p ${item}
+	echo "mkdir:"${item} >>${log_file}
+done
 
+#set gzorobot file name
+src_gzrobot=(
+	#bin/elf files
+	'motion_template'
+	'Loc'
+	'Deviation'
+	'custom_picking'
+	'custom_cart'
+	#shell/scirpts files
+	'clear_log.sh'
+	'ping_ips.sh'
+	#config/xml/txt files
+	'docks.xml'
+	'Deviation_common.ini'
+	'Visual2dCodeLoc_common.ini'
+	'axis_table.txt'
+)
+#update gzrobot files -> ${dest_gzrobot}
+fn_update_file "${src_gzrobot[*]}" "${dest_gzrobot}"
 
+#set agvshell file name
+src_agvshell=(
+	#bin/elf files
+	'agv_shell'
+	#shell/scirpts files
+	'run.sh'
+	#config/xml/txt files
+	'version.txt'
+	'version_config.txt'
+	'gzrobot.service'
+)
+#update agvshell files -> ${dest_agvshell}
+fn_update_file "${src_agvshell[*]}" "${dest_agvshell}"
 
-all_files=`ls $update_file_path`
-for s in ${all_files[@]}; do
-	#echo $s
-    #sleep 3;
-	if [[ $s == $head_cart* ]]; then
-		cp_to_gzrobot $s $head_cart
-	fi
-    
-	if [[ $s == $head_picking* ]]; then
-		cp_to_gzrobot $s $head_picking
-	fi
-    
-    if [[ $s == $head_devition* ]]; then
-		cp_to_gzrobot $s $head_devition
-	fi
-    
-    if [[ $s == $head_loc* ]]; then
-		cp_to_gzrobot $s $head_loc
-	fi
-    
-    if [[ $s == $head_mt* ]]; then
-		cp_to_gzrobot $s $head_mt
-	fi
-    
-    if [[ $s == $head_camera* ]]; then
-		cp_to_lib $s $head_camera
-	fi
-    
-    if [[ $s == $head_motion_net* ]]; then
-		cp_to_lib $s $head_motion_net
-	fi
-    
-    if [[ $s == $head_nshost* ]]; then
-		cp_to_lib $s $head_nshost
-	fi
-    
-    if [[ $s == $head_agvshell* ]]; then
-		cp_to_agvshell $s $head_agvshell
-	fi
-    
-    if [[ $s == $head_fts* ]]; then
-		cp_to_agvshell $s $head_fts
-	fi
-    
-done;
+#set standard file name
+src_standard=(
+	#shell/scirpts files
+	'autostart.sh'
+	#config/xml/txt files
+	'agv_shell.xml'
+)
+#update agvshell files -> ${dest_standard}
+fn_update_file "${src_standard[*]}" "${dest_standard}"
 
-#copy scripts
-if [ -f $update_file_path"ping_ips.sh" ]; then 
-	mv $update_file_path"ping_ips.sh" $dest_grobot_path
-fi
-if [ -f $update_file_path"clear_log.sh" ]; then 
-	mv $update_file_path"clear_log.sh" $dest_grobot_path
-fi
-if [ -f $update_file_path"version.txt" ]; then
-	mv $update_file_path"version.txt" $dest_grobot_path
-fi
-if [ -f $update_file_path"Deviation_common.ini" ]; then
-	mv $update_file_path"Deviation_common.ini" $dest_grobot_path
-fi
-if [ -f $update_file_path"Visual2dCodeLoc_common.ini" ]; then
-	mv $update_file_path"Visual2dCodeLoc_common.ini" $dest_grobot_path
-fi
-if [ -f $update_file_path"docks.xml" ]; then
-	mv $update_file_path"docks.xml" $dest_grobot_path
-fi
-if [ -f $update_file_path"axis_table.txt" ]; then
-	mv $update_file_path"axis_table.txt" $dest_grobot_path
-fi
-if [ -f $update_file_path"run.sh" ]; then
-	mv $update_file_path"run.sh" $dest_agvshell_path
-fi
-if [ -f $update_file_path"gzrobot.service" ]; then
-	mv $update_file_path"gzrobot.service" $dest_agvshell_path
-fi
-if [ -f $update_file_path"autostart.sh" ]; then
-	mv $update_file_path"autostart.sh" $dest_agvshell_path"/standard/"
-fi
-if [ -f $update_file_path"agv_shell.xml" ]; then
-	mv $update_file_path"agv_shell.xml" $dest_agvshell_path"/standard/"
-fi
-if [ -f $update_file_path"layout.xml" ]; then
-	mv $update_file_path"layout.xml" /etc/agv/
-fi
-if [ -f $update_file_path"layout.bin" ]; then
-	mv $update_file_path"layout.bin" /etc/agv/
-fi
-if [ -f $update_file_path"custom_setting_pickingagv_fork_protect.xml" ]; then
-	mv $update_file_path"custom_setting_pickingagv_fork_protect.xml" /etc/agv/
+#set config etc file name
+src_config_etc=(
+	'misc.xml'
+	'mnt.xml'
+	'navigation.xml'
+	'banks.xml'
+	'safety.xml'
+	'layout.xml'
+	'layout.bin'
+	'nsp.xml'
+	'motion_net.xml'
+	'custom_setting.xml'
+	'custom_setting_cartagv.xml'
+	'custom_setting_forkagv.xml'
+	'custom_setting_pickingagv.xml'
+	'custom_setting_pickingagv_fork_protect.xml'
+)
+#update etc files -> ${dest_etc}
+fn_update_file "${src_config_etc[*]}" "${dest_etc}"
+
+#set lib file name
+src_lib=(
+	'nshost.so'
+	'libxml2.so'
+	'motion_net.so'
+	'libgzcamera.so'
+	'libgzfts.so'
+)
+#update lib files -> ${dest_lib}
+fn_update_file "${src_lib[*]}" "${dest_lib}"
+
+#services enable
+if [ -f "/agvshell/gzrobot.service" ]; then
+	systemctl stop gzrobot.service
+	systemctl disable gzrobot.service
+	rm -f /etc/systemd/system/gzrobot.service
+	systemctl enable /agvshell/gzrobot.service
 fi
 
-if [ -f $update_file_path"nsp.xml" ]; then
-	mv $update_file_path"nsp.xml" /etc/agv/
-fi
-#copy config file
-if [ -f $update_file_path$file_banks ]; then
-	mv $update_file_path$file_banks $dest_etc_path
-fi
-if [ -f $update_file_path$file_sefety ]; then
-	mv $update_file_path$file_sefety $dest_etc_path
-fi
-if [ -f $update_file_path$file_version_config ]; then
-	mv $update_file_path$file_version_config $dest_grobot_path
-fi
-
-
-#if [ -f /agvshell/gzrobot.service ]; then
-#	systemctl stop gzrobot.service
-#	systemctl disable gzrobot.service
-#	rm -f /etc/systemd/system/gzrobot.service
-#	systemctl enable /agvshell/gzrobot.service
-#fi
-
+#update done.
 sleep 0.2
-echo "finish grace up, reboot" >>/agvshell/log/update_$date_today_format.log
-echo "" >>/agvshell/log/update_$date_today_format.log
-
+echo upgrade end   ---------`date`------------------ >> ${log_file}
+#Synchronize os's cached writes 
+sync
+sync
+#reboot os
 reboot
 

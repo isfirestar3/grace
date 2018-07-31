@@ -1,7 +1,6 @@
 #include "parameterexporter.h"
 #include "network_client_manager.h"
 #include "singleton.hpp"
-#include "common_impls.hpp"
 
 ParameterExporter::ParameterExporter(const QString &filename)
 :m_file{ filename }
@@ -14,20 +13,11 @@ ParameterExporter::~ParameterExporter()
 
 }
 
-bool ParameterExporter::openExportFile()
-{
-	return m_file.open(QIODevice::WriteOnly);
-}
-
 bool ParameterExporter::exportParameter()
 {
-	nsp::os::waitable_handle waitHandle;
 	bool ret = false;
 	switch_t switch_t_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_switch, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		Q_UNUSED(waitSig);
-
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -39,23 +29,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&switch_t_, sizeof(switch_t_)))
+	if (!write((const char *)&switch_t_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	mode_t mode_t_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_mode, 1, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig2(&waitHandle);
-		Q_UNUSED(waitSig2);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -67,23 +53,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&mode_t_, sizeof(mode_t_)))
+	if (!write((const char *)&mode_t_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	diagnosis_current_t diagnosis_current_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_diagnosis_current, 1, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		Q_UNUSED(waitSig);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -95,23 +77,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&diagnosis_current_, sizeof(diagnosis_current_)))
+	if (!write((const char *)&diagnosis_current_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	motor_r motor_r_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_motor_r, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		Q_UNUSED(waitSig);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -123,23 +101,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&motor_r_, sizeof(motor_r_)))
+	if (!write((const char *)&motor_r_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	motor_l motor_l_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_motor_l, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		Q_UNUSED(waitSig);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -151,22 +125,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&motor_l_, sizeof(motor_l_)))
+	if (!write((const char *)&motor_l_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	polepairs polepairs_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_polepairs, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -178,22 +149,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&polepairs_, sizeof(polepairs_)))
+	if (!write((const char *)&polepairs_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	encoderlines encoderlines_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_encoderlines, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -205,22 +173,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&encoderlines_, sizeof(encoderlines_)))
+	if (!write((const char *)&encoderlines_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	break_t break_t_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_break, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -232,22 +197,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&break_t_, sizeof(break_t_)))
+	if (!write((const char *)&break_t_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	con_current_t con_current;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_con_current, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -259,22 +221,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&con_current, sizeof(con_current)))
+	if (!write((const char *)&con_current))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	max_current_t max_current;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_max_current, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -286,22 +245,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&max_current, sizeof(max_current)))
+	if (!write((const char *)&max_current))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	homing_t homing_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_homing, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -313,22 +269,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&homing_, sizeof(homing_)))
+	if (!write((const char *)&homing_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	pos_ki_t pos_ki_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_pos_ki, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -340,22 +293,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&pos_ki_, sizeof(pos_ki_)))
+	if (!write((const char *)&pos_ki_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	pos_kp_t pos_kp_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_pos_kp, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -367,22 +317,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&pos_kp_, sizeof(pos_kp_)))
+	if (!write((const char *)&pos_kp_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	jerk_t jerk_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_jerk, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -394,22 +341,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&jerk_, sizeof(jerk_)))
+	if (!write((const char *)&jerk_))
 	{
 		return false;
 	}
 
-	acceleration_t acc_t;
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
+	vel_acc_t acc_t;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_acceleration, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -417,26 +361,23 @@ bool ParameterExporter::exportParameter()
 			return;
 		}
 
-		acc_t = *(acceleration_t *)str_data.data();
+		acc_t = *(vel_acc_t *)str_data.data();
 		ret = true;
 	});
-
-	waitHandle.wait(TIMEOUT);
 
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&acc_t, sizeof(acc_t)))
+	if (!write((const char *)&acc_t))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	velocity_t velocity_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_velocity, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -448,22 +389,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&velocity_, sizeof(velocity_)))
+	if (!write((const char *)&velocity_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	kvff_t kvff_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_kvff, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -475,22 +413,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&kvff_, sizeof(kvff_)))
+	if (!write((const char *)&kvff_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	kaff_t kaff_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_kaff, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -502,22 +437,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&kaff_, sizeof(kaff_)))
+	if (!write((const char *)&kaff_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	speed_data speed_data_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_speed_kp, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -529,21 +461,18 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&speed_data_, sizeof(speed_data_)))
+	if (!write((const char *)&speed_data_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_speed_kp, 1, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -555,21 +484,18 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&speed_data_, sizeof(speed_data_)))
+	if (!write((const char *)&speed_data_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_speed_kp, 2, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -581,21 +507,18 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&speed_data_, sizeof(speed_data_)))
+	if (!write((const char *)&speed_data_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_speed_kl, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -607,21 +530,18 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&speed_data_, sizeof(speed_data_)))
+	if (!write((const char *)&speed_data_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_speed_kl, 1, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -633,21 +553,18 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&speed_data_, sizeof(speed_data_)))
+	if (!write((const char *)&speed_data_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_speed_kl, 2, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -659,22 +576,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&speed_data_, sizeof(speed_data_)))
+	if (!write((const char *)&speed_data_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	vel_dir vel_dir_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_veldir, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -686,22 +600,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&vel_dir_, sizeof(vel_dir_)))
+	if (!write((const char *)&vel_dir_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	vel_acc_t vel_acc_t_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_vel_acc, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -713,22 +624,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&vel_acc_t_, sizeof(vel_acc_t_)))
+	if (!write((const char *)&vel_acc_t_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	vel_dec_t vel_dec_t_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_vel_dec, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -740,22 +648,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&vel_dec_t_, sizeof(vel_dec_t_)))
+	if (!write((const char *)&vel_dec_t_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	halt_deceleration_t halt_deceleration_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_halt_deceleration, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -767,22 +672,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&halt_deceleration_, sizeof(halt_deceleration_)))
+	if (!write((const char *)&halt_deceleration_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	di_config_t di_config_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_di_config, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -794,21 +696,18 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&di_config_, sizeof(di_config_)))
+	if (!write((const char *)&di_config_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_di_config, 1, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -820,21 +719,18 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&di_config_, sizeof(di_config_)))
+	if (!write((const char *)&di_config_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_di_config, 2, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -846,21 +742,18 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&di_config_, sizeof(di_config_)))
+	if (!write((const char *)&di_config_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_di_config, 3, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -872,21 +765,18 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&di_config_, sizeof(di_config_)))
+	if (!write((const char *)&di_config_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_di_config, 4, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -898,21 +788,18 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&di_config_, sizeof(di_config_)))
+	if (!write((const char *)&di_config_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_di_config, 5, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -924,22 +811,19 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&di_config_, sizeof(di_config_)))
+	if (!write((const char *)&di_config_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	di_filter_time_t di_filter_time_;
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_di_filter_time, 0, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -951,21 +835,18 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&di_filter_time_, sizeof(di_filter_time_)))
+	if (!write((const char *)&di_filter_time_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_di_filter_time, 1, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -977,21 +858,18 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&di_filter_time_, sizeof(di_filter_time_)))
+	if (!write((const char *)&di_filter_time_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_di_filter_time, 2, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -1003,21 +881,18 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&di_filter_time_, sizeof(di_filter_time_)))
+	if (!write((const char *)&di_filter_time_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_di_filter_time, 3, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -1029,21 +904,18 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&di_filter_time_, sizeof(di_filter_time_)))
+	if (!write((const char *)&di_filter_time_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_di_filter_time, 4, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -1055,21 +927,18 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&di_filter_time_, sizeof(di_filter_time_)))
+	if (!write((const char *)&di_filter_time_))
 	{
 		return false;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(SEDN_INTERVAL));
 	nsp::toolkit::singleton<network_client_manager>::instance()->read_register_data(ktask_type_read_register_di_filter_time, 5, [&](const std::string &str_data, int err_code)->void{
-		shr::gui::waitable_sig waitSig(&waitHandle);
-		
 		if (nsp::proto::errorno_t::kSuccessful != err_code || str_data.empty())
 		{
 			ret = false;
@@ -1081,14 +950,12 @@ bool ParameterExporter::exportParameter()
 		ret = true;
 	});
 
-	waitHandle.wait(TIMEOUT);
-
 	if (!ret)
 	{
 		return false;
 	}
 
-	if (!write((const char *)&di_filter_time_, sizeof(di_filter_time_)))
+	if (!write((const char *)&di_filter_time_))
 	{
 		return false;
 	}
@@ -1096,30 +963,37 @@ bool ParameterExporter::exportParameter()
 	return true;
 }
 
-bool ParameterExporter::write(const char *data, qint64 size)
+bool ParameterExporter::write(const char *data)
 {
 	if (nullptr == data)
 	{
 		return false;
 	}
 
-	if (size <= 0)
+	uint dataLen = qstrlen(data);
+
+	if (dataLen <= 0)
 	{
 		return true;
 	}
 
+	if (!m_file.open(QIODevice::WriteOnly))
+	{
+		return false;
+	}
+
 	qint64 writenLen = -1;
 
-	while (writenLen = m_file.write(data, size))
+	while (writenLen = m_file.write(data, dataLen))
 	{
 		if (-1 == writenLen)
 		{
 			return false;
 		}
 
-		size -= writenLen;
+		dataLen -= writenLen;
 
-		if (0 == size)
+		if (0 == dataLen)
 		{
 			break;
 		}

@@ -554,12 +554,12 @@ void log_select::on_sendLogButton_clicked()
 			QMessageBox::information(this, QStringLiteral("warning："), QStringLiteral("The start time should be less than the end time ！"), QMessageBox::Ok);//起始时间应小于结束时间
 			return;
 		}
-		//std::string current_time;
-		//get_current_time(current_time);
-		//if (strat_time > current_time || end_time > current_time){
-		//	QMessageBox::information(this, QStringLiteral("warning："), QStringLiteral("The time is greater than current time, unreasonable ！"), QMessageBox::Ok);//时间大于当前时间，不合理
-		//	return;
-		//}
+		std::string current_time;
+		get_current_time(current_time);
+		if (strat_time > current_time || end_time > current_time){
+			QMessageBox::information(this, QStringLiteral("warning："), QStringLiteral("The time is greater than current time, unreasonable ！"), QMessageBox::Ok);//时间大于当前时间，不合理
+			return;
+		}
 	}
 	//获取日志类型
 	std::vector<std::string>selected;

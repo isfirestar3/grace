@@ -1,7 +1,5 @@
 #pragma once
 
-#include <memory>
-#include "serialize.hpp"
 #include "agv_shell_proto.hpp"
 
 namespace nsp{
@@ -12,7 +10,7 @@ namespace nsp{
 			proto_frimware_info_request(){}
 			~proto_frimware_info_request(){}
 
-			agv_shell_proto_head head_;
+			proto_head head_;
 			nsp::proto::proto_crt_t<int> frimware_type_;
 			nsp::proto::proto_string_t<char> target_endpoint_;
 
@@ -44,7 +42,7 @@ namespace nsp{
 			proto_frimware_info_response(){}
 			~proto_frimware_info_response(){}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_crt_t<int> frimware_status;
 			nsp::proto::proto_crt_t<int> frimware_type_;
 			nsp::proto::proto_crt_t<int> vcu_type_;
@@ -82,7 +80,7 @@ namespace nsp{
 			proto_frimware_update(){}
 			~proto_frimware_update(){}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_crt_t<int> frimware_type_;
 			nsp::proto::proto_string_t<char> frimware_path_;
 			nsp::proto::proto_string_t<char> target_endpoint_;
@@ -117,7 +115,7 @@ namespace nsp{
 			proto_frimware_update_response(){}
 			~proto_frimware_update_response(){}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_crt_t<int> frimware_type_;
 			nsp::proto::proto_crt_t<int> frimware_step;
 			nsp::proto::proto_crt_t<int> frimware_status;
@@ -152,7 +150,7 @@ namespace nsp{
 			proto_frimware_download_request(){}
 			~proto_frimware_download_request(){}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_crt_t<int> frimware_type_;
 			nsp::proto::proto_crt_t<int> frimware_length_;
 			nsp::proto::proto_string_t<char> target_endpoint_;
@@ -187,7 +185,7 @@ namespace nsp{
 			proto_frimware_download_reponse(){}
 			~proto_frimware_download_reponse(){}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_string_t<char> frimware_path_;
 
 			const int length() const
@@ -216,7 +214,7 @@ namespace nsp{
 			proto_msg_str(int type) : head_(type) {}
 			~proto_msg_str() {}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_crt_t<int> msg_int_;
 			nsp::proto::proto_string_t<char>  msg_str_;
 
@@ -251,7 +249,7 @@ namespace nsp{
 			proto_frimware_custom_update() {}
 			~proto_frimware_custom_update() {}
 
-			nsp::proto::agv_shell_proto_head head_;
+			nsp::proto::proto_head head_;
 			nsp::proto::proto_crt_t<int> node_id;
 			nsp::proto::proto_crt_t<int> serial_type;
 			nsp::proto::proto_string_t<char> frimware_path_;
@@ -284,19 +282,19 @@ namespace nsp{
 		}proto_frimware_custom_update_t;
 
 		template<class T, uint32_t _Type>
-		class package : public agv_shell_proto_head {
+		class package : public proto_head {
 			T body_;
 		public:
-			package(const T &body_ref) : body_(body_ref), agv_shell_proto_head(_Type) {
+			package(const T &body_ref) : body_(body_ref), proto_head(_Type) {
 			}
-			package() : agv_shell_proto_head(_Type) {
+			package() : proto_head(_Type) {
 			}
 			~package() {}
 			virtual const int length() const override {
-				return agv_shell_proto_head::length() + body_.length();
+				return proto_head::length() + body_.length();
 			}
 			virtual unsigned char *serialize(unsigned char *bytes) const override {
-				unsigned char *pos = agv_shell_proto_head::serialize(bytes);
+				unsigned char *pos = proto_head::serialize(bytes);
 				return body_.serialize(pos);
 			}
 			virtual const unsigned char *build(const unsigned char *bytes, int &cb) override {

@@ -360,8 +360,8 @@ void network_client_manager::write_jerk(task_type_t task_type, uint16_t sub_inde
 
 void network_client_manager::write_acceleration(task_type_t task_type, uint16_t sub_index, float acceleration_, funcalltask_t callback /*= nullptr*/)
 {
-	acceleration_t acc_t;
-	acc_t.acceleration_ = acceleration_;
+	vel_acc_t acc_t;
+	acc_t.vel_acc_ = acceleration_;
 	const int BUF_SIZE = sizeof(acc_t);
 	char buf[BUF_SIZE] = { 0 };
 	memcpy(buf, &acc_t, BUF_SIZE);

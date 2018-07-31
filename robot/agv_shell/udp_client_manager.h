@@ -1,11 +1,15 @@
 #pragma once
 
-#include "udp_session.h"
-#include "singleton.hpp"
-#include <map>
-#include <string>
-#include <memory>
+#include "dhcp_udp_session.h"
+#include "nisdef.h"
 #include "proto_udp_typedef.h"
+#include "singleton.hpp"
+#include "udp_session.h"
+#include <map>
+#include <memory>
+#include <string>
+#include <thread>
+
 
 class udp_client_manager{
 	udp_client_manager();
@@ -14,6 +18,7 @@ class udp_client_manager{
 
 public:
 	int init_network();
+	void keepalive();
 	int post_vcu_type_request(const nsp::tcpip::endpoint& ep, const std::shared_ptr<motion::asio_block> &asio_ack);
 	int post_vcu_version_request(const FIRMWARE_SOFTWARE_TYPE type, const nsp::tcpip::endpoint& ep, const int is_control_, const std::shared_ptr<motion::asio_block> &asio_ack);
 	int post_vcu_reset_request(const nsp::tcpip::endpoint& ep, const uint32_t file_size, const std::shared_ptr<motion::asio_block> &asio_ack);
@@ -25,6 +30,8 @@ public:
 	int post_vcu_keep_alive_request(const nsp::tcpip::endpoint& ep);
 	int post_query_vcu_keep_alive_request(const nsp::tcpip::endpoint& ep, const std::shared_ptr<motion::asio_block> &asio_ack);
 	int post_set_vcu_keep_alive_request(const nsp::tcpip::endpoint& ep, int status, const std::shared_ptr<motion::asio_block> &asio_ack);
+	
+	int post_local_info_request(int shell_port, int port, const std::string& mac);
 
 	//can自主驱动业务
 	int post_can_write_bin_file(const nsp::tcpip::endpoint& ep, const int block_offset, const std::string&file_block_data,
@@ -51,6 +58,11 @@ public:
 	uint32_t get_reset_wait_time(){ return reset_timeout_; }
 	void set_local_endpoint(const std::string& ipv4,const uint16_t port);
 	nsp::tcpip::endpoint get_local_ep_obj_(){ return local_ep_obj_; }
+	inline void set_dhcp_fix_ep(const std::string& ipv4, const uint16_t port) {
+		dhcp_fix_ep_.ipv4(ipv4);
+		dhcp_fix_ep_.port(port);
+	}
+	inline nsp::tcpip::endpoint get_dhcp_fix_ep(){ return dhcp_fix_ep_; }
 
 private:
 	void clean_session();
@@ -59,8 +71,14 @@ private:
 	nsp::tcpip::endpoint local_ep_obj_;
 	nsp::tcpip::endpoint m_core_ep_obj_;
 	nsp::tcpip::endpoint camera_ep_obj_;
+	nsp::tcpip::endpoint dhcp_fix_ep_;
 	int version_control_;
 	uint32_t reset_timeout_;
 
 	std::shared_ptr<udp_session> net_session_;
+	
+	std::shared_ptr<dhcp_udp_session> dhcp_session_;
+	
+	nsp::os::waitable_handle waiter_;
+    std::thread* loop_th_ = nullptr;
 };

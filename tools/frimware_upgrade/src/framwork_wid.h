@@ -16,26 +16,9 @@
 
 #define NET_WINDOW_SIZE     2
 
-#define NET_ADDRESS	"0.0.0.0"
-
-class QRegExpValidator;
-
 class framwork_wid : public QMainWindow{
 	Q_OBJECT
-public:
-	enum class NodeIDField
-	{
-		NIF_StartNodeID,
-		NIF_EndNodeID, 
-		NIF_FieldCount
-	};
 
-	enum class IpNodeIDField
-	{
-		INIF_Ip, 
-		INIF_Node,
-		INIF_FieldCount
-	};
 public:
 	framwork_wid(QWidget*parent = 0);
 	~framwork_wid();
@@ -44,7 +27,10 @@ private:
 	void init_slot();
 	int ip_separate(const std::string&ip_start, const std::string&ip_end, std::vector<std::string>& vct_str);
 	int start_task_thead();
-	void update_net_recv_data(const std::string& ip, const int operate_type, const std::string& data, const nsp::proto::errorno_t error);
+	void update_net_recv_data(const std::string& ip, const int data_type, const std::string& data, const nsp::proto::errorno_t error);
+	void update_net_recv_download(const std::string&, const int type, const int, const nsp::proto::errorno_t);
+	void update_net_recv_upload(const std::string&, const int type, const int, const nsp::proto::errorno_t);
+	void update_upload_net_recv_data(const std::string& ip, const int data_type, const std::string& data, const nsp::proto::errorno_t status);
 private slots:
 	void init_xml_file();
 	void action_download();
@@ -62,34 +48,23 @@ private slots:
 	void btn_start_upload_slot(int row);
 	void btn_delete_slot(int row);
 	//void update_recv_data();
+	void update_radi();
+	void update_reset_status();
 	void update_reset_final_lstatus();
+	void set_delete_btn_status();
 	void select_all_check();
-	void on_combox_style_changed(const QString &qstr_style);
-	void on_combox_serial_id_changed(const QString & qstr_serial_id );
-
-	void update_status(QString ip, int uidate_area, QString result, int status);
-signals:
-	void updatestatussignal(QString ip, int uidate_area, QString result, int status);
 private:
-	void get_vcu_info_task(const std::string& lcoal_ip, const std::string& ip, uint8_t node_id, uint8_t serial_id, const int port);
-	void update_vcu_bin_task(int row, const std::string& ip_node_id_str, uint8_t node_id);
+	void update_download_compare_status(const int index, const int type, const nsp::proto::errorno_t);
+	void update_download_progress_status(const int index, const int type, const nsp::proto::errorno_t);
+	void update_download_reset_status(const int index, const int type, const nsp::proto::errorno_t);
+
+	void get_vcu_info_task(const std::string& lcoal_ip,const std::string& ip, const int port);
+	void update_vcu_bin_task(const std::string& ip);
 	void get_upload_vcu_info_task(const std::string& lcoal_ip, const std::string& ip, const int port);
-
-	void start_data_forward(const std::string& lcoal_ip, const std::string& ip, const int port);
-
-	void get_vcu_version_task(const std::string& lcoal_ip, const std::string& ip, const int port, uint8_t serial_id, uint8_t node_id);
-
-	void get_vcu_cpu_task(const std::string& lcoal_ip, const std::string& ip, const int port, uint8_t serial_id, uint8_t node_id);
-
-	Q_INVOKABLE void start_data_foward_callback(const std::string& ipNodeIDStr, const int operate_type, const std::string& data, const nsp::proto::errorno_t status);
-	Q_INVOKABLE void get_vcu_type_callback(const std::string& ipNodeIDStr, const int operate_type, const std::string& data, const nsp::proto::errorno_t status);
-	Q_INVOKABLE void get_vcu_version_callback(const std::string& ipNodeIDStr, const int operate_type, const std::string& data, const nsp::proto::errorno_t status);
-	Q_INVOKABLE void update_vcu_bin_task_callback(const std::string& ipNodeIDStr, const int operate_type, const std::string& data, const nsp::proto::errorno_t status);
-private:
+private :
 	Ui::MainWindow main_wid_;
 	config config_info_;
 	firmware_info firm_info_;
-	QSharedPointer<QRegExpValidator> m_nodeIDValidator;
 //	QStandardItemModel *view_model_;
 	custom_control_delegate* custom_delegate_;
 	QSignalMapper* pMapper_;
@@ -110,7 +85,6 @@ private:
 	std::atomic<QVariant> var_;
 	std::atomic<QVariant> reset_status_;
 	std::atomic<int> index_delete_;
-	enum device_type  type_device_;
 	//std::string ip_; 
 	//int data_type_;
 	//std::string data_;

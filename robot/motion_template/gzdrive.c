@@ -169,6 +169,7 @@ struct vcu_common_report {
 
 ////////////////////////////////////        对象和功能结构定义部分     /////////////////////////////////////////////////////////////////////////////
 #define GZD_UDP_PORT                (0x5000)
+//#define GZD_UDP_TARGET            ("10.10.100.169")
 #define GZD_UDP_TARGET              ("192.168.0.2")
 #define GZD_UDP_LOCAL               ("192.168.0.3")
 #define GZD_DEVICE_CONFIG_PORT      (0x4002)
@@ -360,7 +361,7 @@ int nspi__on_vcu_common_report(struct vcu_common_report *common_report) {
         if (0 != hardware_error) {
             var__mark_hardware_error(kVarFixedObject_Vehide, hardware_error);
             log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout,
-                "hardware error=0x%08X fault stop=%d", hardware_error, veh->fault_stop_);
+                "hardware error=%d fault stop=%d", hardware_error, veh->fault_stop_);
         } else {
             if (veh->fault_stop_ & VEH_HARDWARE_HANDLEING) {
                 veh->fault_stop_ &= ~VEH_HARDWARE_FAULT;

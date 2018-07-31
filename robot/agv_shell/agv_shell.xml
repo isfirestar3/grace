@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<agv_shell auto_startup = "0" port = "4410" fts_port="4411" fts_long_port="4412">
+<agv_shell auto_startup = "0" port = "4410" fts_port="4411">
 	<process name="../gzrobot/motion_template" cmd="" delay_start="500"/>
 	<process name="../gzrobot/Loc" cmd="" delay_start="2000"/>
 	<process name="../gzrobot/Deviation" cmd="" delay_start="1000"/>

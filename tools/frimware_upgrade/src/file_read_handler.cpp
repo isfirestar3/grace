@@ -1,9 +1,7 @@
 #include "file_read_handler.h"
 #include "log.h"
 
-file_read_handler::file_read_handler()
-:file_block_size_(FILE_BLOCK_SIZE_CAN)
-{
+file_read_handler::file_read_handler(){
 
 }
 
@@ -24,79 +22,41 @@ int file_read_handler::open_file(const std::string& file_name){
 		return -1;
 	}
 
-	fseek(file_handler_, 0, SEEK_SET);
-	std::string str_file_data;
-	char chbuf[1024] = { 0 };
-	int32_t  nRead = 0;
-	int32_t nOffset = 0;
-	bool isHexFile = true;
-	if (file_name.find(".bin") != std::string::npos){
-		isHexFile = false;
+	uint64_t block_number = 1;
+	file_size_ = buf.st_size;
+	if (buf.st_size != 0){
+		block_number = (buf.st_size % FILE_BLOCK_SIZE == 0) ? (buf.st_size / FILE_BLOCK_SIZE) : (buf.st_size / FILE_BLOCK_SIZE + 1);
 	}
-
-	while ((nRead = fread(chbuf, sizeof(char), sizeof(chbuf), file_handler_)) > 0)
-	{
-		nOffset = 0;
-		while (nOffset< nRead)
-		{
-			if (isHexFile == false || (chbuf[nOffset] != '\r' && chbuf[nOffset] != '\n')){
-				str_file_data.append(chbuf + nOffset, 1);
-			}
-			nOffset++;
-		}
-
-		memset(chbuf, 0, sizeof(chbuf));
-	}
-	fclose(file_handler_);
 	map_file_block_.clear();
-
-	nOffset = 0;
-	check_sum_ = 0;
-	while (nOffset < str_file_data.size() / file_block_size_)
-	{
-		std::string tmp_data = "";
-		tmp_data.assign( &str_file_data[nOffset *file_block_size_], file_block_size_);
-		map_file_block_.insert(std::make_pair(nOffset, tmp_data));
-		nOffset++;
-		check_sum(tmp_data);
-	}
-
-	int32_t nlast = str_file_data.size() % file_block_size_;
-	if (nlast > 0)
-	{
-		std::string tmp_data = "";
-		tmp_data.assign(&str_file_data[nOffset *file_block_size_], nlast);
-		map_file_block_.insert(std::make_pair(nOffset, tmp_data));
-		check_sum(tmp_data);
-	}
-	return 0;
-}
-
-void file_read_handler::check_sum(std::string buffer )
-{
-	for (int index = 0; index < buffer.length(); index++){
-		if (0 == index % 2 ){
-			check_sum_ += uint8_t(buffer[index]);
+	//fseek函数将数据指针指向初始位置
+	fseek(file_handler_, 0, SEEK_SET);
+	for (int i = 0; i < block_number; i++){
+		if (i != (block_number - 1)){
+			char line_block[FILE_BLOCK_SIZE] = {0};
+			if (fread(line_block, sizeof(char), FILE_BLOCK_SIZE, file_handler_) != FILE_BLOCK_SIZE){
+				nsperror << "failed to read bin file while the block is:" << i;
+				return -1;
+			}
+			std::string tmp_data;
+			tmp_data.assign(line_block, sizeof(line_block));
+			map_file_block_.insert(std::make_pair(i, tmp_data));
 		}
 		else{
-			check_sum_ += uint8_t(buffer[index]) << 8;
-			if (check_sum_ == 0x4f2b){
-				int j = 5;
+			//最后一片数据，由于数据大小未知，故此处另做处理
+			uint64_t end_size = buf.st_size - i*FILE_BLOCK_SIZE;
+			char* line_block = new char[end_size];
+			if (fread(line_block, sizeof(char), end_size, file_handler_) != end_size){
+				nsperror << "failed to read bin file in the last block.";
+				return -1;
 			}
+			std::string tmp_data;
+			tmp_data.assign(line_block, end_size);
+			map_file_block_.insert(std::make_pair(i, tmp_data));
+			delete[] line_block;
 		}
 	}
-	//static uint16_t sum = 0;
-	//for (int index = 0; index < buffer.length();){
-	//	uint16_t temp = 0;
-	//	int size = 1;
-	//	if (buffer.length() - index > 2){
-	//		size = 2;
-	//	}
-
-	//	memcpy(&temp, buffer.c_str() + index, size);
-	//	sum += temp;
-	//	index = index + 2;
-	//}
+	fclose(file_handler_);
+	return 0;
 }
 
 //关闭文件句柄
@@ -108,16 +68,6 @@ int file_read_handler::close_file(){
 //获取文件块数量，map集合中key值由第0块递增
 int file_read_handler::get_file_block_num(){
 	return map_file_block_.size();
-}
-
-void file_read_handler::set_block_size(uint32_t block_size)
-{
-	if ( block_size == 0 )
-	{
-		block_size = FILE_BLOCK_SIZE;
-	}
-
-	file_block_size_ = block_size;
 }
 
 //根据索引号获取数据块

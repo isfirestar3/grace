@@ -1,12 +1,13 @@
 #include "agv_shell_server.h"
-#include "frimware_task.h"
-#include "file_read_handler.h"
-#include "file_can_read.h"
-#include "gzfts_api.h"
-#include <algorithm>
 #include "agv_shell_common.h"
-
-#define NET_WINDOW_SIZE     1
+#include "agv_shell_define.h"
+#include "const.h"
+#include "file_can_read.h"
+#include "file_manager.h"
+#include "file_read_handler.h"
+#include "frimware_task.h"
+#include "udp_client_manager.h"
+#include <algorithm>
 
 agv_shell_server::agv_shell_server() {
 	initlization();
@@ -48,6 +49,8 @@ void agv_shell_server::initlization(){
 	parment.block_size_pre_transfer = 0x00002000;
 	parment.fts_callback = &fts_usercall;
 	fts_change_configure(&parment);*/
+	
+	sys_info_.init();
 }
 
 void agv_shell_server::uinit(){
@@ -73,16 +76,17 @@ void agv_shell_server::uinit(){
 
 void agv_shell_server::alive_check_thread()
 {
-	const int ALIVE_TIMEOUT_INTERVAL = 2000;
-	const int ALIVE_MAX_COUNT = 5;
-	while (check_wait_.wait(ALIVE_TIMEOUT_INTERVAL))
+	int shell_port = nsp::toolkit::singleton<global_parameter>::instance()->get_server_port();
+	int port = nsp::toolkit::singleton<global_parameter>::instance()->get_fts_port();
+	
+	while (check_wait_.wait(TCP_KEEPALIVE_TIME_INTERVAL))
 	{
 		if (is_exist_ == 1)break;
 
 		if (service_)
 		{
 			service_->notify_all([&](const std::shared_ptr<agv_shell_session> &client) {
-				if (client->get_alive_count() > ALIVE_MAX_COUNT){
+				if (client->get_alive_count() > TCP_KEEPALIVE_MAX_COUNT){
 					loerror("agv_shell") << "get a timeout then close session, the remote endpoint is " << client->get_remote_endpoint().to_string() << " the lnk is " << client->get_link();
 					client->close();
 				}
@@ -92,6 +96,10 @@ void agv_shell_server::alive_check_thread()
 				}
 			});
 		}
+		
+		nsp::toolkit::singleton<udp_client_manager>::instance()->post_local_info_request(shell_port, port, sys_info_.get_mac_addr());
+		//file transform check timeout
+		nsp::toolkit::singleton<file_manager>::instance()->check_file_timeout();
 	}
 }
 
@@ -313,10 +321,12 @@ int agv_shell_server::on_frimware_restart(const uint32_t link, const int frimwar
 	return 0;
 }
 
-void agv_shell_server::on_query_vcu_keep_alive_status(const uint32_t link){
+void agv_shell_server::on_query_vcu_keep_alive_status(const uint32_t link, const unsigned char *buffer, int cb){
+	if( !buffer ) return;
+	
 	std::shared_ptr<query_keepalive_status_task> task = nullptr;
 	try{
-		task = std::make_shared<query_keepalive_status_task>(link);
+		task = std::make_shared<query_keepalive_status_task>(link, *(uint32_t *)buffer);
 		auto base_one = std::static_pointer_cast<base_task>(task);
 		if (!base_task_spool){
 			loerror("agv_shell") << "the frimware restart spool is not exists.";
@@ -329,12 +339,12 @@ void agv_shell_server::on_query_vcu_keep_alive_status(const uint32_t link){
 		loerror("agv_shell") << "failed to make shared task of query vcu keepalive status.";
 		return;
 	}
-	return;
+	
 }
-void agv_shell_server::on_set_vcu_keep_alive_status(const uint32_t link, int status){
+void agv_shell_server::on_set_vcu_keep_alive_status(const uint32_t link, uint32_t id, int status){
 	std::shared_ptr<set_keepalive_status_task> task = nullptr;
 	try{
-		task = std::make_shared<set_keepalive_status_task>(link, status);
+		task = std::make_shared<set_keepalive_status_task>(link, id, status);
 		auto base_one = std::static_pointer_cast<base_task>(task);
 		if (!base_task_spool){
 			loerror("agv_shell") << "the frimware restart spool is not exists.";
@@ -349,59 +359,40 @@ void agv_shell_server::on_set_vcu_keep_alive_status(const uint32_t link, int sta
 	}
 	return ;
 }
-int agv_shell_server::post_vcu_keep_alive_status(const uint32_t link, const int proto_type, int status) {
-	std::shared_ptr<agv_shell_session> client_session_ = nullptr;
-	if (service_ && (service_->search_client_by_link(link, client_session_) >= 0)){
-		if (client_session_){
-			return client_session_->post_keepalive_status_ack(proto_type, status);
-		}
-	}
-	loerror("agv_shell") << "can not find agv_shell client session.";
-	return -1;
+int agv_shell_server::post_vcu_keep_alive_status(const uint32_t link, int id, const int proto_type, int status, int err) {
+	nsp::proto::proto_keepalive_status_reponse ack(proto_type);
+	ack.head_.id_ = id;
+	ack.head_.err_ = err;
+	ack.status_ = status;
+	ack.head_.size_ = ack.length();
+	
+	post_pkgTsession_bylink(link, &ack);
+	return 0;
 }
 
-/*void agv_shell_server::on_deal_process_cmd(const HTCPLINK link, int cmd, int process_id) {
-	std::shared_ptr<deal_process_cmd_task> task = nullptr;
-	try{
-		task = std::make_shared<deal_process_cmd_task>(link, cmd, process_id);
-		auto base_one = std::static_pointer_cast<base_task>(task);
-		if (!base_task_spool){
-			loerror("agv_shell") << "the base task spool is not exists.";
-			return;
-		}
-		base_task_spool->post(base_one);
-	}
-	catch (...)
-	{
-		loerror("agv_shell") << "failed to make shared task of deal process cmd task.";
-		return;
-	}
-	return ;
-}*/
-
 void agv_shell_server::on_deal_process_cmd(const HTCPLINK link, const std::shared_ptr<nsp::proto::proto_command_process> p_info) {
-	std::shared_ptr<deal_process_cmd_task> task = nullptr;
+	deal_process_cmd_task* task = nullptr;
+	nsp::proto::proto_head ack(PKTTYPE_AGV_SHELL_PROCESS_COMMAND_ACK);
+	ack.id_ = p_info->head_.id_;
+	ack.err_ = 0;
+	ack.size_ = ack.length();
+	
 	try{
-		loinfo("agv_shell") << "get handler process list command,now create a task.";
-		task = std::make_shared<deal_process_cmd_task>(link, p_info->command_, p_info->process_id_all_);
+		loinfo("agv_shell") << "get handler process list command, now create a task.";
+		task = new deal_process_cmd_task(p_info->command_, p_info->process_id_all_);
 		auto iter = p_info->list_param_.begin();
 		while (iter != p_info->list_param_.end() ) {
 			task->add_cmd_param( *iter );
 			++iter;
 		}
-		auto base_one = std::static_pointer_cast<base_task>(task);
-		if (!base_task_spool){
-			loerror("agv_shell") << "the base task spool is not exists.";
-			return;
-		}
-		base_task_spool->post(base_one);
-	}
-	catch (...)
-	{
-		loerror("agv_shell") << "failed to make shared task of deal process cmd task.";
+		
+		ack.err_ = task->process_task();
+	} catch (...) {
+		loerror("agv_shell") << "failed to make new task of deal process cmd task.";
 		return;
 	}
-	return ;
+	
+	post_pkgTsession_bylink(link, &ack);
 }
 
 void agv_shell_server::close_all() {
@@ -426,34 +417,24 @@ void agv_shell_server::post_notify_all(const nsp::proto::proto_interface& packag
 	}
 }
 
-void agv_shell_server::post_file_mutex(const int status)
+void agv_shell_server::post_file_mutex(const uint32_t link, const unsigned char *buffer, int cb)
 {
-	if (service_) {
-		service_->notify_all([&](const std::shared_ptr<agv_shell_session>&client){
-			if (client->post_file_status(status) < 0)
-			{
-				loerror("agv_shell") << "failed to send file lock mutex to client,then close the session";
-				client->close();
-			}
-		});
-	}
-}
-
-void agv_shell_server::post_shell_version(const std::string &version)
-{
-	if (service_) {
-		service_->notify_all([&](const std::shared_ptr<agv_shell_session>&client) {
-			if (client->post_shell_version(version) < 0) {
-				loerror("agv_shell") << "failed to send the package of shell version,then close the session";
-				client->close();
-			}
-		});
-	}
+	if(!buffer) return;
+	
+	int status = nsp::toolkit::singleton<global_parameter>::instance()->query_file_lock();
+	
+	nsp::proto::proto_keepalive_status_reponse ack(PKTTYPE_AGV_SHELL_FILE_MUTEX_STATUS_ACK);
+	ack.head_.id_ = *(uint32_t *)buffer;
+	ack.head_.err_ = 0;
+	ack.status_ = status;
+	ack.head_.size_ = ack.length();
+	
+	post_pkgTsession_bylink(link, &ack);
 }
 
 void agv_shell_server::add_client_lnk(const uint32_t link){
-	auto iter = std::find_if(vct_lnk_.begin(), vct_lnk_.end(), [&](const uint32_t lk)->bool{
-		return link == lk ? true : false;
+	auto iter = std::find_if(vct_lnk_.begin(), vct_lnk_.end(), [&](const uint32_t lk)->int{
+		return link == lk ? 1 : 0;
 	});
 	if (iter == vct_lnk_.end()){
 		vct_lnk_.push_back(link);
@@ -462,8 +443,8 @@ void agv_shell_server::add_client_lnk(const uint32_t link){
 }
 
 void agv_shell_server::reduce_client_lnk(const uint32_t link){
-	auto iter = std::find_if(vct_lnk_.begin(), vct_lnk_.end(), [&](const uint32_t lk)->bool{
-		return link == lk ? true : false;
+	auto iter = std::find_if(vct_lnk_.begin(), vct_lnk_.end(), [&](const uint32_t lk)->int{
+		return link == lk ? 1 : 0;
 	});
 	if (iter == vct_lnk_.end()){
 		loerror("agv_shell") << "can not find link:" << link << " in the client link collection.";
@@ -473,12 +454,74 @@ void agv_shell_server::reduce_client_lnk(const uint32_t link){
 	return;
 }
 
-void agv_shell_server::post_tar_backups(const uint32_t link, const std::string& des_file)
+void agv_shell_server::post_tar_backups(const uint32_t link, int id, const std::string& des_file, int err)
 {
+	nsp::proto::proto_msg ack(PKTTYPE_AGV_SHELL_BACKUP_FILES_ACK);
+	ack.head_.id_ = id;
+	ack.head_.err_ = err;
+	ack.msg_ = des_file;
+	ack.head_.size_ = ack.length();
+	
+	post_pkgTsession_bylink(link, &ack);
+}
+
+//blank box
+void agv_shell_server::post_write_file_status(const uint32_t link, const int pkt_id, const uint64_t file_id, 
+		const uint32_t block_num, int error_code) {
+	file::proto::proto_file_status_t ack(PKTTYPE_AGV_SHELL_PUSH_FILE_BLOCK_ACK, pkt_id);
+	ack.head_.err_ = error_code;
+	ack.error_code_ = error_code;
+	ack.block_num_ = block_num;
+	ack.file_id_ = file_id;
+	ack.head_.size_ = ack.length();
+	
+	post_pkgTsession_bylink(link, &ack);
+}
+
+void agv_shell_server::post_read_file_status(const uint32_t link, const int pkt_id, const uint64_t file_id, 
+			const uint32_t block_num, const uint32_t off, std::string& data, int error_code) {
+	file::proto::proto_file_data_t ack(PKTTYPE_AGV_SHELL_READ_FILE_BLOCK_ACK, pkt_id);
+	ack.head_.err_ = error_code;
+	ack.block_num_ = block_num;
+	ack.file_id_ = file_id;
+	ack.file_offset_ = off;
+	ack.file_data_ = data;
+	ack.head_.size_ = ack.length();
+	
+	post_pkgTsession_bylink(link, &ack);
+}
+
+int agv_shell_server::on_get_sysinfo_fixed(const HTCPLINK link, const unsigned char *buffer, int cb) {
+	return sys_info_.post_sysinfo_fixed(link, buffer, cb);
+}
+
+int agv_shell_server::on_get_sysinfo_changed(const HTCPLINK link, const unsigned char *buffer, int cb) {
+	return sys_info_.post_sysinfo_changed(link, buffer, cb);
+}
+
+int agv_shell_server::post_pkgTsession_bylink(const HTCPLINK link, const nsp::proto::proto_interface *package) {
 	std::shared_ptr<agv_shell_session> client_session_ = nullptr;
 	if (service_ && (service_->search_client_by_link(link, client_session_) >= 0)){
 		if (client_session_){
-			client_session_->post_tar_backups(des_file);
+			return client_session_->psend(package);
+		} else {
+			loerror("agv_shell") << "can not find agv_shell client session.";
 		}
 	}
+	
+	return -1;
 }
+
+int agv_shell_server::post_pkgTsession_bylink(const HTCPLINK link, const void *buffer, int cb) {
+	std::shared_ptr<agv_shell_session> client_session_ = nullptr;
+	if (service_ && (service_->search_client_by_link(link, client_session_) >= 0)){
+		if (client_session_){
+			return client_session_->send(buffer, cb);
+		} else {
+			loerror("agv_shell") << "can not find agv_shell client session.";
+		}
+	}
+	
+	return -1;
+}
+

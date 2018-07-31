@@ -211,7 +211,6 @@ int agv_manager::build_attr(const std::vector<agv_attribute_inner> &vec_attr, st
 
 int agv_manager::build_agvinfo(const std::vector<agv_info_inner> &agvinfo, agv_info **agvs)
 {
-	*agvs = nullptr;
 	agv_info * pre_node = nullptr;
 	for (auto iter : agvinfo){
 		agv_info* pNew = new_agvinfo(iter);
@@ -300,14 +299,12 @@ int agv_manager::load_server_agvinfo(enum load_agvinfo_method method, std::vecto
 			motion_back = *(agv_motion::motion_data *)data;
 		}
 		wait.sig();
-		loinfo("libagvinfo") << "load_agvinfo returned";
 	}), method);
 	
 	if(errcode){
 		return errcode;
 	};
 
-	loinfo("libagvinfo") << "wait load_agvinfo return";
 	wait.wait();
 	wait.reset();
 

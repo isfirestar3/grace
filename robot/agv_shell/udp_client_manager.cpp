@@ -1,33 +1,68 @@
 #include "udp_client_manager.h"
+#include "const.h"
 #include "log.h"
 
-udp_client_manager::udp_client_manager(){
+udp_client_manager::udp_client_manager() : waiter_(0) {
 
 }
 
 udp_client_manager::~udp_client_manager(){
 	clean_session();
+	
+	waiter_.sig();
+    if (loop_th_) {
+        if (loop_th_->joinable()) {
+            loop_th_->join();
+            delete loop_th_;
+            loop_th_ = nullptr;
+        }
+    }
+    waiter_.reset();
 }
 
 int udp_client_manager::init_network(){
-	if (net_session_){
-		loerror("agv_shell") << "udp network session is already exists.";
-		return 0;
-	}
-	try{
-		net_session_ = std::make_shared<udp_session>();
-	}
-	catch (...){
-		return -1;
-	}
-	if (net_session_){
-		if (net_session_->create(local_ep_obj_) < 0){
-			loerror("agv_shell") << "failed to create udp session object.";
-			return -1;
+	do 
+	{
+		if ( !net_session_ ){
+			try{
+				net_session_ = std::make_shared<udp_session>();
+				
+				if (net_session_->create(local_ep_obj_) < 0){
+					loerror("agv_shell") << "failed to create udp session object.";
+					break;
+				}
+			} catch (...) {
+				loerror("agv_shell") << "make udp_session point failed.";
+			}
 		}
-		return 0;
-	}
-	return -1;
+	} while(0);
+	
+	do 
+	{
+		if ( !dhcp_session_ ){
+			try{
+				dhcp_session_ = std::make_shared<dhcp_udp_session>();
+				
+				if (dhcp_session_->create(0) < 0){
+					loerror("agv_shell") << "failed to create dhcp udp session object.";
+					break;
+				}
+			} catch (...) {
+				loerror("agv_shell") << "make dhcp udp session point failed.";
+			}
+		}
+	} while(0);
+	
+	try {
+        if (!loop_th_) {
+            loop_th_ = new std::thread( std::bind( &udp_client_manager::keepalive, this ) );
+        }
+    } catch (...) {
+        loerror("agv_shell") << "udp manager create thread failure ";
+        return -1;
+    }
+	
+	return 0;
 }
 
 void udp_client_manager::clean_session(){
@@ -35,6 +70,24 @@ void udp_client_manager::clean_session(){
 		net_session_->close();
 	}
 	net_session_ = nullptr;
+	
+	if (dhcp_session_){
+		dhcp_session_->close();
+	}
+	dhcp_session_ = nullptr;
+}
+
+void udp_client_manager::keepalive() {
+	int res = -1;
+	
+    while (waiter_.wait(VCU_UDP_KEEPALIVE_TIME_INT) > 0) {
+		//每3秒钟向vcu发送一次心跳包
+		res = nsp::toolkit::singleton<udp_client_manager>::instance()->post_vcu_keep_alive_request(m_core_ep_obj_);
+		if (res < 0) {
+			loerror("agv_shell") << "send keep alive package to vcu failed.";
+		}
+    }
+    waiter_.reset();
 }
 
 int udp_client_manager::post_vcu_type_request(const nsp::tcpip::endpoint& ep,
@@ -103,6 +156,14 @@ int udp_client_manager::post_set_vcu_keep_alive_request(const nsp::tcpip::endpoi
 		return -1;
 	}
 	return net_session_->post_set_vcu_keep_alive_request(ep, status, asio_ack);
+}
+
+int udp_client_manager::post_local_info_request(int shell_port, int port, const std::string& mac) {
+	if (!dhcp_session_){
+		return -1;
+	}
+	
+	return dhcp_session_->post_local_info_request(shell_port, port, mac, dhcp_fix_ep_);
 }
 
 int udp_client_manager::post_can_write_bin_file(const nsp::tcpip::endpoint& ep, const int block_offset, const std::string&file_block_data,

@@ -80,7 +80,7 @@ static void load_agvconf_xml() {
 	unsigned long ret = 0;
 	char *endptr = NULL;
 
-	log__write(MODULE_NAME, kLogLevel_Info, kLogTarget_Stdout | kLogTarget_Filesystem, "loadXml:%s", dock_path.c_str());
+	loinfo(MODULE_NAME) << "loadXml " << dock_path;
 	try {
 		file = new rapidxml::file<char>(dock_path.c_str());
 		doc.parse<0>(file->data());
@@ -91,35 +91,33 @@ static void load_agvconf_xml() {
 				// 命令行没有设置时以xml文件设置为准 
 				p_run.inet = att_ipaddr->value();
 				para_xml_set |= FLAG_SET_IPADDR;
-				log__write(MODULE_NAME, kLogLevel_Info, kLogTarget_Stdout | kLogTarget_Filesystem, "loadXml ipv4:%s", att_ipaddr->value());
+				loinfo(MODULE_NAME) << "loadXml ipv4:" << att_ipaddr->value();
 			}
 			rapidxml::xml_attribute<>* att_port = root->first_attribute("port");
 			if (att_port && !(para_cmd_set & FLAG_SET_PORT)) {
 				// 命令行没有设置时以xml文件设置为准 
-				errno = 0;
 				ret = strtoul(att_port->value(), &endptr, 10);
 				if (errno || ret < 1 || ret > 65535 || (endptr && *endptr != '\0')) {
 					// 有错误忽略(为缺省值)
-					log__write(MODULE_NAME, kLogLevel_Info, kLogTarget_Stdout | kLogTarget_Filesystem, "loadXml port error:%s", att_port->value());
+					loinfo(MODULE_NAME) << "loadXml port error:" << att_port->value();
 				}
 				else {
 					p_run.port = (uint16_t)ret;
 					para_xml_set |= FLAG_SET_PORT;
-					log__write(MODULE_NAME, kLogLevel_Info, kLogTarget_Stdout | kLogTarget_Filesystem, "loadXml port:%s", att_port->value());
+					loinfo(MODULE_NAME) << "loadXml port:" << att_port->value();
 				}
 			}
 			rapidxml::xml_attribute<>* att_periods = root->first_attribute("periods");
 			if (att_periods && !(para_cmd_set & FLAG_SET_XML_PERIODS)) {
 				// 命令行没有设置时以xml文件设置为准 
-				errno = 0;
 				ret = strtoul(att_periods->value(), &endptr, 10);
 				if (errno || (endptr && *endptr != '\0')) {
 					// 有错误忽略(为缺省值)
-					log__write(MODULE_NAME, kLogLevel_Info, kLogTarget_Stdout | kLogTarget_Filesystem, "loadXml periods error:%s", att_periods->value());
+					loinfo(MODULE_NAME) << "loadXml periods error:" << att_periods->value();
 				} else {
 					p_run.periods = (uint32_t)ret;
 					para_xml_set |= FLAG_SET_XML_PERIODS;
-					log__write(MODULE_NAME, kLogLevel_Info, kLogTarget_Stdout | kLogTarget_Filesystem, "loadXml periods:%s", att_periods->value());
+					loinfo(MODULE_NAME) << "loadXml periods:" << att_periods->value();
 				}
 			}
 		}
@@ -127,10 +125,10 @@ static void load_agvconf_xml() {
 	}
 	catch (...) {
 		delete file;
-		log__write(MODULE_NAME, kLogLevel_Info, kLogTarget_Stdout | kLogTarget_Filesystem, "loadXml err");
+		loinfo(MODULE_NAME) << "loadXml err";
 	}
 
-	log__write(MODULE_NAME, kLogLevel_Info, kLogTarget_Stdout | kLogTarget_Filesystem, "loadXml end");
+	loinfo(MODULE_NAME) << "loadXml end";
 }
 
 // 当命令行和XML文件中都未指定时，运行参数的值设置为缺省值 
@@ -179,13 +177,10 @@ int check_argv(int argc, char** argv)
 			break;
 		case 'p':
 			if (optarg){
-				errno = 0;
 				ul = strtoul(optarg, &endptr, 10);
 				if (errno || ul < 1 || ul > 65535 || (endptr && *endptr != '\0')) {
 					// 有错误忽略(为缺省值)
-					log__write(
-						MODULE_NAME, kLogLevel_Info, kLogTarget_Stdout | kLogTarget_Filesystem,
-						"command line invalid port:%d", optarg);
+					loinfo(MODULE_NAME) << "command line invalid port: " << optarg;
 				}
 				else {
 					p_run.port = (uint16_t)ul;
@@ -195,13 +190,10 @@ int check_argv(int argc, char** argv)
 			break;
 		case 'x':
 			if (optarg){
-				errno = 0;
 				ul = strtoul(optarg, &endptr, 10);
 				if (errno || ul == 0 || (endptr && *endptr != '\0')) {
 					// 有错误忽略(为缺省值)
-					log__write(
-						MODULE_NAME, kLogLevel_Info, kLogTarget_Stdout | kLogTarget_Filesystem,
-						"command line invalid periods:%d", optarg);
+					loinfo(MODULE_NAME) << "command line invalid periods: " << optarg;
 				} else {
 					p_run.periods = (uint32_t)ul;
 					para_cmd_set |= FLAG_SET_XML_PERIODS;
