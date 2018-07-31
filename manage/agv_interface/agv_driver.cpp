@@ -263,6 +263,70 @@ bool AgvDriver::StartTaskPath(std::vector<trail_t> complete_task_path)
 	return true;
 }
 
+bool AgvDriver::UpdateTaskPath(std::vector<trail_t> complete_task_path)
+{
+	std::lock_guard<decltype(agv_driver_mutex_)> guard(agv_driver_mutex_);
+	if (false == is_register_ || false == have_task_) {
+		loinfo("agvdriver") << "AgvDriver Agv " << agv_id_ << " Update task path failed, is register:" << is_register_ << ", already have task:" << have_task_;
+		return false;
+	}
+
+	//if (complete_task_path_.size() > complete_task_path.size()) {
+	//	loinfo("agvdriver") << "AgvDriver Agv " << agv_id_ << " Update task path failed, complete_task_path_.size()=" << complete_task_path_.size() << " , complete_task_path.size()" << complete_task_path.size();
+	//	return false;
+	//}
+
+	//unsigned int m_index = -1;
+	//for (unsigned int i = 0; i < complete_task_path_.size(); ++i) {
+	//	trail_t m_current = complete_task_path_[i];
+	//	trail_t m_update = complete_task_path[i];
+	//	if (m_current.edge_id_ == m_update.edge_id_ && m_current.wop_id_ == m_update.wop_id_) {
+	//		continue;
+	//	}
+	//	m_index = i;
+	//	break;
+	//}
+
+	unsigned int m_index = -1;
+	for (unsigned int i = 0; i < complete_task_path_.size(); ++i) {
+		trail_t m_current = complete_task_path_[i];
+		if (m_current.edge_id_ == current_upl_.edge_id_ && i == wop_index_) {
+
+			m_index = i;
+			break;
+		}
+	}
+
+	if (-1 == m_index) {
+		lotrace("agvdriver") << "AgvDriver Agv " << agv_id_ << " Update task path failed, current Upl(" << current_upl_.edge_id_ << "," << wop_index_ << ")";
+		return false;
+	}
+
+	std::stringstream ss;
+	for (unsigned int i = 0; i < complete_task_path.size(); ++i) {
+		trail_t m_task_path = complete_task_path[i];
+		ss << " " << m_task_path.edge_id_ << " " << m_task_path.wop_id_ << ",";
+	}
+	lotrace("agvdriver") << "AgvDriver Agv " << agv_id_ << " Update task path success, Path list:" << ss.str();
+
+	complete_task_path_ = complete_task_path;
+
+	need_allocate_task_path_.clear();
+	for (unsigned int i = m_index+1; i < complete_task_path.size(); ++i) {
+		need_allocate_task_path_.push_back(complete_task_path[i]);
+	}
+
+	std::stringstream ssl;
+	for (unsigned int i = 0; i < need_allocate_task_path_.size(); ++i) {
+		trail_t m_task_path = need_allocate_task_path_[i];
+		ssl << " " << m_task_path.edge_id_ << " " << m_task_path.wop_id_ << ",";
+	}
+	lotrace("agvdriver") << "AgvDriver Agv " << agv_id_ << " Update task path success, Need Allocate Path List:" << ssl.str();
+
+	traffic_manage_->ClearNotAllocateSegment(agv_id_);
+	return true;
+}
+
 void AgvDriver::FinishTaskPath()
 {
 	std::lock_guard<decltype(agv_driver_mutex_)> guard(agv_driver_mutex_);
@@ -427,9 +491,9 @@ void AgvDriver::AllocateDealCycle()
     }
 
 
-    if (__path_available_fn && has_path)
+    if (__path_available_fn )
     {
-        __path_available_fn(1);
+        __path_available_fn(has_path);
     }
 }
 

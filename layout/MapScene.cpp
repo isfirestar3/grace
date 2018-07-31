@@ -1029,7 +1029,11 @@ void MapScene::editMoreNodes()
 				int node_id = dynamic_cast<NodeItem*>(item)->GetNodeId();
 				if (m_pNodeItemMng)
 				{
-					m_pNodeItemMng->UpdateNodeItem(node_id, editWnd.pSpin);
+					double tmp_x, tmp_y = 0;
+					//Æ½ÒÆ
+					editWnd.pMove ?  (tmp_x = editWnd.move_x, tmp_y = editWnd.move_y) : (tmp_x = 0, tmp_y = 0);
+					m_pNodeItemMng->UpdateNodeItem(node_id, editWnd.pSpin, tmp_x,tmp_y);
+
 				}
 			}
 		}

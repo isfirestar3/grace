@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using Tool.XControl;
 using System.Windows.Media;
 using System.ComponentModel;
+using System.Windows.Threading;
 
 namespace Tool.RobotsHome
 {
@@ -55,30 +56,69 @@ namespace Tool.RobotsHome
         Int32                       RobotCount        = 0;
         RobotInfoCollect            dcRobotInfo       = null;
         ListSortDirection           DirectionSort = ListSortDirection.Ascending;
+
+        DispatcherTimer DispatcherTimer = new DispatcherTimer();
+
         public RobotsHome()
         {
             InitializeComponent();
             This = this;
             Refresh();
             NetInterface.NetRegsiterMsgCallback(NetInterface.NetWorkCallback);
+
+            DispatcherTimer.Tick += new EventHandler(DispatcherTimerTick);
+            DispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            DispatcherTimer.Start();
         }
+        private void DispatcherTimerTick(object sender, EventArgs e)
+        {
+            StatisticRobotNumber();
+        }
+
         //绑定
         public void Refresh()
         {
             dcRobotInfo = RobotInfoCollect.GetInstance();
             RobotList.DataContext = dcRobotInfo;
             RobotCount = dcRobotInfo.Collection.ToList().Count;
-            RefrshRobotPageInfo(dcRobotInfo.Collection.ToList(),PageRobotCount);
+			if (OnlineCheck.IsChecked == true)
+			{
+            	RefrshRobotPageInfo(dcRobotInfo.Collection.ToList().Where(p => p.NetState == true).ToList(), PageRobotCount);//RefrshRobotPageInfo(dcRobotInfo.Collection.ToList(),PageRobotCount);
+			}
+			else
+			{
+				RefrshRobotPageInfo(dcRobotInfo.Collection.ToList(), PageRobotCount);
+			}
+            StatisticRobotNumber();
         }
+        //统计在线数目
+        public void StatisticRobotNumber()
+        {
+            dcRobotInfo = RobotInfoCollect.GetInstance();
+            int Online = 0;
+            int Total = 0;
+            foreach (RobotInfo robot_item in dcRobotInfo.Collection.ToList())
+            {
+                if (robot_item.NetState == true)
+                {
+                    Online++;
+                }
+                Total++;
+            }
+            Online_num.Content = Online;
+            Total_num.Content = Total;
+        }
+
         //分页
         public void RefrshRobotPageInfo(List<RobotInfo> list,Int32 EveryPageCount)
         {
             PageRobotInfo = new Tool.ListViewPage<RobotInfo>(list, EveryPageCount);
             PageRobotCount = EveryPageCount;
-            this.RobotList.ItemsSource = PageRobotInfo.GetPageData(JumpOperation.GoHome);
+          //this.RobotList.ItemsSource = PageRobotInfo.GetPageData(JumpOperation.GoHome);
+            this.RobotList.ItemsSource = list;
             RobotList.Items.Refresh();
 
-            Sort(RobotList, "Id", ListSortDirection.Ascending);
+            Sort(RobotList, "isSelected", ListSortDirection.Ascending);
         }
         //改变单页个数
         private void OnChangePageNum(object sender, SelectionChangedEventArgs e)
@@ -181,7 +221,6 @@ namespace Tool.RobotsHome
                     return;
                 }
                 RobotInfoCollect.GetInstance().UpdateNetId(endpoint, robotId);
-
 
                 if (NetInterface.Connect(robotId, endpoint) < 0)
                 {

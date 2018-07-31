@@ -9,6 +9,7 @@ public:
 	ParameterImporter(const QString &filename);
 	~ParameterImporter();
 
+	bool openImportFile();
 	bool importParameter();
 private:
 	bool read(char *data, qint64 dataLen);

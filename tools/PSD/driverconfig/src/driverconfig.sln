@@ -8,7 +8,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "driverconfig", "driverconfi
 		{DAD3F6D4-E86B-49A2-8A4D-2F5FA42F0608} = {DAD3F6D4-E86B-49A2-8A4D-2F5FA42F0608}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gdp", "..\gdp\gdp.vcxproj", "{DAD3F6D4-E86B-49A2-8A4D-2F5FA42F0608}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gdp", "..\..\..\..\..\CDP\trunk\gdp\gdp.vcxproj", "{DAD3F6D4-E86B-49A2-8A4D-2F5FA42F0608}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

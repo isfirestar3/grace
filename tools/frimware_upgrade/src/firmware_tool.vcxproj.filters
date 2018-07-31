@@ -52,6 +52,9 @@
     <Filter Include="nsp">
       <UniqueIdentifier>{2dcf9d6c-d644-49eb-bc1b-d87745fc93d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{fde7d8ee-6137-4794-9249-50e840679088}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -156,6 +159,18 @@
     <ClCompile Include="..\..\..\sdk\nsp\toolkit.cpp">
       <Filter>nsp</Filter>
     </ClCompile>
+    <ClCompile Include="common\waitdialog.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_waitdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_waitdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="common\waitdialog_p.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="firmware.qrc">
@@ -181,6 +196,12 @@
     </CustomBuild>
     <CustomBuild Include="download_btns.ui">
       <Filter>ui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="common\waitdialog.h">
+      <Filter>common</Filter>
+    </CustomBuild>
+    <CustomBuild Include="common\waitdialog.ui">
+      <Filter>common</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -332,6 +353,30 @@
     </ClInclude>
     <ClInclude Include="..\..\..\sdk\nsp\toolkit.h">
       <Filter>nsp</Filter>
+    </ClInclude>
+    <ClInclude Include="comm_impl.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="basic_def.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\watcherwaiter.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\gdp_singleton.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\FutureResultReceiver.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\watcherdialog.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_waitdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\waitdialog_p.h">
+      <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

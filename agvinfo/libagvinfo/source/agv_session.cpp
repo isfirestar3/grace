@@ -26,12 +26,15 @@ void agv_session::on_recvdata(const std::string &packet)
 }
 
 int agv_session::keepalive(){
+	loinfo("libagvinfo") << "keepalive";
 	nsp::proto::proto_heart_beat heart_packet;
+	heart_packet.head_.id_ = nsp::toolkit::singleton<network>::instance()->pid();
 	return psend(&heart_packet);
 }
 
 int agv_session::load_agvinfo(std::shared_ptr<agv_motion::motion_ack> motion,int method )
 {
+	loinfo("libagvinfo") << "load agvinfo";
 	uint32_t pid = nsp::toolkit::singleton<network>::instance()->pid();
 	proto_req_agvinfo agvinfo;
 	agvinfo.head.id_ = pid;
@@ -45,6 +48,7 @@ int agv_session::load_agvinfo(std::shared_ptr<agv_motion::motion_ack> motion,int
 
 int agv_session::set_agvinfo(std::shared_ptr<agv_motion::motion_ack> motion, int method, std::vector<agv_info_inner>& vecagvinfo)
 {
+	loinfo("libagvinfo") << "set agvinfo";
 	uint32_t pid = nsp::toolkit::singleton<network>::instance()->pid();
 
 	proto_set_agvinfo req_agvinfo;
@@ -77,6 +81,7 @@ int agv_session::set_agvinfo(std::shared_ptr<agv_motion::motion_ack> motion, int
 
 int agv_session::get_agvdetail(std::shared_ptr<agv_motion::motion_ack> motion, int agvid ,int method)
 {
+	loinfo("libagvinfo") << "get agvinfo detail";
 	uint32_t pid = nsp::toolkit::singleton<network>::instance()->pid();
 	proto_get_agvdetail agvdetail;
 	agvdetail.head.id_ = pid;
@@ -107,6 +112,7 @@ int agv_session::set_agvdetail(std::shared_ptr<agv_motion::motion_ack> motion, i
 }
 
 void agv_session::on_disconnected(const HTCPLINK previous){
+	loinfo("libagvinfo") << "disconnect link" << previous;
 	std::string ipstr = remote().to_string();
 	if (disconnect_callback_){
 		disconnect_callback_(ipstr);

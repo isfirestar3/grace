@@ -204,6 +204,7 @@ QVariant NodeItem::itemChange(GraphicsItemChange change, const QVariant& value)
 		{
 			if (pEdgeItem)
 			{
+				pEdgeItem->Adjust_CtrlPos_From_NodeChange();
 				pEdgeItem->Adjust();
 			}
 		}
@@ -236,9 +237,28 @@ void NodeItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 }
 
 
-void  NodeItem::UpdateNodeInfo(bool spin)
+void  NodeItem::UpdateNodeInfo(bool spin, double x, double y)
 {
 	spin ? m_nodeInfo.spin = 1 : m_nodeInfo.spin = 0;
+	m_nodeInfo.pos_x += x;
+	m_nodeInfo.pos_y += y;
 	DATAMNG->UpdateNodeInfo(m_nodeInfo);
+
+	if (x != 0 || y != 0){
+		//foreach(EdgeItem* pEdgeItem, m_listEdgeItem)
+		//{
+		//	if (pEdgeItem)
+		//	{
+		//		pEdgeItem->Adjust_CtrlPos_From_NodeChange();
+		//		pEdgeItem->Adjust();
+		//	}
+		//}
+		QPointF newPos;	
+		newPos.setX(m_nodeInfo.pos_x);
+		newPos.setY(m_nodeInfo.pos_y);
+		SetPosData(newPos);
+		setPos(newPos);
+	}
 	update();
+
 }

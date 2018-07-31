@@ -9,7 +9,6 @@
 #include <condition_variable>
 #include <memory>
 #include <deque>
-#include <functional>
 
 #include "os_util.hpp"
 

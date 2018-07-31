@@ -1,7 +1,7 @@
 #ifndef __GRACE_ROBOT_AGVSHELL_COMMON_H__
 #define __GRACE_ROBOT_AGVSHELL_COMMON_H__
 
-#include "const.h"
+#include "gzfts_api.h"
 #include "posix_ifos.h"
 #include "singleton.hpp"
 #include <atomic>
@@ -45,7 +45,7 @@ typedef struct __xml_parameters {
 	std::string local_mclog_ipv4_;
 	std::string local_syslog_ipv4_;
 	int auto_startup_ = 0;
-	int server_port_ = SHELL_TCP_PORT;
+	int server_port_ = 4410;
 	std::string dhcp_fix_ipv4_;
 } xml_parameters;
 
@@ -54,6 +54,12 @@ typedef struct __startup_parameters {
 	std::string program_name_;
 	std::string program_path_;
 } startup_parameters;
+#pragma pack(pop)
+
+enum thread_block_t {
+    non_block_thread = 0,
+    block_thread = 1,
+};
 
 typedef struct white_item_info_t
 {
@@ -64,12 +70,6 @@ typedef struct white_item_info_t
 	void* file_handler;
 #endif
 }white_item_info;
-#pragma pack(pop)
-
-enum thread_block_t {
-    non_block_thread = 0,
-    block_thread = 1,
-};
 
 class global_parameter
 {
@@ -86,7 +86,7 @@ public:
 public:
 	int loadXml();
 	int load_processes_fxml(std::vector<agv_process_info >& process_list);
-	int init_white_list();
+	bool init_white_list();
 	int start_auto_script();
 	
 	void set_run_cmd(int cmd) {
@@ -239,40 +239,37 @@ public:
 	}
 	void run_progess_by_get_logtype(std::string&log_path, std::set<std::string>&log_type);
 
-	int modify_file_lock(const int is_lock);
+	bool modify_file_lock(const bool is_lock);
 	int query_file_lock();
 
-	void load_shell_version();
-	std::string get_shell_version(){
+	//shell 版本信息相关
+	std::string load_shell_version(const std::string& file_name);
+
+	void set_shell_version(const std::string& str){
+		shell_version_ = str;
+	}
+	std::string& get_shell_version(){
 		return shell_version_;
 	}
 
-	void load_config_version();
+	void set_config_version(const std::string& str){
+		config_version = str;
+	}
 	std::string get_config_version(){
 		return config_version;
 	}
 
-	void load_ntp_server();
-	int  set_ntp_server(const std::string& address);
-	std::string& get_ntp_server(){
-		return ntp_server;
-	}
-
-	int check_file(std::string strfilename, const std::string &strmodify_time, const std::string &start_time, const std::string& end_time);
+	bool check_file(std::string strfilename, const std::string &strmodify_time, const std::string &start_time, const std::string& end_time);
 
 	std::string get_type(std::string strname);
-	
-	int bash_command(const std::string &command, std::string &result, int max_length, const char * type = "r");
-	int bash_command(const std::string & command, const char * type = "r");
 
-private:
-	//shell 版本信息相关
-	std::string load_version_file(const std::string& file_name);
-	
+	bool bash_command(const std::string &command, std::string &result, int max_length );
+
+	bool bash_command(const std::string & command, const char * type = "r");
 private:
 	std::atomic<int> run_cmd_ {-1};
-	int fts_port_ = SHELL_TCP_PORT;
-	int fts_long_port_ = SHELL_FTS_LONG_TCP_PORT;
+	int fts_port_ = 4411;
+	int fts_long_port_ = 4412;
 	std::string run_param_;
 	xml_parameters xml_parameters_;
 	startup_parameters startup_parameters_;
@@ -282,28 +279,31 @@ private:
 	std::string shell_version_="";
 	//配置文件版本
 	std::string config_version = "";
-	//时间同步服务器地址
-	std::string ntp_server = "";
 };
 
+std::string convert_positive(const std::string& str, const char preview_cr, const  char new_cr);
+std::string CK_GetProcessName(std::string& path);
+std::string CK_GetProcessRelatePath(std::string& path);
 /* execute a process by popen, block currenct thread 
 // param 1: process name, full path
 // param 2: params to process
 */
 void run_process_by_popen(void* p1, void* p2);
-void run_tar_by_popen( std::string cmd, std::string cmd_parament,  std::string des_file,  std::string src_file,  uint32_t lnk, int id);
+void run_tar_by_popen( std::string cmd, std::string cmd_parament,  std::string des_file,  std::string src_file,  uint32_t lnk);
 int run_copye_file_by_popen(const std::string& src_file, const std::string& des_file);
 
 int start_process_normal(const char* file_name, const char* param, int flag=non_block_thread);
 int start_process(agv_process_info& pf);
 int kill_process(agv_process_info& pf);
-
+int reboot_os();
+int shutdown_os();
+uint16_t get_progress_status();
 // 批量执行 
 int start_agv_processes();
 int kill_agv_processes();
 int restart_agv_processes();
 int reboot_agv_syn();
 int shutdown_agv_syn();
-
+int check_args(int argc, char **argv);
 int update_config_file( std::vector<agv_process_info >& replace_cfg );
 #endif

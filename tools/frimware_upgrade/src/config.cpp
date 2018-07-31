@@ -52,5 +52,17 @@ int config::read_xml_file(const std::string&file_name, firmware_info& info){
 	}
 	size_t pos = info.firmware_path_.find_last_of("/\\");
 	info.firmware_name_ = info.firmware_path_.substr(pos + 1);
+	if (info.firmware_path_.find(':') == std::string::npos)			//Ïà¶ÔÂ·¾¶
+	{
+		size_t pospath = file_name.find_last_of("/\\");
+		std::string strrelapath = file_name.substr(0,pospath+1);
+
+		if (strrelapath.find_last_of("/\\") != strrelapath.length()-1)
+		{
+			strrelapath += "\\";
+		}
+
+		info.firmware_path_ = strrelapath + info.firmware_path_;
+	}
 	return 0;
 }

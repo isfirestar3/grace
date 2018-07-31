@@ -325,6 +325,8 @@ void *nspi__keepalive_checking_routine(void *parameter) {
     struct list_head *pos, *cursor;
     nsp__tcp_object_t *object;
 
+    log__save("motion_template", kLogLevel_Info, kLogTarget_Filesystem | kLogTarget_Stdout, "keepalive checking thread startup.");
+
     while (__tcp_server->keepalive_join_ < 0) {
         if (posix__waitfor_waitable_handle(&__tcp_server->keepalive_sync_, __session_timeout_tick) < 0) {
             break;

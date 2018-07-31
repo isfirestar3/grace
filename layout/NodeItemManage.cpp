@@ -124,14 +124,14 @@ bool NodeItemManage::RemoveNodeItem(int node_id)
 	return false;
 }
 
-bool NodeItemManage::UpdateNodeItem(int node_id,bool spin)
+bool NodeItemManage::UpdateNodeItem(int node_id, bool spin , double x, double y)
 {
 	for (auto itNode = m_vecNodeItem.begin(); itNode != m_vecNodeItem.end(); ++itNode)
 	{
 		NodeItem* pNodeItem = *itNode;
 		if (pNodeItem && pNodeItem->GetNodeId() == node_id)
 		{
-			pNodeItem->UpdateNodeInfo(spin);
+			pNodeItem->UpdateNodeInfo(spin,x,y);
 		}
 	}
 	return false;

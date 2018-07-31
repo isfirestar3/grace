@@ -11,13 +11,12 @@ INCLUDES=-I../../sdk/nsp/ \
         -I../../sdk/misc/ \
         -I../../sdk/rapidxml/ \
 		-I../../private/proto/ \
-		-I./fts/proto \
-		-I./fts \
         -I./
         
-SRCS+=$(wildcard ./fts/*.cpp) $(wildcard *.cpp) $(wildcard ../../sdk/nsp/*.cpp)
+SRCS+=$(wildcard *.cpp) 
 OBJS:=$(patsubst %.cpp,%.o,$(SRCS))
 
+LDFLAGS:=-lm -lpthread -ldl -lrt libgzfts.so -Wl,-rpath=.
 
 ifeq ($(build),debug)
 	CPPFLAGS+=-g
@@ -27,16 +26,17 @@ endif
 
 ifeq ($(arch),arm)
 	CC=arm-linux-gnueabihf-g++ 
-	LDFLAGS:=/usr/local/lib/nshost.so -Wl,-rpath=/usr/local/lib -L /usr/local/lib/
+	LDFLAGS+=/usr/local/lib/nshost.so -Wl,-rpath=/usr/local/lib -L /usr/local/lib/
 else
 	CC=g++
-	LDFLAGS:=/usr/local/lib64/nshost.so -Wl,-rpath=/usr/local/lib64/  -L /usr/local/lib64/
+	LDFLAGS+=/usr/local/lib64/nshost.so -Wl,-rpath=/usr/local/lib64/  -L /usr/local/lib64/
 endif
 
-LDFLAGS+=-lm -lpthread -ldl -lrt
+GETFTSLIB=`ln -sf ../../gzfts/libgzfts.so ./libgzfts.so`
 
 $(TARGET): $(OBJS)
-	$(CC) -o $@ $^ $(LDFLAGS)
+	@echo get libgzfts.so $(GETFTSLIB)
+	$(CC) $^ -o $@  $(LDFLAGS)
 
 all:		
 	$(TARGET)

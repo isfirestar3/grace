@@ -23,11 +23,6 @@ do
 	find /agvshell/log/ -type f | grep -v $date_today |grep -v $date_yes |grep -v $date_before_2 >>/gzrobot/log/"delete_file_"$date_today_format".log"
 	find /agvshell/log/ -type f | grep -v $date_today |grep -v $date_yes |grep -v $date_before_2 | xargs rm -f 
 
-	######### delete temp files #################
-	find /agvshell/standard/ -maxdepth 1 -type f \( -name "*.tar" -o -name "*.xz" \) -mmin +60 >>/gzrobot/log/"delete_file_"$date_today_format".log"
-	find /agvshell/standard/ -maxdepth 1 -type f \( -name "*.tar" -o -name "*.xz" \) -mmin +60 | xargs rm -f
-
-	
 	######### gzip today and yesterday's log files #################
 	find /gzrobot/log/ -type f -name '*.log' | grep -v $date_today | xargs gzip
 	find /agvshell/log/ -type f -name '*.log' | grep -v $date_today | xargs gzip
@@ -39,9 +34,8 @@ do
 	find /var/log/ -type f -name '*syslog*' -size +300M -exec sh -c 'cat /dev/null> {}' \;
 	find /var/log/ -type f -name '*daemon*' -size +300M >>/gzrobot/log/"delete_file_"$date_today_format".log"
 	find /var/log/ -type f -name '*daemon*' -size +300M -exec sh -c 'cat /dev/null> {}' \;
-	find /var/log/ -type f -name '*.gz' >>/gzrobot/log/"delete_file_"$date_today_format".log"
-	find /var/log/ -type f -name '*.gz' |xargs rm -f
-
+	find /var/log/ -type f -name '*.gz' |xargs rm -rf
+	
 	sleep 3600
 	
 done;

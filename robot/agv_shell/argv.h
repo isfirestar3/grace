@@ -5,6 +5,10 @@
 #include <string>
 #include <stdint.h>
 
+#define SHELL_PORT 4410
+#define FTS_PORT 4411
+#define FTS_LONG_PORT 4412
+
 struct parament_run{
 	std::string ipv4_;
 	uint16_t shell_port_;
@@ -16,8 +20,7 @@ struct parament_run{
 enum opt_invisible_indx {
 	kInvisibleOptIndex_GetHelp = 'h',
 	kInvisibleOptIndex_GetVersion = 'v',
-	kInvisibleOptIndex_StartProcess = 's',
-	kInvisibleOptIndex_ShellPort = 0x301,
+	kInvisibleOptIndex_ShellPort,
 	kInvisibleOptIndex_FtsPort,
 	kInvisibleOptIndex_FtsLongPort,
 	kInvisibleOptIndex_Default
@@ -26,7 +29,6 @@ enum opt_invisible_indx {
 static const struct option long_options[] = {
 	{ "help", no_argument, NULL, kInvisibleOptIndex_GetHelp },
 	{ "version", no_argument, NULL, kInvisibleOptIndex_GetVersion },
-	{ "start-process", no_argument, NULL, kInvisibleOptIndex_StartProcess },
 	{ "shell-port", required_argument, NULL, kInvisibleOptIndex_ShellPort },
 	{ "fts-port", required_argument, NULL, kInvisibleOptIndex_FtsPort },
 	{ "fts-long-port", required_argument, NULL, kInvisibleOptIndex_FtsLongPort },

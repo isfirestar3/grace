@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+#include <sched.h>
 #include "version.h"
 
 #include "var.h"
@@ -30,6 +32,29 @@
 
 #include <time.h>
 
+#include "memdump.h"
+#include "pstorage.h"
+
+#pragma pack(push, 1)
+
+typedef struct {
+    struct list_head link_;
+    void( *func_)(void *functional_object);
+} canio__event_callback_t;
+
+struct p_storage_t {
+    union {
+        struct {
+            upl_t upl;
+            double last_total_odo;
+        }p_storage_feild;
+
+        unsigned char p_storage_occupy[P_STORAGE_FILE_SIZE];
+    };
+};
+
+#pragma pack(pop)
+
 int run__interval_control(posix__waitable_handle_t *waiter, uint64_t begin_tick, uint32_t maximum_delay) {
     uint32_t tsc;
     int interval = (int) (posix__gettick() - begin_tick);
@@ -49,16 +74,7 @@ int run__interval_control(posix__waitable_handle_t *waiter, uint64_t begin_tick,
     return interval;
 }
 
-#pragma pack(push, 1)
-
-typedef struct {
-    struct list_head link_;
-    void( *func_)(void *functional_object);
-} canio__event_callback_t;
-
-#pragma pack(pop)
-
-int run__algorithm_traj_control() {
+int run__algorithm_traj_control(void *memory_dump_object) {
     int retval = -1;
 
     posix__boolean_t sim = run__getarg_simflag();
@@ -87,7 +103,6 @@ int run__algorithm_traj_control() {
 	ts2 = posix__clock_gettime();
     nav = var__create_navigation_dup(0);
 	ts3 = posix__clock_gettime();
-	
     retval = nav__traj_control(nav, veh, var__get_driveunit(NULL), sim);
 	ts4 = posix__clock_gettime();
 	
@@ -226,7 +241,7 @@ void *run__guard_proc(void *argv) {
                 }
                 if (0 != err->error_[fixed_object_ids[i]].hardware) {
                     log__save("motion_template", kLogLevel_Warning, kLogTarget_Stdout | kLogTarget_Filesystem, 
-                        "error object id=%u, hardware error=%d", fixed_object_ids[i], err->error_[fixed_object_ids[i]].hardware);
+                        "error object id=%u, hardware error=0x%08X", fixed_object_ids[i], err->error_[fixed_object_ids[i]].hardware);
                     fault |= VEH_HARDWARE_FAULT;
                 }
                 break;
@@ -265,6 +280,7 @@ void *run__navigation_proc(void *argv) {
     uint64_t begin_tick;
     var__error_handler_t *err;
     static const uint32_t NAVIGATION_INTERVAL = 20;
+    void *memory_dump_object;
 
     if (posix__init_synchronous_waitable_handle(&waiter) < 0) {
         return NULL;
@@ -279,12 +295,25 @@ void *run__navigation_proc(void *argv) {
     navigation_error_as_fatal = err->navigation_error_as_fatal_;
     var__release_object_reference(err);
 
+    /*  创建内存记录对象, 不成功也不影响进程运行 */
+    memory_dump_object = NULL;
+    if (allocate_memory_dump(&memory_dump_object) < 0) {
+        memory_dump_object = NULL;
+    }
+	
+	cpu_set_t set;
+    CPU_ZERO(&set);
+    CPU_SET(3, &set);
+    if (pthread_setaffinity_np(pthread_self(), sizeof(set), &set) == -1) {
+        log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout,"nav thread bind cpu3 error.");
+    }
+
     log__save("motion_template", kLogLevel_Info, kLogTarget_Filesystem | kLogTarget_Stdout,"navigation loop success startup.");
 
     while (1) {
         begin_tick = posix__gettick();
 
-        if (run__algorithm_traj_control() < 0) {
+        if (run__algorithm_traj_control(memory_dump_object) < 0) {
             log__save("motion_template", kLogLevel_Warning, kLogTarget_Filesystem | kLogTarget_Stdout, "navigation loop executive fault.");
             if (navigation_error_as_fatal) {
                 var__mark_framwork_error(kVarFixedObject_Navigation, var__make_error_code(kVarType_Navigation, kFramworkFatal_NavigationExecutiveFault));
@@ -339,6 +368,10 @@ int main(int argc, char **argv) {
     posix__pthread_t navigation_tp, safty_tp, guard_tp;
     posix__waitable_handle_t monitor;
     int retval;
+    struct p_storage_t p_storage_object;
+    int p_storage_retval;
+    var__navigation_t *nav;
+
     static const char startup_message[] = POSIX__EOL
             "****************************************************************************"POSIX__EOL
             "*                            application startup                           *"POSIX__EOL
@@ -351,6 +384,12 @@ int main(int argc, char **argv) {
     signal(SIGPIPE, &sighandler);
     /* 为了不随终端关闭， 是否应该增加这个处理？ 能否真正替代 nohup(1)? */
     signal(SIGHUP, SIG_IGN);
+	cpu_set_t set;
+    CPU_ZERO(&set);
+    CPU_SET(0, &set);
+    if (sched_setaffinity(0, sizeof(cpu_set_t), &set) == -1) {
+        log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout,"main bind cpu0 error.");
+    }
 #endif
 
     /* 检查参数并执行异化  */
@@ -396,7 +435,6 @@ int main(int argc, char **argv) {
     var__load_var_configure();
     mnt__load_setting();
 
-    /* 开始启动网络服务 */
 #ifndef _WIN32
     nis_checr(&mtecr);
 #endif
@@ -408,12 +446,6 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    /* 尝试连接事件服务器 
-    char essnhost[posix__ipv4_length];
-    run__getarg_essnhost(essnhost);
-    gesn__config_server(essnhost, run__getarg_essnport());
-    log__save("motion_template", kLogLevel_Info, kLogTarget_Filesystem | kLogTarget_Stdout, "motion_template process startup.");*/
-
     /* arm 环境需要建立和M核的通道 */
 #if !_WIN32
     nsp__init_gzd_object();
@@ -422,15 +454,36 @@ int main(int argc, char **argv) {
 
     posix__pthread_create(&navigation_tp, &run__navigation_proc, &monitor);
 
-    /* 启动安全防护过程 */
+    /* create thread for runtime safty */
     if (safety__init() >= 0) {
         posix__pthread_create(&safty_tp, &run__safety_proc, NULL);
     } else {
         log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout, "failed to init safety thread.");
     }
 
-    /* 启动错误检测线程 */
+    /* create thread for guard and error detect */
     posix__pthread_create(&guard_tp, &run__guard_proc, NULL);
+
+    /* zeroization save object */
+    memset(&p_storage_object, 0, sizeof(p_storage_object));
+    p_storage_retval = run__load_mapping();
+    if (p_storage_retval >= 0) {
+        run__read_mapping(0, sizeof(p_storage_object), (void*) &p_storage_object);
+        log__save("motion_template", kLogLevel_Info, kLogTarget_Filesystem | kLogTarget_Stdout, 
+                "last upl: [edge:%d] [percent:%.2f] [angle:%.2f]", 
+                p_storage_object.p_storage_feild.upl.edge_id_,
+                p_storage_object.p_storage_feild.upl.percentage_,
+                p_storage_object.p_storage_feild.upl.angle_);
+        /* acquire to load storage data on startup */
+        if (run__if_loadonexec()) {
+            if ((nav = var__get_navigation()) != NULL) {
+                memcpy(&nav->i.upl_, &p_storage_object.p_storage_feild.upl, sizeof(upl_t));
+                var__release_object_reference(nav);
+            }
+        }
+    } else {
+        log__save("motion_template", kLogLevel_Warning, kLogTarget_Filesystem | kLogTarget_Stdout, "failed load file mapping for UPL.");
+    }
 
     while (1) {
         retval = posix__waitfor_waitable_handle(&monitor, (uint32_t) navigation_timeout_as_fatal);
@@ -444,7 +497,26 @@ int main(int argc, char **argv) {
                 break;
             }
         }
+
+        if (p_storage_retval >= 0) {
+            nav = var__get_navigation();
+            if (nav) {
+                memcpy(&p_storage_object.p_storage_feild.upl, &nav->i.upl_, sizeof(upl_t));
+                var__release_object_reference(nav);
+
+                p_storage_retval = run__write_mapping(sizeof(p_storage_object), &p_storage_object);
+
+                /* one time failed, nolonger try */
+                if (p_storage_retval < 0) {
+                    log__save("motion_template", kLogLevel_Warning, kLogTarget_Filesystem | kLogTarget_Stdout, "failed storage upl information to file.");
+                }
+            }
+        }
     }
 
+    if (p_storage_retval >= 0) {
+        run__release_mapping();
+    }
+    
     return 0;
 }

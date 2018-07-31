@@ -401,7 +401,8 @@ extern int safety__init() {
 
     var__safety_t *sf = var__get_safety();
     if (sf) {
-        sf->enable_ = g_sfw_enable;
+        sf->enable_ = g_cfg_enable;
+        sf->enabled_ = sf->enable_;
     }
     var__release_object_reference(sf);
 
@@ -413,19 +414,21 @@ extern int safety__proc() {
     int cur_bank = 0;
     int level = 0;
     enum em_safety_protect_output_t out_slt = kSafetyProtectOutput_Normal;
-    var__safety_t *sf = var__get_safety();
-    if (sf) {
-        if (g_sfw_enable != sf->enable_) {
-            g_sfw_enable = sf->enable_;
-            log__save("safety", kLogLevel_Info, kLogTarget_Filesystem | kLogTarget_Stdout, "g_sfw_enable = %d", g_sfw_enable);
-        }
-    }
-    var__release_object_reference(sf);
+    
 
     do {
         if (g_cfg_enable == 0) {
             break;
         }
+        var__safety_t *sf = var__get_safety();
+        if (sf) {
+            if (g_sfw_enable != sf->enable_) {
+                g_sfw_enable = sf->enable_;
+                log__save("safety", kLogLevel_Info, kLogTarget_Filesystem | kLogTarget_Stdout, "g_sfw_enable = %d", g_sfw_enable);
+            }
+        }
+        var__release_object_reference(sf);
+
         if (g_sfw_enable == 0) {
             break;
         }
@@ -466,12 +469,19 @@ extern int safety__proc() {
 
     } while (0);
 
-    sf = var__get_safety();
+    var__safety_t *sf = var__get_safety();
     if (sf) {
         sf->cur_bank_id_ = g_last_bank;
         sf->cur_bank_level = g_last_level;
         sf->safety_reslut_ = out_slt;
-        sf->enabled_ = g_sfw_enable;
+        if (g_cfg_enable == 0) {
+            sf->enabled_ = 0;
+        }
+        else
+        {
+            sf->enabled_ = g_sfw_enable;
+        }
+        
         memcpy(&sf->sensor_trrigered_, &g_sensor_triggered, sizeof (st_safety_dev_bank_src_info));
     }
     var__release_object_reference(sf);

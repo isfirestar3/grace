@@ -22,7 +22,7 @@ int network_manager::init_task_pool()
 			thread_pool_ = std::make_shared<nsp::toolkit::task_thread_pool<network_task>>(MAX_TASK_POOL_SIZE);
 		}
 		catch (...){
-			nsperror << "init task pool failed";
+			loerror("libagvinfo") << "init task pool failed";
 			return -1;
 		}
 	}
@@ -40,6 +40,7 @@ int network_manager::push_task(std::string packet,std::function<int (nsp::proto:
 		task = std::make_shared<network_task>(packet, function_psend);
 	}
 	catch(...){
+		loerror("libagvinfo") << "push_task failed";
 		return -1;
 	}
 

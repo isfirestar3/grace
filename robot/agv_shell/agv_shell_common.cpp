@@ -1,10 +1,8 @@
 #include "agv_shell_common.h"
-#include "agv_shell_server.h"
 #include "getopt.h"
 #include "log.h"
 #include "os_util.hpp"
-#include "public.h"  //split_symbol_string
-#include "proto_agv_sysinfo.h"  //proto_process_run_info_t
+#include "posix_time.h"
 #include "rapidxml.hpp"
 #include "rapidxml_iterators.hpp"
 #include "rapidxml_print.hpp"
@@ -13,14 +11,61 @@
 #include <stdio.h>
 #include <iostream>
 #include <memory>
+#include "os_util.hpp"
+#include "agv_shell_server.h"
 
 #ifdef _WIN32
 #include <io.h>
 #endif
 
 
+#define CONFIGE_FILE_NAME "/standard/agv_shell.xml"
+#define MAX_LINE 256
+
 std::vector<agv_process_info > global_parameter::agv_process_;
 std::vector<std::string> global_parameter::vct_auto_run_list_;
+
+std::string CK_GetProcessName(std::string& path) {
+    std::string name;
+    std::size_t pos = path.find_last_of("/");
+    std::size_t pos1 = path.find_last_of("\\");
+    std::size_t p = 0;
+    if (pos == std::string::npos
+            && pos1 == std::string::npos) {
+        return path;
+    } else if (pos == std::string::npos) {
+        p = pos1;
+    } else if (pos1 == std::string::npos) {
+        p = pos;
+    } else {
+        p = pos1 > pos ? pos1 : pos;
+    }
+
+    name = path.substr(p + 1, path.length() - p - 1);
+    return name;
+
+}
+
+std::string CK_GetProcessRelatePath(std::string& path) {
+    std::string name = "";
+    std::size_t pos = path.find_last_of("/");
+    std::size_t pos1 = path.find_last_of("\\");
+    if (pos == std::string::npos) {
+        pos = 0;
+    }
+    if (pos1 == std::string::npos) {
+        pos1 = 0;
+    }
+    std::size_t p = pos1 > pos ? pos1 : pos;
+    if (p > 0) {
+        name += path.substr(0, p + 1);
+
+    } else {
+        name = "";
+    }
+    return name;
+
+}
 
 //update <agv_shell > node configure
 int update_config_file( std::vector<agv_process_info >& replace_cfg ) {
@@ -29,7 +74,7 @@ int update_config_file( std::vector<agv_process_info >& replace_cfg ) {
 	std::string temp_file = dock_path + "_tmp";
 	
 	FILE *fp, *tmp_fp;
-	char* str_line = (char*)malloc(MAX_LINE);
+	char str_line[MAX_LINE];
 	if(( fp = fopen(dock_path.c_str(), "r") ) == NULL) {
 		loerror("agv_shell") << "fopen file " << dock_path << " failure, errno:" << errno;
 		return -1;
@@ -43,8 +88,7 @@ int update_config_file( std::vector<agv_process_info >& replace_cfg ) {
 	int replace_flag = 0;
 	while ( !feof(fp) ) {
 		memset(str_line, 0, MAX_LINE);
-		str_line = fgets(str_line, MAX_LINE, fp);
-		if(!str_line) break;
+		fgets(str_line, MAX_LINE, fp);
 		if (replace_flag != 0) ++replace_flag;
 		if (strstr(str_line, "agv_shell")  && strstr(str_line, "port")) {
 			++replace_flag;
@@ -167,6 +211,16 @@ int start_process_normal(const char* name, const char* param, int flag) {
 	return ret;
 }
 
+std::string convert_positive(const std::string& str, const char preview_cr, const  char new_cr){
+	std::string result = str;
+	for (size_t i = 0; i < result.size(); i++){
+		if (result.at(i) == preview_cr){
+			result.at(i) = new_cr;
+		}
+	}
+	return result;
+}
+
 static
 void start_process_functional(void* p) {
     if( !p ) return;
@@ -189,7 +243,7 @@ void start_process_functional(void* p) {
     si.dwFlags = STARTF_USESHOWWINDOW;
     si.wShowWindow = SW_SHOW; //SW_HIDE隐藏窗口  
 
-	BOOL ret = CreateProcessA((char*)p_pinfo->process_name_.c_str(), (char*)p_pinfo->cmd_.c_str(), NULL, NULL, FALSE, /*CREATE_NEW_CONSOLE*/0, NULL, work_path.size() == 0 ? NULL : work_path.c_str() , &si, &pi);
+	BOOL ret = CreateProcessA((char*)p_pinfo->name_.c_str(), (char*)p_pinfo->cmd_.c_str(), NULL, NULL, FALSE, /*CREATE_NEW_CONSOLE*/0, NULL, work_path.size() == 0 ? NULL : work_path.c_str(), &si, &pi);
     if (ret) {
         //关闭子进程的主线程句柄  
         CloseHandle(pi.hThread);
@@ -235,7 +289,14 @@ void start_process_functional(void* p) {
 		}
 	}
 
-    pid_t pid = fork();
+	pid_t pid = -1;
+	/*char path_stdout[512], path_stderr[512];
+	posix__systime_t nowTime;
+	FILE* stream_stdout = NULL;
+	FILE* stream_stderr = NULL;*/
+	int status = 0;
+REFORK:
+	pid = fork();
     switch (pid) {
 	case -1:
 		loerror("agv_shell") << "fork failed";
@@ -243,6 +304,19 @@ void start_process_functional(void* p) {
 		break;
 	case 0:
 		//这是在子进程中，调用execlp切换为ps进程   
+		/*if("Loc" == p_pinfo->process_name_) {
+			//redirect stdout and stderr
+			posix__localtime(&nowTime);
+			posix__sprintf(path_stdout, cchof(path_stdout), "./log/loc_stdout_%04u%02u%02u_%02u%02u%02u.log", 
+			nowTime.year, nowTime.month, nowTime.day, nowTime.hour, nowTime.minute, nowTime.second);
+			posix__sprintf(path_stderr, cchof(path_stderr), "./log/loc_stderr_%04u%02u%02u_%02u%02u%02u.log", 
+				nowTime.year, nowTime.month, nowTime.day, nowTime.hour, nowTime.minute, nowTime.second);
+			stream_stdout = freopen( path_stdout, "w", stdout );
+			stream_stderr = freopen( path_stderr, "w", stderr );
+			if(!stream_stdout || !stream_stderr) {
+				exit(SIGUSR1);
+			}
+		}*/
 		loinfo("agv_shell") << "child " << p_pinfo->name_ << " " << p_pinfo->cmd_ << "  begin...";
 		if (-1 == execv(p_pinfo->name_.c_str(), argv)) {
 			loerror("agv_shell") << "execv failure, errno:" << errno;
@@ -253,7 +327,6 @@ void start_process_functional(void* p) {
 		//这是在父进程中，等待子进程结束 
 		p_pinfo->pid_ = pid;
 		loinfo("agv_shell") << "wait " << p_pinfo->process_name_ << " stop, pid=" << p_pinfo->pid_;
-		int status;
 		waitpid(pid, &status, 0);
 		if( WIFEXITED(status) ) {
 			WEXITSTATUS(status);
@@ -262,6 +335,10 @@ void start_process_functional(void* p) {
 		if( WIFSIGNALED(status) ) {
 			WTERMSIG(status);
 			loinfo("agv_shell") << "process " << p_pinfo->process_name_ << " stopped, WTERMSIG status=" << status;
+			if("Loc" == p_pinfo->process_name_ && (SIGUSR1 == (status & 0x0F))) {
+				loinfo("agv_shell") << "restart " << p_pinfo->process_name_ << " because WTERMSIG status is SIGUSR1.";
+				goto REFORK;
+			}
 		}
 		p_pinfo->pid_ = 0;
 		loinfo("agv_shell") << "process " << p_pinfo->process_name_ << " stopped, status=" << status;
@@ -326,6 +403,24 @@ int kill_process(agv_process_info& pf) {
     return 0;
 }
 
+int reboot_os() {
+#ifdef _WIN32
+    system("shutdown -r -t 3");
+#else
+    system("reboot");
+#endif // _WIN32
+    return 0;
+}
+
+int shutdown_os() {
+#ifdef _WIN32
+    system("shutdown -s -t 3");
+#else
+    system("shutdown -h now");
+#endif // _WIN32
+    return 0;
+}
+
 int start_agv_processes() {
     auto iter = global_parameter::agv_process_.begin();
 	for (; iter != global_parameter::agv_process_.end(); ++iter) {
@@ -376,99 +471,59 @@ int shutdown_agv_syn() {
     return 0;
 }
 
-int get_process_config_info(nsp::proto::proto_vector_t<agv::proto::proto_process_info_t>& vec) {
-	agv::proto::proto_process_info_t pr;
-	int index = 0;
-	for (auto &ap : global_parameter::agv_process_) {
-		pr.process_id_ = index++;
-		pr.process_name_ = ap.process_name_;
-		pr.process_path_ = ap.name_;
-		pr.process_cmd_ = ap.ori_cmd_;
-		pr.process_delay_ = ap.delay_start_;
-		vec.push_back(pr);
+
+int check_args(int argc, char **argv) {
+    int ch;
+	while (-1 != (ch = getopt(argc, argv, "su:P:")) ) {
+		switch (ch) {
+		case 's':
+			if(nsp::toolkit::singleton<global_parameter>::instance()->get_auto_startup() > 0) {
+				nsp::toolkit::singleton<global_parameter>::instance()->set_auto_startup(1);
+			} else {
+				nsp::toolkit::singleton<global_parameter>::instance()->set_auto_startup(0);
+			}
+			break;
+		case 'u':
+			nsp::toolkit::singleton<global_parameter>::instance()->set_upgrade_flag(1);
+			nsp::toolkit::singleton<global_parameter>::instance()->set_program_name(optarg);
+			break;
+		case 'P':
+			nsp::toolkit::singleton<global_parameter>::instance()->set_program_path(optarg);
+			break;
+		default:
+			return -1;
+		}
 	}
-	
-	return vec.size();
+    return 0;
 }
 
-int get_process_run_info(nsp::proto::proto_vector_t<agv::proto::proto_process_run_info_t>& process_vec) {
-	agv::proto::proto_process_run_info_t t_prot_proc;
-	std::string command("ps -A -opid -oetime -osize -orss -o%cpu -o%mem -oargs | grep -v ps | grep -v grep | grep -eagv_shell ");
-	std::string process_info_str;
-	std::vector<std::string> v_str;
-	char * pchar = nullptr;
-	char shell_name[32];
-	
-	for (auto &iter : global_parameter::agv_process_) {
+uint16_t get_progress_status(){
+	uint16_t status = 0;
+	int index = 0;
+	for (auto &iter : global_parameter::agv_process_){
 #ifndef _WIN32
-		if (iter.pid_ <= 0 || 0 != kill(iter.pid_, 0)) {
+		if (iter.pid_ > 0 && 0 == kill(iter.pid_, 0)) {
+			status = status | (1 << index);//_status = (_status<<1) + 1;
+		}
+		else {
 			iter.pid_ = 0;
 		}
 #else
 		if (iter.hdl_){
 			loinfo("agv_shell") << "the process:" << iter.process_name_ << " and handler:" << iter.hdl_;
 			int result = WaitForSingleObjectEx(iter.hdl_, 0, TRUE);
-			if (result != WAIT_TIMEOUT){
+			if (result == WAIT_TIMEOUT){
+				status = status | (1 << index);				//进程存在
+			}
+			else{
 				CloseHandle(iter.hdl_);						//进程不存在
 				iter.hdl_ = NULL;
-				iter.pid_ = 0;
 			}
 		}
 #endif
-		t_prot_proc.name = iter.process_name_;
-		t_prot_proc.pid = iter.pid_;
-		process_vec.push_back(t_prot_proc);
-		
-		command += (" -e" + iter.process_name_);
+		++index;
 	}
-	//add shell self
-	posix__getpename2(shell_name, 32);
-	t_prot_proc.name = shell_name;
-	t_prot_proc.pid = posix__getpid();
-	process_vec.push_back(t_prot_proc);
-	//loinfo("agv_shell") << "get running process info cmd:" << command;
-#ifndef _WIN32
-	char * buffer = nullptr;
-	try{
-		buffer= new char[1024];
-		memset(buffer,0,sizeof(char)*(1024));
-	}
-	catch(...){
-		return -1;
-	}
-
-	FILE *p = nullptr;
-	p = popen(command.c_str(), "r");
-	if (!p) {
-		loerror("agv_shell") << "popen failure, cmd:" << command;
-		delete [] buffer;
-		return -1;
-	} else {
-		while( (buffer = fgets(buffer, 1024, p)) ) {
-			if((pchar = strchr(buffer,'\n'))!= nullptr){
-				*pchar = '\0';
-			}
-			process_info_str = buffer;
-			v_str.clear();
-			split_symbol_string(process_info_str, ' ', v_str);
-			if(v_str.size() <= 0 || v_str[0].empty()) continue;
-			for(auto &it : process_vec) {
-				if(it.pid == atol(v_str[0].c_str())) {
-					it.run_time = v_str[1];
-					it.vir_mm = atol(v_str[2].c_str());
-					it.rss = atol(v_str[3].c_str());
-					it.average_cpu = atol(v_str[4].c_str());
-					it.average_mem = atol(v_str[5].c_str());
-					break;
-				}
-			}
-		}
-	}
-	if(buffer) delete [] buffer;
-	pclose(p);
-	
-#endif
-	return 0;
+	return status;
 }
 
 global_parameter::global_parameter() {
@@ -505,7 +560,7 @@ int global_parameter::load_processes_fxml(std::vector<agv_process_info >& proces
                 rapidxml::xml_attribute<>* lp = pr->first_attribute("name");
                 if (lp) {
                     ap.name_ = lp->value();
-                    ap.process_name_ = get_process_name(ap.name_);
+                    ap.process_name_ = CK_GetProcessName(ap.name_);
                 }
 
                 rapidxml::xml_attribute<>* dp = pr->first_attribute("cmd");
@@ -580,7 +635,7 @@ int global_parameter::loadXml() {
                 rapidxml::xml_attribute<>* lp = pr->first_attribute("name");
                 if (lp) {
                     ap.name_ = lp->value();
-                    ap.process_name_ = get_process_name(ap.name_);
+                    ap.process_name_ = CK_GetProcessName(ap.name_);
                 }
 
                 rapidxml::xml_attribute<>* dp = pr->first_attribute("cmd");
@@ -681,9 +736,9 @@ int global_parameter::loadXml() {
     return 0;
 }
 
-int global_parameter::init_white_list()
+bool global_parameter::init_white_list()
 {
-	int result = -1;
+	bool result = false;
 #ifdef _WIN32
 	for ( auto &iter : vct_white_list_)
 	{
@@ -697,7 +752,7 @@ int global_parameter::init_white_list()
 		}
 		loinfo("agv_shell") << "success to monolize the file " << iter.file_name;
 		iter.file_handler = hFile;
-		result = 0;
+		result = true;
 	}
 	return result;
 #else
@@ -705,23 +760,21 @@ int global_parameter::init_white_list()
 	auto iter = vct_white_list_.begin();
 	for(; iter != vct_white_list_.end(); ++iter) {
 		command = "chattr +i " + iter->file_name;
-		int sys_ret = system(command.c_str());
-		if(sys_ret) {
-			loerror("agv_shell") << "failed to lock file:" << iter->file_name << " ret:" << sys_ret;
+		if(!nsp::toolkit::singleton<global_parameter>::instance()->bash_command(command,"r")){
 			continue;
 		}
-		result = 0;
+		result = true;
         loinfo("agv_shell") << "success to lock file:" << iter->file_name;
 	}
 	return result;
 #endif
 }
 
-int global_parameter::modify_file_lock(const int is_lock)
+bool global_parameter::modify_file_lock(const bool is_lock)
 {
-	int result = 0;
+	bool result = true;
 #ifdef _WIN32
-	if (1 == is_lock)
+	if (is_lock)
 	{
 		//加锁
 		result = init_white_list();
@@ -735,7 +788,7 @@ int global_parameter::modify_file_lock(const int is_lock)
 			{
 				if (!CloseHandle(iter.file_handler))
 				{
-					result = -1;
+					result = false;
 					loerror("agv_shell") << "failed to close white list file:" << iter.file_name << " handler.";
 				}
 				else
@@ -747,7 +800,7 @@ int global_parameter::modify_file_lock(const int is_lock)
 		}
 	}
 #else
-	if(1 == is_lock)
+	if(is_lock)
 	{
 		//加锁
 		result = init_white_list();
@@ -759,10 +812,8 @@ int global_parameter::modify_file_lock(const int is_lock)
 		auto iter = vct_white_list_.begin();
 		for (; iter != vct_white_list_.end(); ++iter) {
 			command = "chattr -i " + iter->file_name;
-			int sys_ret = system(command.c_str());
-			if(sys_ret) {
-				result = -1;
-				loinfo("agv_shell") << "failed to unlock file:" << iter->file_name << " ret:" << sys_ret;
+			if(!nsp::toolkit::singleton<global_parameter>::instance()->bash_command(command,"r")){
+				result = false;
 				continue;
 			}
 			loinfo("agv_shell") << "success to unlock file:" << iter->file_name;
@@ -790,7 +841,7 @@ int global_parameter::query_file_lock()
 	auto iter = vct_white_list_.begin();
 	for (; iter != vct_white_list_.end(); ++iter) {
 		command = "lsattr " + iter->file_name;
-		if (0 != nsp::toolkit::singleton<global_parameter>::instance()->bash_command(command,char_ret,16, "r")){
+		if (!nsp::toolkit::singleton<global_parameter>::instance()->bash_command(command,char_ret,16)){
 			continue;
 		}
 
@@ -826,7 +877,7 @@ void run_process_by_popen(void* p1, void* p2) {
 	
 	loinfo("agv_shell") << "start process:" << command;
 	
-	if (0 != nsp::toolkit::singleton<global_parameter>::instance()->bash_command(command,"w")){
+	if (!nsp::toolkit::singleton<global_parameter>::instance()->bash_command(command,"w")){
 		return;
 	}
 	loinfo("agv_shell") << "process:" << command << " finished.";
@@ -836,27 +887,22 @@ void run_process_by_popen(void* p1, void* p2) {
 	return;
 }
 
-void run_tar_by_popen(std::string cmd, std::string cmd_parament, std::string des_file, std::string src_file, uint32_t lnk, int id) {
+void run_tar_by_popen(std::string cmd, std::string cmd_parament, std::string des_file, std::string src_file, uint32_t lnk) {
 #ifndef _WIN32
-	int err = 0;
 	//add file execute access
 	if (chmod(cmd.c_str(), S_IRWXU | S_IRWXG) < 0) {
-		err = errno;
-		nsp::toolkit::singleton<agv_shell_server>::instance()->post_tar_backups(lnk, id, des_file, err);
-		loerror("agv_shell") << "file:" << cmd << " chmod failed, errno:" << err;
+		loerror("agv_shell") << "file:" << cmd << " chmod failed, errno:" << errno;
 		return;
 	}
 
 	std::string command = cmd + " " + cmd_parament +" " +des_file + " " + src_file;
 	loinfo("agv_shell") << "start tar backups file:" << command;
-	if (0 != nsp::toolkit::singleton<global_parameter>::instance()->bash_command(command,"r")){
-		err = -1;
-		nsp::toolkit::singleton<agv_shell_server>::instance()->post_tar_backups(lnk, id, des_file, err);
+	if (!nsp::toolkit::singleton<global_parameter>::instance()->bash_command(command,"r")){
 		return;
 	}
 	loinfo("agv_shell") << "backups files:" << command << " finished.";
 	//压缩完通知客户端已完成tar压缩
-	nsp::toolkit::singleton<agv_shell_server>::instance()->post_tar_backups(lnk, id, des_file, err);
+	nsp::toolkit::singleton<agv_shell_server>::instance()->post_tar_backups(lnk, des_file);
 #else
 
 #endif
@@ -870,7 +916,7 @@ int run_copye_file_by_popen(const std::string& src_file, const std::string& des_
 	std::string command = "cp " + src_file + " " + des_file;
 	loinfo("agv_shell") << "start copy file: " << src_file << " to " << des_file;
 
-	if (0 != nsp::toolkit::singleton<global_parameter>::instance()->bash_command(command,"r")){
+	if (!nsp::toolkit::singleton<global_parameter>::instance()->bash_command(command,"r")){
 		return -1;
 	}
 	loinfo("agv_shell") << "copy files:" << command << " finished.";
@@ -950,37 +996,26 @@ void global_parameter::run_progess_by_get_logtype(std::string&log_path, std::set
 #endif
 }
 
-void global_parameter::load_shell_version(){
-	shell_version_ = load_version_file(SOFT_VERSION_FILE_NAME);
-}
-
-void global_parameter::load_config_version(){
-	config_version = load_version_file(CONFIG_VERSION_FILE_NAME);
-}
-
-std::string global_parameter::load_version_file(const std::string& file_name)
+std::string global_parameter::load_shell_version(const std::string& file_name)
 {
 	std::string res = "";
 	FILE *handle = NULL;
-	std::string full_name = nsp::os::get_module_directory<char>() + POSIX__DIR_SYMBOL_STR;
-	full_name += file_name;
-
-	uint64_t file_size = nsp::os::get_filesize(full_name);
+	uint64_t file_size = nsp::os::get_filesize(file_name);
 	if (file_size <= 0) {
 		return res;
 	}
-	if ((handle = fopen(full_name.c_str(), "r")) == NULL) {
-		loerror("agv_shell") << "failed to open version file:" << full_name << ".";
+	if ((handle = fopen(file_name.c_str(), "r")) == NULL) {
+		loerror("agv_shell") << "failed to open version file:" << file_name << ".";
 		return res;
 	}
 	//fseek函数将数据指针指向初始位置
 	fseek(handle, 0, SEEK_SET);
-	char * pchar = nullptr;
-	char* strLine= (char*)malloc(MAX_LINE);
+	char strLine[MAX_LINE];
 	//要求只读第一行数据
-	strLine = fgets(strLine, MAX_LINE, handle);
-	if((pchar = strchr(strLine,'\n')) != nullptr){
-		*pchar = '\0';
+	while (!feof(handle))
+	{
+		fgets(strLine, MAX_LINE, handle);
+		if (strcmp(strLine, "") != 0)break;
 	}
 	res = strLine;
 	fclose(handle);
@@ -988,22 +1023,22 @@ std::string global_parameter::load_version_file(const std::string& file_name)
 	return res;
 }
 
-int global_parameter::check_file(std::string strfilename, const std::string &strmodify_time, const std::string &start_time, const std::string& end_time){
+bool global_parameter::check_file(std::string strfilename, const std::string &strmodify_time, const std::string &start_time, const std::string& end_time){
 	std::string::size_type pos;
 	std::string filetime;
 
 	if (strfilename.find(".log") == std::string::npos &&
 		strfilename.find(".jpg") == std::string::npos){
-		return -1;
+		return false;
 	}
 
 	if ((pos = strfilename.find_first_of("20")) == std::string::npos){
 		loinfo("agv_shell") << strfilename.c_str() << " not log file";
-		return -1;
+		return false;
 	}
-	filetime = strfilename.substr(pos, 15);
-	if (filetime.length() < 15){
-		return -1;
+	filetime = strfilename.substr(pos, 14);
+	if (filetime.length() < 14){
+		return false;
 	}
 
 	std::string::size_type pos_replace;
@@ -1012,9 +1047,9 @@ int global_parameter::check_file(std::string strfilename, const std::string &str
 	}
 
 	if (start_time <= strmodify_time && end_time >= filetime){
-		return 0;
+		return true;
 	}
-	return -1;
+	return false;
 }
 
 std::string global_parameter::get_type(std::string strname){
@@ -1025,90 +1060,16 @@ std::string global_parameter::get_type(std::string strname){
 		type = strname.substr(0, pos - 1);
 	}
 	else if (strname.find("-C-") != std::string::npos || strname.find("-search-invalid-") != std::string::npos){
-		type = "localization";
+		type = "get_position_image";
 	}
 	else if (strname.find("Deviation_") == 0){
-		type = "deviation";
+		type = "get_reposition_image";
 	}
 
 	return type;
 }
 
-void global_parameter::load_ntp_server() {
-	std::string file_name;
-	std::size_t pos;
-
-	auto ap = global_parameter::vct_auto_run_list_.begin();
-	while (ap != global_parameter::vct_auto_run_list_.end()) {
-		pos = ap->find_last_of(AUTO_START_FILE_NAME);
-		if (pos != std::string::npos) {
-			file_name = *ap;
-			break;
-		}
-		++ap;
-	}
-	if (0 == file_name.size()) {
-		loinfo("agv_shell") << "can not find file " << AUTO_START_FILE_NAME << " from auto_run_list";
-		return;
-	}
-	try {
-		std::ifstream read_file(file_name);
-		if (!read_file) {
-			return;
-		}
-		std::string line;
-		while (getline(read_file, line)) {
-			if (line.substr(0, 14) == "ip_ntp_server=") {
-				// get address "123.123.123.123" from "ip_ntp_server=123.123.123.123"
-				ntp_server = line.substr(14);
-				loinfo("agv_shell") << "ntp server address:" << ntp_server;
-				break;
-			}
-		}
-		read_file.close();
-	}
-	catch (...) {
-		loinfo("agv_shell") << "read file error, file:" << file_name;
-		return;
-	}
-
-	return;
-}
-
-int global_parameter::set_ntp_server(const std::string& address) {
-	int ret = 0;
-#ifndef _WIN32
-	std::string file_name;
-	std::size_t pos;
-	std::string cmd_str = "sed -i 's/^ip_ntp_server=.*/ip_ntp_server=";
-
-	auto ap = global_parameter::vct_auto_run_list_.begin();
-	while (ap != global_parameter::vct_auto_run_list_.end()) {
-		pos = ap->find_last_of(AUTO_START_FILE_NAME);
-		if (pos != std::string::npos) {
-			file_name = *ap;
-			break;
-		}
-		++ap;
-	}
-	if (0 == file_name.size()) {
-		loinfo("agv_shell") << "can not find file " << AUTO_START_FILE_NAME;
-		return -1;
-	}
-	// sed -i 's/^ip_ntp_server=.*/ip_ntp_server=address/' file_name
-	cmd_str += address + "/' "+ file_name;
-	ret = system(cmd_str.c_str());
-	if (ret == 0) {
-		ntp_server = address;
-		loinfo("agv_shell") << "set ntp server address:" << address << " file:" << file_name;
-	} else {
-		loerror("agv_shell") << "set ntp server error:" << address << ret;
-	}
-#endif
-	return ret;
-}
-
-int global_parameter::bash_command(const std::string &command, std::string &result, int max_length, const char *type){
+bool global_parameter::bash_command(const std::string &command, std::string &result,int max_length ){
 #ifndef _WIN32
 	if( max_length > 0){
 		char * buffer = nullptr;
@@ -1117,24 +1078,18 @@ int global_parameter::bash_command(const std::string &command, std::string &resu
 			memset(buffer,0,sizeof(char)*(max_length));
 		}
 		catch(...){
-			return -1;
+			return false;
 		}
 
 		FILE *p = nullptr;
-		p = popen(command.c_str(), type);
+		p = popen(command.c_str(), "r");
 		if (!p) {
 			loerror("agv_shell") << "popen failure, cmd:" << command;
 			delete [] buffer;
-			return -1;
+			return false;
 		}
 		else {
-			buffer = fgets(buffer, max_length, p);
-			if(!buffer){
-				loerror("agv_shell") << "fgets buffer error";
-				delete [] buffer;
-				pclose(p);
-				return -1;
-			}
+			fgets(buffer, max_length, p);
 			char * pchar = nullptr;
 			if((pchar = strchr(buffer,'\n'))!= nullptr){
 				*pchar = '\0';
@@ -1145,19 +1100,19 @@ int global_parameter::bash_command(const std::string &command, std::string &resu
 		pclose(p);
 	}
 #endif
-	return 0;
+	return true;
 }
 
-int global_parameter::bash_command(const std::string & command, const char * type ){
+bool global_parameter::bash_command(const std::string & command, const char * type ){
 #ifndef _WIN32
 	FILE *p = nullptr;
 	p = popen(command.c_str(), type);
 	if (!p) {
 		loerror("agv_shell") << "popen failure, cmd:" << command;
-		return -1;
+		return false;
 	}
 	//loinfo("agv_shell")<<"2";
 	pclose(p);
 #endif
-	return 0;
+	return true;
 }

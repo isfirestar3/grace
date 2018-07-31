@@ -7,6 +7,9 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#include <sys/types.h>
+#include <signal.h>
+
 #include "ncb.h"
 #include "cache.h"
 #include "imgdef.h"
@@ -234,13 +237,19 @@ static void *routine_rcv(void *p) {
     int pic_id;
     int retval = 0;
     struct gzimage_t *image;
+    int times_in_block_full;
 
     log__save("libgzcamera", kLogLevel_Info, kLogTarget_Filesystem, "libgzcamera image data receiver thread startup.");
 
+    times_in_block_full = 0;
     while (1) {
         if (retval >= 0) {
             pic_id = select_cache_memory(kCameraCacheAccess_ReceiverWriteable, &cache_ptr);
             if (pic_id < 0) {
+                if (++times_in_block_full >= 10) {
+                    raise(SIGUSR1);
+                }
+
                 log__save("libgzcamera", kLogLevel_Error, kLogTarget_Filesystem, "failed to get cache node memory for camera data recviver");
                 // 有可能出现的极端情况：接收缓冲区瞬间填满,处理线程响应不及时， 导致一轮 select_cache_memory_dec(kCameraCacheAccess_HandlerReadable, &buffer)) 失败
                 // 此时处理线程等待事件，但是无法得到有效通知
@@ -249,6 +258,8 @@ static void *routine_rcv(void *p) {
                 usleep(10 * 1000);
                 continue;
             }
+
+            times_in_block_full = 0;
         }
 
 #if TRACE_CAMERA_DEBUG
@@ -517,32 +528,28 @@ int camera_config_parameters(struct packet_config_parameter *parameter) {
     // 保存当前的参数配置
     bcopy(parameter, &local_ncb.parameter_request, sizeof (local_ncb.parameter_request));
 
-    // 200ms, 5 times, try to send parameter config package to camera device.
-    // from gc2.2, wait until camera parameter config return.
-    while (1) {
-        for (i = 0; i < 5; i++) {
-            if (sendto(local_ncb.ctrlfd, (const void *) parameter, sizeof (struct packet_config_parameter), 0, (__CONST_SOCKADDR_ARG) & camera_control_addr, camera_addr_len) < 0) {
-                log__save("libgzcamera", kLogLevel_Error, kLogTarget_Filesystem, "failed to send parameter config packet to target.errno=%d", errno);
-                return -1;
-            }
-            posix__waitfor_waitable_handle(&local_ncb.evt_config_parameter_completed, 200);
-            switch (local_ncb.config_parameter_status) {
-                case CONFIG_PARAMETER_STATUS_READY:
-                    log__save("libgzcamera", kLogLevel_Info, kLogTarget_Filesystem, "config parameter successful.");
-                    return 0;
-                case CONFIG_PARAMETER_STATUS_FAULT:
-                    log__save("libgzcamera", kLogLevel_Error, kLogTarget_Filesystem, "config parameter fault.");
-                    return -1;
-                case CONFIG_PARAMETER_STATUS_WAITTING:
-                    break;
-                default:
-                    break;
-            }
+    // 200ms/次， 5次内， 重试进行参数配置操作
+    for (i = 0; i < 5; i++) {
+        if (sendto(local_ncb.ctrlfd, (const void *) parameter, sizeof (struct packet_config_parameter), 0, (__CONST_SOCKADDR_ARG) & camera_control_addr, camera_addr_len) < 0) {
+            log__save("libgzcamera", kLogLevel_Error, kLogTarget_Filesystem, "failed to send parameter config packet to target.errno=%d", errno);
+            return -1;
         }
-
-        log__save("libgzcamera", kLogLevel_Error, kLogTarget_Filesystem, "camera_config_parameters fault by timeout.");
+        posix__waitfor_waitable_handle(&local_ncb.evt_config_parameter_completed, 200);
+        switch (local_ncb.config_parameter_status) {
+            case CONFIG_PARAMETER_STATUS_READY:
+                log__save("libgzcamera", kLogLevel_Info, kLogTarget_Filesystem, "config parameter successful.");
+                return 0;
+            case CONFIG_PARAMETER_STATUS_FAULT:
+                log__save("libgzcamera", kLogLevel_Error, kLogTarget_Filesystem, "config parameter fault.");
+                return -1;
+            case CONFIG_PARAMETER_STATUS_WAITTING:
+                break;
+            default:
+                break;
+        }
     }
 
+    log__save("libgzcamera", kLogLevel_Error, kLogTarget_Filesystem, "camera_config_parameters fault by timeout.");
     return -ETIMEDOUT;
 }
 

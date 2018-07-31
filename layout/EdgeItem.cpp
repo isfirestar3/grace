@@ -105,6 +105,19 @@ void EdgeItem::Adjust()
 	DATAMNG->UpdateEdgeInfo(m_edgeInfo);
 }
 
+void EdgeItem::Adjust_CtrlPos_From_NodeChange()
+{
+	QPointF ctrlPos1 = InitCtrlPoint1Pos(m_pStartNode, m_pEndNode);
+	QPointF ctrlPos2 = InitCtrlPoint2Pos(m_pStartNode, m_pEndNode);
+	m_pCtrlPoint1->setPos(ctrlPos1);
+	m_pCtrlPoint2->setPos(ctrlPos2);
+
+	m_edgeInfo.ctrl_point1.x = ctrlPos1.x();
+	m_edgeInfo.ctrl_point1.y = ctrlPos1.y();
+	m_edgeInfo.ctrl_point2.x = ctrlPos2.x();
+	m_edgeInfo.ctrl_point2.y = ctrlPos2.y();
+}
+
 QPointF EdgeItem::InitCtrlPoint1Pos(NodeItem* pStartNode, NodeItem* pEndNode)
 {
 	if (pStartNode == NULL || pEndNode == NULL)

@@ -14,4 +14,7 @@
         <file>../image/start.png</file>
         <file>../image/start_task.png</file>
     </qresource>
+    <qresource prefix="/">
+        <file>image/wait.gif</file>
+    </qresource>
 </RCC>

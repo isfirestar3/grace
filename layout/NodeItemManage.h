@@ -18,7 +18,7 @@ public:
 	int GetMaxNodeId();
 	void SetItemMoveable(bool bMoveable);
 	bool RemoveNodeItem(int node_id);
-	bool UpdateNodeItem(int node_id,bool spin);//批量修改用
+	bool UpdateNodeItem(int node_id,bool spin,double x,double y);//批量修改用
 private:
 	MapScene* m_mapScene;
 

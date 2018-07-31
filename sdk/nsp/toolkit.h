@@ -137,6 +137,7 @@ namespace nsp {
         int decrypt(const std::string &crypt, const char *key, std::string &out);
 
         // HEX字符串转整型, "1234ABCD" 转换为 0x1234ABCD， 注意高低位结构
+
         template<class T>
         int strtohex(const std::basic_string<char> &strhex, T &int_hex) {
             // 输出初始值

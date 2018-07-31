@@ -185,9 +185,9 @@ void position_frame::on_refresh()
 			return;
 		}
 
-		vel_acc_t acc_t = *(vel_acc_t *)str_data.data();
+		acceleration_t acc_t = *(acceleration_t *)str_data.data();
 		QMetaObject::invokeMethod(ui.doubleSpinBox_acceleration, "setValue", Qt::QueuedConnection,
-			Q_ARG(double, acc_t.vel_acc_));
+			Q_ARG(double, acc_t.acceleration_));
 		QMetaObject::invokeMethod(ui.acceleration_r_label, "setText", Qt::QueuedConnection,
 			Q_ARG(const QString &, tr("R:") + DUI_HAO_MARK));
 	});

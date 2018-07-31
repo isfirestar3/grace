@@ -211,17 +211,19 @@ double NavSearch::SearchNavPath(const position_t& src_pos, const position_t& des
 {
 	std::vector<PathSearch_UPL> start_upl_list;
 	Point2UplList(src_pos, start_upl_list);
+	nspinfo << "start_pos_angle=" << src_pos.angle_;
+	nspinfo << "end_pos_angle=" << dest_pos.angle_;
 	nspinfo << "all adaptive start upl list :";
 	for (auto start_upl : start_upl_list)
 	{
-		nspinfo << "edge_id=" << start_upl.edge_id << ",wop_id=" << start_upl.wop_id << ",percent=" << start_upl.fPercent;
+		nspinfo << "edge_id=" << start_upl.edge_id << ",wop_id=" << start_upl.wop_id << ",percent=" << start_upl.fPercent << ",aof=" << start_upl.fAoa;
 	}
 	std::vector<PathSearch_UPL> target_upl_list;
 	Point2UplList(dest_pos, target_upl_list);
 	nspinfo << "all adaptive dest upl list :";
 	for (auto dest_upl : target_upl_list)
 	{
-		nspinfo << "edge_id=" << dest_upl.edge_id << ",wop_id=" << dest_upl.wop_id << ",percent=" << dest_upl.fPercent;
+		nspinfo << "edge_id=" << dest_upl.edge_id << ",wop_id=" << dest_upl.wop_id << ",percent=" << dest_upl.fPercent << ",aof=" << dest_upl.fAoa;
 	}
 
 	double distance_min = DISTANCE_INFINITY;
@@ -270,9 +272,9 @@ double NavSearch::SearchNavPath(const position_t& src_pos, const position_t& des
 	if (distance_min < DISTANCE_INFINITY)
 	{
 		nspinfo << "start_upl_best:edge_id=" << start_upl_best.edge_id << ",wop_id="
-			<< start_upl_best.wop_id << ",percent=" << start_upl_best.fPercent;
+			<< start_upl_best.wop_id << ",percent=" << start_upl_best.fPercent << ",aof=" << start_upl_best.fAoa;
 		nspinfo << "dest_upl_best:edge_id=" << dest_upl_best.edge_id << ",wop_id="
-			<< dest_upl_best.wop_id << ",percent=" << dest_upl_best.fPercent;
+			<< dest_upl_best.wop_id << ",percent=" << dest_upl_best.fPercent << ",aof=" << dest_upl_best.fAoa;
 	}
 	
 	return distance_min;

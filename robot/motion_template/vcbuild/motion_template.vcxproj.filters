@@ -138,6 +138,9 @@
     <ClCompile Include="..\memdump.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\mclog.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\regist_event.c">
       <Filter>Source Files</Filter>
     </ClCompile>

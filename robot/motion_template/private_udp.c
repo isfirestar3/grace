@@ -68,6 +68,8 @@ static void *routine_handler(void *p) {
     unsigned char *buffer;
     private_udp_callback_t callback = (private_udp_callback_t) ncb->callback;
 
+    log__save("motion_template", kLogLevel_Info, kLogTarget_Filesystem | kLogTarget_Stdout, "private UDP handler thread startup.\n");
+
     while (1) {
         pthread_mutex_lock(&ncb->mtx_handler);
         while (!ncb->pass_handler) {

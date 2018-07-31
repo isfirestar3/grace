@@ -303,7 +303,12 @@ namespace Tool.CarHouse
 
             else if (true== RDNo.IsChecked)
             {
-                Tool.Net.NetInterface.OpenDhcp(true);
+                int ret = Tool.Net.NetInterface.OpenDhcp(true);
+                if (ret < 0)
+                {
+                    NotifyMessageEx.ShowNotify(Tool.MainWindow.This, "打开DHCP失败", "提示");
+                    return;
+                }
                 Tool.RobotsHome.RobotInfoCollect.GetInstance().CleanRobotObj();
                 Refresh();
 
@@ -317,12 +322,12 @@ namespace Tool.CarHouse
 
 
                 Tool.RobotsHome.RobotsHome.This.Refresh();
-                int ret = Tool.Net.NetInterface.OpenDhcp(true);
-                if (ret < 0)
-                {
-                    NotifyMessageEx.ShowNotify(Tool.MainWindow.This, "打开DHCP失败", "提示");
-                    return;
-                }
+                //int ret = Tool.Net.NetInterface.OpenDhcp(true);
+                //if (ret < 0)
+                //{
+                //    NotifyMessageEx.ShowNotify(Tool.MainWindow.This, "打开DHCP失败", "提示");
+                //    return;
+                //}
 
                 BtnAdd.IsEnabled = false;
                 BtnDel.IsEnabled = false;

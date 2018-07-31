@@ -4,6 +4,7 @@
 #include "network.h"
 #include "xml_node.h"
 #include <algorithm>
+#include "log.h"
 //#include "agvinfo_proto.hpp"
 
 //#define  debug_test_disconnect
@@ -47,6 +48,7 @@ int agv_manager::connect_server(std::string ip, uint16_t port)
 			return -1;
 		}
 
+		loinfo("libagvinfo") << "try to connect ipv4" << ep.to_string();
 		if (session->connect(ep)< 0 ){
 			loerror("agv_info") << "connect failed";
 			return -1;
@@ -58,6 +60,7 @@ int agv_manager::connect_server(std::string ip, uint16_t port)
 	}
 
 	if (session){							//连接成功后再剔除已连接的session
+		loinfo("libagvinfo") << "close last session" << session->remote().to_string();
 		session->close();
 	}
 
@@ -85,6 +88,7 @@ void agv_manager::disconnect()
 	}
 
 	if (session){
+		loinfo("libagvinfo") << "disconnect session" << session->remote().to_string();
 		session->close();
 	}
 	session_condition_.notify_one();
@@ -99,6 +103,7 @@ void agv_manager::disconnect()
 
 void agv_manager::on_disconnect( std::string ipstr )
 {
+	loinfo("libagvinfo") << "on_disconnect ipv4" << ipstr;
 	std::lock_guard<decltype(mutex_)> locker(mutex_);
 	if (agv_session_ && !agv_session_->remote().to_string().compare(ipstr.c_str())){
 		agv_session_ = nullptr;
@@ -108,6 +113,7 @@ void agv_manager::on_disconnect( std::string ipstr )
 
 int agv_manager::check_connect(){
 	const static uint64_t time_out_tick = 60000;
+	const static uint64_t keep_alive_tick = 4000;
 	while (true){
 		{
 			std::shared_ptr<agv_session> session = nullptr;
@@ -116,16 +122,18 @@ int agv_manager::check_connect(){
 				if (agv_session_){
 					uint64_t tick = agv_session_->get_tick();
 					uint64_t current_tick = nsp::os::gettick();
-					if (current_tick - tick > time_out_tick){
+					uint64_t dec_tick = current_tick - tick;
+					if (dec_tick > time_out_tick){
 #ifdef debug_test_disconnect
 						std::this_thread::sleep_for(std::chrono::milliseconds(100));
 #endif
+						loinfo("libagvinfo") << "session timeout";
 						std::swap(session, agv_session_);
 #ifdef debug_test_disconnect
 						std::this_thread::sleep_for(std::chrono::milliseconds(100));
 #endif
 					}
-					else{
+					else if (dec_tick > keep_alive_tick){
 						if (agv_session_->keepalive() < 0){
 							std::swap(session, agv_session_);
 						}
@@ -152,6 +160,7 @@ int agv_manager::check_connect(){
 			}
 		}
 	}
+	loinfo("libagvinfo") << "thread check_connect exit";
 	return 0;
 }
 
@@ -162,6 +171,7 @@ agv_info * agv_manager::new_agvinfo(const agv_info_inner &agvinfo)
 		temp = new agv_info;
 	}
 	catch (...){
+		loerror("libagvinfo") << "new agv_info error";
 		return nullptr;
 	}
 	memset(temp, 0, sizeof(agv_info));
@@ -195,6 +205,7 @@ int agv_manager::build_attr(const std::vector<agv_attribute_inner> &vec_attr, st
 			arr_attr = new agv_attribute[length];
 		}
 		catch (...){
+			loerror("libagvinfo") << "new agv_attribute error";
 			return -1;
 		}
 
@@ -211,6 +222,7 @@ int agv_manager::build_attr(const std::vector<agv_attribute_inner> &vec_attr, st
 
 int agv_manager::build_agvinfo(const std::vector<agv_info_inner> &agvinfo, agv_info **agvs)
 {
+	*agvs = nullptr;
 	agv_info * pre_node = nullptr;
 	for (auto iter : agvinfo){
 		agv_info* pNew = new_agvinfo(iter);
@@ -241,6 +253,7 @@ int agv_manager::build_agvdetail(uint32_t vhid, const std::vector<agv_attribute_
 		*detail = new agv_detail;
 	}
 	catch (...){
+		loerror("libagvinfo") << "new agv_detail error";
 		return -1;
 	}
 
@@ -299,12 +312,14 @@ int agv_manager::load_server_agvinfo(enum load_agvinfo_method method, std::vecto
 			motion_back = *(agv_motion::motion_data *)data;
 		}
 		wait.sig();
+		loinfo("libagvinfo") << "load_agvinfo returned";
 	}), method);
 	
 	if(errcode){
 		return errcode;
 	};
 
+	loinfo("libagvinfo") << "wait load_agvinfo return";
 	wait.wait();
 	wait.reset();
 

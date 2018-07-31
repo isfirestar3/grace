@@ -28,8 +28,21 @@ void NodesEditWnd::InitForm()
 	if (pAttrLayout)
 	{
 		m_pSpin = new QCheckBox(QStringLiteral("是否可旋转："));
-		pAttrLayout->addWidget(m_pSpin, 0, 1, 1, 1);
-
+		pAttrLayout->addWidget(m_pSpin, 0, 0, 1, 1);
+		m_pMove = new QCheckBox(QStringLiteral("是否移动"));
+		pAttrLayout->addWidget(m_pMove, 2, 0, 1, 1);
+		m_pLabel_X = new QLabel(QStringLiteral("X轴平移："));
+		pAttrLayout->addWidget(m_pLabel_X, 3, 0, 1, 1);
+		m_pLabel_Y = new QLabel(QStringLiteral("Y轴平移："));
+		pAttrLayout->addWidget(m_pLabel_Y, 4, 0, 1, 1);
+		m_pMove_X = new QLineEdit();
+		pAttrLayout->addWidget(m_pMove_X, 3, 1, 1, 1);
+		m_pMove_Y = new QLineEdit();
+		pAttrLayout->addWidget(m_pMove_Y, 4, 1, 1, 1);
+		m_pCm_X = new QLabel(QStringLiteral("cm"));
+		pAttrLayout->addWidget(m_pCm_X, 3, 2, 1, 1);
+		m_pCm_Y = new QLabel(QStringLiteral("cm"));
+		pAttrLayout->addWidget(m_pCm_Y, 4, 2, 1, 1);
 	}
 	QGridLayout* pSaveLayout = new QGridLayout;
 	if (pSaveLayout)
@@ -53,5 +66,8 @@ void NodesEditWnd::InitSlot()
 void NodesEditWnd::SlotBtnSaveData()
 {
 	pSpin = m_pSpin->isChecked();
+	pMove = m_pMove->isChecked();
+	move_x = m_pMove_X->text().toDouble();
+	move_y = m_pMove_Y->text().toDouble();
 	this->accept();
 }

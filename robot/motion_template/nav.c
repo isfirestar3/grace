@@ -39,6 +39,7 @@ static int nav__cal_nav_poionts(var__navigation_t *nav);
 static int nav__cal_nav_poionts_ext(var__navigation_t *nav);
 static void nav__cal_dis_left(var__navigation_t *nav);
 static int nav__check_path(var__navigation_t *nav);
+static int nav__check_path_same_endpos(var__navigation_t *nav);
 #if PRINT_NAV_DEBUG_LOG
 static void nav__log(var__navigation_t *nav, var__vehicle_t *veh);
 #endif
@@ -82,6 +83,10 @@ static double g_average_odo_delay = 0;
 #endif
 
 static int g_confidence_err = 0;
+
+static int g_last_traj_idex = -1;
+static upl_t g_last_upl = { -1, 0.0, {0.0 }};
+static int g_need_last_upl = 1;
 
 static void nav_pos_interpolated(var__navigation_t *nav, var__vehicle_t *veh) {
     if (g_simflag > 0) {
@@ -204,18 +209,26 @@ static void nav__cal_dis_left(var__navigation_t *nav) {
             nav->i.dist_to_partition_ = 0;
             return;
         }
-        if (nav__is_forward(cur_wop) == 1) {
-            nav->i.dist_to_dest_ = cur_edge->length_ * (dest_per - per) / 100;
-            nav->i.dist_to_partition_ = cur_edge->length_ * (dest_per - per) / 100;
-        } else {
-            nav->i.dist_to_dest_ = cur_edge->length_ * (per - dest_per) / 100;
-            nav->i.dist_to_partition_ = cur_edge->length_ * (per - dest_per) / 100;
+
+        if (nav__check_path_same_endpos(nav) != 1)
+        {
+            if (nav__is_forward(cur_wop) == 1) {
+                nav->i.dist_to_dest_ = cur_edge->length_ * (dest_per - per) / 100;
+                nav->i.dist_to_partition_ = cur_edge->length_ * (dest_per - per) / 100;
+            }
+            else {
+                nav->i.dist_to_dest_ = cur_edge->length_ * (per - dest_per) / 100;
+                nav->i.dist_to_partition_ = cur_edge->length_ * (per - dest_per) / 100;
+            }
+
+            if (nav->i.dist_to_dest_ < 0) {
+                nav->i.dist_to_dest_ = 0;
+                nav->i.dist_to_partition_ = 0;
+            }
         }
 
-        if (nav->i.dist_to_dest_ < 0) {
-            nav->i.dist_to_dest_ = 0;
-            nav->i.dist_to_partition_ = 0;
-        }
+
+
         var__end_search();
         var__end_search();
         return;
@@ -245,13 +258,19 @@ static void nav__cal_dis_left(var__navigation_t *nav) {
         nav->i.dist_to_partition_ = 0;
         return;
     }
-    if (nav__is_forward(cur_wop)) {
-        nav->i.dist_to_dest_ = cur_edge->length_ * (100 - per) / 100;
-        nav->i.dist_to_partition_ = cur_edge->length_ * (100 - per) / 100;
-    } else {
-        nav->i.dist_to_dest_ = cur_edge->length_ * per / 100;
-        nav->i.dist_to_partition_ = cur_edge->length_ * per / 100;
+
+    if (nav__check_path_same_endpos(nav) != 1)
+    {
+        if (nav__is_forward(cur_wop)) {
+            nav->i.dist_to_dest_ = cur_edge->length_ * (100 - per) / 100;
+            nav->i.dist_to_partition_ = cur_edge->length_ * (100 - per) / 100;
+        }
+        else {
+            nav->i.dist_to_dest_ = cur_edge->length_ * per / 100;
+            nav->i.dist_to_partition_ = cur_edge->length_ * per / 100;
+        }
     }
+
 
     var__end_search();
     var__end_search();
@@ -289,16 +308,22 @@ static void nav__cal_dis_left(var__navigation_t *nav) {
                 nav->i.dist_to_partition_ = 0;
                 return;
             }
-            if (nav__is_forward(nxt_wop) == 1) {
-                nav->i.dist_to_dest_ += nxt_edge->length_ * (dest_per) / 100;
-                if (is_partition == 0) {
-                    nav->i.dist_to_partition_ += nxt_edge->length_ * (dest_per) / 100;
+
+            if (nav__check_path_same_endpos(nav) != 1)
+            {
+                if (nav__is_forward(nxt_wop) == 1) {
+                    nav->i.dist_to_dest_ += nxt_edge->length_ * (dest_per) / 100;
+                    if (is_partition == 0) {
+                        nav->i.dist_to_partition_ += nxt_edge->length_ * (dest_per) / 100;
+                    }
                 }
-            } else {
-                nav->i.dist_to_dest_ += nxt_edge->length_ * (100 - dest_per) / 100;
-                if (is_partition == 0) {
-                    nav->i.dist_to_partition_ += nxt_edge->length_ * (100 - dest_per) / 100;
+                else {
+                    nav->i.dist_to_dest_ += nxt_edge->length_ * (100 - dest_per) / 100;
+                    if (is_partition == 0) {
+                        nav->i.dist_to_partition_ += nxt_edge->length_ * (100 - dest_per) / 100;
+                    }
                 }
+
             }
 
             if (nav->i.dist_to_dest_ < 0) {
@@ -309,10 +334,14 @@ static void nav__cal_dis_left(var__navigation_t *nav) {
             }
 
         } else {
-            nav->i.dist_to_dest_ += nxt_edge->length_;
-            if (is_partition == 0) {
-                nav->i.dist_to_partition_ += nxt_edge->length_;
+            if (nav__check_path_same_endpos(nav) != 1)
+            {
+                nav->i.dist_to_dest_ += nxt_edge->length_;
+                if (is_partition == 0) {
+                    nav->i.dist_to_partition_ += nxt_edge->length_;
+                }
             }
+
         }
 
         cur_trail_edge = nxt_trail_edge;
@@ -837,6 +866,13 @@ int nav__mapping_upl(var__navigation_t *nav) {
     int i;
     int i_wop;
     double min_weight = 9999999;
+    double lat_upl_weight = 9999999;
+    if (g_last_upl.edge_id_ == -1 &&  g_need_last_upl == 1)
+    {
+        g_last_upl = nav->i.upl_;
+        
+    }
+    
     upl_t upl;
     var__map_layout_t * map = var__get_layout();
     if (!map) {
@@ -892,9 +928,29 @@ int nav__mapping_upl(var__navigation_t *nav) {
             //upl.wop_id_ = suitable_wop_id;
             upl.angle_ = NormalAngle(nav->pos_.angle_ - p_on_line.angle_);
         }
+
+        if (nav->i.upl_.edge_id_ == e->id_)
+        {
+            lat_upl_weight = edge_weight;
+        }
     }
     nav->i.upl_ = upl;
+    if (g_need_last_upl == 1)
+    {
+        log__save("nav", kLogLevel_Info, kLogTarget_Filesystem | kLogTarget_Stdout,
+            "min_weight %.6f, last_upl_weight %.6f, diff %.6f", min_weight, lat_upl_weight, fabs(min_weight - lat_upl_weight));
+    }
+
+    if (fabs(min_weight - lat_upl_weight) < 0.02 && g_need_last_upl == 1)
+    {
+        nav->i.upl_ = g_last_upl;
+		log__save("nav", kLogLevel_Info, kLogTarget_Filesystem | kLogTarget_Stdout,
+			"Use last upl: %d:%.6f:%.6f", g_last_upl.edge_id_, g_last_upl.percentage_, g_last_upl.angle_);
+    }
+
+
     var__release_object_reference(map);
+    g_need_last_upl = 0;
     return 0;
 }
 
@@ -1395,17 +1451,31 @@ static int nav__check_path(var__navigation_t *nav)
     if (!cur_edge || !nxt_edge) {
         return -1;
     }
-
+    const var__way_of_pass_t* cur_wop = var__search_wop(cur_trail_edge->wop_id_);
+    const var__way_of_pass_t* nxt_wop = var__search_wop(nxt_trail_edge->wop_id_);
+    if (!cur_wop || !nxt_wop) {
+        return 0;
+    }
     int ok = 0;
+
     if (cur_edge->id_ != nxt_edge->id_)
     {
-        if (cur_edge->start_node_id_ == nxt_edge->start_node_id_
-            || cur_edge->start_node_id_ == nxt_edge->end_node_id_
-            || cur_edge->end_node_id_ == nxt_edge->start_node_id_
-            || cur_edge->end_node_id_ == nxt_edge->end_node_id_)
+        int connect_node_cur = -1;
+        if (nav__is_forward(cur_wop) == 1)//正向
+        {
+            connect_node_cur = cur_edge->end_node_id_;
+        }
+        else
+        {
+            connect_node_cur = cur_edge->start_node_id_;
+        }
+        if (connect_node_cur == nxt_edge->start_node_id_
+            || connect_node_cur == nxt_edge->end_node_id_)
         {
             ok = 1;
         }
+
+
     }
     else
     {
@@ -1415,6 +1485,8 @@ static int nav__check_path(var__navigation_t *nav)
         }
     }
 
+    var__end_search();
+    var__end_search();
     var__end_search();
     var__end_search();        
 
@@ -1426,6 +1498,70 @@ static int nav__check_path(var__navigation_t *nav)
     return  ok;
 }
 
+static int nav__check_path_same_endpos(var__navigation_t *nav)
+{
+    if (nav->i.traj_ref_index_curr_ > nav->traj_ref_.count_ - 1
+        || nav->i.traj_ref_index_curr_ < 1) {
+        return 0;
+    }
+
+    trail_t* cur_trail_edge = &((trail_t*)nav->traj_ref_.data_)[nav->i.traj_ref_index_curr_];
+    trail_t* last_trail_edge = &((trail_t*)nav->traj_ref_.data_)[nav->i.traj_ref_index_curr_ - 1];
+
+    const var__edge_t* cur_edge = var__search_edge(cur_trail_edge->edge_id_);
+    const var__edge_t* last_edge = var__search_edge(last_trail_edge->edge_id_);
+    if (!cur_edge || !last_edge) {
+        return -1;
+    }
+
+    int ok = 0;
+
+    const var__way_of_pass_t* cur_wop = var__search_wop(cur_trail_edge->wop_id_);
+    const var__way_of_pass_t* last_wop = var__search_wop(last_trail_edge->wop_id_);
+    if (!cur_wop || !last_wop) {
+        return 0;
+    }
+    int dst_node_cur = -1;
+    if (nav__is_forward(cur_wop) == 1)//正向
+    {
+        dst_node_cur = cur_edge->end_node_id_;
+    }
+    else
+    {
+        dst_node_cur = cur_edge->start_node_id_;
+    }
+
+    int dest_node_last = -1;
+    if (nav__is_forward(last_wop) == 1)//正向
+    {
+        dest_node_last = last_edge->end_node_id_;
+    }
+    else
+    {
+        dest_node_last = last_edge->start_node_id_;
+    }
+
+    if (dst_node_cur == dest_node_last)  //终点相同
+    {
+        ok = 1;
+    }
+
+    var__end_search();
+    var__end_search();
+    var__end_search();
+    var__end_search();
+
+    if (ok == 1){
+        if (g_last_traj_idex != nav->i.traj_ref_index_curr_)
+        {
+            log__save("nav", kLogLevel_Info, kLogTarget_Filesystem | kLogTarget_Stdout, "nav__check_path_same_endpos idex[%d],[%d,%d][%d,%d] same end node point"
+                , nav->i.traj_ref_index_curr_, last_trail_edge->edge_id_, last_trail_edge->wop_id_, cur_trail_edge->edge_id_, cur_trail_edge->wop_id_);
+        }
+    }
+    g_last_traj_idex = nav->i.traj_ref_index_curr_;
+
+    return  ok;
+}
 static
 int nav__traj_control_proc(var__navigation_t *nav, var__vehicle_t *veh, const struct list_head *drive_unit_entry, double* v_x, double *v_y, double* w, double deta_time) {
     velocity_t v_temp;
@@ -1532,6 +1668,13 @@ int nav__traj_control_proc(var__navigation_t *nav, var__vehicle_t *veh, const st
         }
         var__end_search();
         var__end_search();
+
+        if (nav->acc_ > 0.8) {
+            if (fabs(nav->i.aim_heading_error_) > nav->stop_tolerance_angle_ * 3) {
+                b_reached = 0;
+            }
+        }
+        
         if (b_reached) {
             if (nav->i.traj_ref_index_curr_ < nav->traj_ref_.count_ - 1) {
                 if (nav__check_path(nav) != 1)
@@ -1974,7 +2117,8 @@ static void nav__log(var__navigation_t *nav, var__vehicle_t *veh) {
             "%d %d %d %.5f "
             "%.5f "
             "%d "
-            "%.5f",
+            "%.5f "
+            "%d",
             nav_pos.x_, nav_pos.y_, nav_pos.angle_,
             nav->i.aim_point_.x_, nav->i.aim_point_.y_, nav->i.aim_point_.angle_,
             nav->i.predict_point_.x_, nav->i.predict_point_.y_, nav->i.predict_point_.angle_, nav->i.predict_point_curvature_,
@@ -1986,7 +2130,8 @@ static void nav__log(var__navigation_t *nav, var__vehicle_t *veh) {
             , cur_wop->id_, cur_wop->direction_, cur_wop->angle_type_, cur_wop->angle_
             , nav->i.dist_to_partition_
             , g_proc_state
-            , dist_err);
+            , dist_err
+            ,nav->is_traj_whole_);
     var__end_search();
     var__end_search();
 }

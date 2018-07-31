@@ -361,7 +361,7 @@ int nspi__on_vcu_common_report(struct vcu_common_report *common_report) {
         if (0 != hardware_error) {
             var__mark_hardware_error(kVarFixedObject_Vehide, hardware_error);
             log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout,
-                "hardware error=%d fault stop=%d", hardware_error, veh->fault_stop_);
+                "hardware error=0x%08X fault stop=%d", hardware_error, veh->fault_stop_);
         } else {
             if (veh->fault_stop_ & VEH_HARDWARE_HANDLEING) {
                 veh->fault_stop_ &= ~VEH_HARDWARE_FAULT;

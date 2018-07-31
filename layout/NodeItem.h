@@ -26,7 +26,7 @@ public:
 	void RemoveAllEdge(); //删除跟此节点关联的所有边
 	QList<EdgeItem*>* listEdgeItem() { return &m_listEdgeItem; }
 
-	void  UpdateNodeInfo(bool spin);
+	void  UpdateNodeInfo(bool spin , double x, double y);
 private:
 	QRectF boundingRect() const;
 	QPainterPath shape() const;

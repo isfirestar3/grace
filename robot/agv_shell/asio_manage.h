@@ -9,6 +9,8 @@
 #include "os_util.hpp"
 #include "asio.hpp"
 
+#define MAXDWORD    0xffffffff 
+
 class asio_manage{
 
 public:

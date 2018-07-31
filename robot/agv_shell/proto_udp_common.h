@@ -51,8 +51,10 @@ namespace nsp{
 				}
 
 			}common_data;
+		#pragma pack(pop)
 
 			//以下为can协议封装的数据
+#pragma pack(push, 1)
 			typedef struct __can_data : public nsp::proto::proto_interface{
 				uint8_t can_cmd;
 				uint8_t	can_serial_index_0;
@@ -87,14 +89,10 @@ namespace nsp{
 
 				unsigned char *serialize(unsigned char*bytes)const
 				{
-					memcpy(bytes, &can_cmd, sizeof(uint8_t));
-					bytes += sizeof(uint8_t);
-					memcpy(bytes, &can_serial_index_0, sizeof(uint8_t));
-					bytes += sizeof(uint8_t);
-					memcpy(bytes, &can_serial_index_1, sizeof(uint8_t));
-					bytes += sizeof(uint8_t);
-					memcpy(bytes, &can_node_id, sizeof(uint8_t));
-					bytes += sizeof(uint8_t);
+					*bytes++ = can_cmd;
+					*bytes++ = can_serial_index_0;
+					*bytes++ = can_serial_index_1;
+					*bytes++ = can_node_id;
 					memcpy(bytes, &data_length, sizeof(uint32_t));
 					bytes += sizeof(uint32_t);
 					for (size_t i = 0; i < data_.size(); i++){
@@ -108,60 +106,19 @@ namespace nsp{
 				{
 					if (!bytes || cb < length())return nullptr;
 
-					memcpy(&can_cmd, bytes, sizeof(uint8_t));
-					bytes += sizeof(uint8_t);
-					memcpy(&can_serial_index_0, bytes, sizeof(uint8_t));
-					bytes += sizeof(uint8_t);
-					memcpy(&can_serial_index_1, bytes, sizeof(uint8_t));
-					bytes += sizeof(uint8_t);
-					memcpy(&can_node_id, bytes, sizeof(uint8_t));
-					bytes += sizeof(uint8_t);
+					can_cmd = *bytes++;
+					can_serial_index_0 = *bytes++;
+					can_serial_index_1 = *bytes++;
+					can_node_id = *bytes++;
 					memcpy(&data_length, bytes, sizeof(uint32_t));
 					bytes += sizeof(uint32_t);
-					data_.assign((char*)bytes, (cb - 4*sizeof(uint8_t) - sizeof(uint32_t)));
+					data_.assign((char*)bytes, cb);
 					return bytes;
 				}
 
 			}can_data_t;
-
-			
-			typedef struct __recv_data{
-				short int data_len_ = 0;//双字节存储数据长度
-				std::string data_;//数据块
-
-				const int length()const
-				{
-					return  sizeof(data_len_) + data_len_*sizeof(data_);
-				}
-
-				unsigned char *serialize(unsigned char*bytes)const
-				{
-					if (!bytes)return nullptr;
-					memcpy(bytes, &data_len_, sizeof(data_len_));
-					bytes += sizeof(data_len_);
-					for (short int i = 0; i < data_len_; i++){
-						if (data_.at(i)){
-							memcpy(bytes, &data_.at(i), sizeof(unsigned char));
-							bytes += sizeof(unsigned char);
-						}
-					}
-					return bytes;
-				}
-
-				const unsigned char *build(const unsigned char *bytes, int &cb)
-				{
-					if (!bytes || cb < length())return nullptr;
-					memcpy(&data_len_, bytes, sizeof(data_len_));
-					bytes += sizeof(data_len_);
-					cb -= sizeof(data_len_);
-					data_.assign((char*)bytes, cb);
-					bytes += sizeof(char)*data_.size();
-					cb -= data_.size();
-					return bytes;
-				}
-
-			}recv_data;
 #pragma pack(pop)
+
 
 			class unpackage{
 			private:
@@ -220,7 +177,7 @@ namespace nsp{
 					return pkt_head_.sub_operate_;
 				}
 			};
-			
+
 			template<class T>
 			std::shared_ptr<T> shared_for(const void *data, uint32_t cb)
 			{
@@ -240,6 +197,46 @@ namespace nsp{
 					return std::shared_ptr<T>(nullptr);
 				}
 			}
+
+
+#pragma pack(push, 1)
+			typedef struct __recv_data{
+				short int data_len_ = 0;//双字节存储数据长度
+				std::string data_;//数据块
+
+				const int length()const
+				{
+					return  sizeof(data_len_) + data_len_*sizeof(data_);
+				}
+
+				unsigned char *serialize(unsigned char*bytes)const
+				{
+					if (!bytes)return nullptr;
+					memcpy(bytes, &data_len_, sizeof(data_len_));
+					bytes += sizeof(data_len_);
+					for (short int i = 0; i < data_len_; i++){
+						if (data_.at(i)){
+							memcpy(bytes, &data_.at(i), sizeof(unsigned char));
+							bytes += sizeof(unsigned char);
+						}
+					}
+					return bytes;
+				}
+
+				const unsigned char *build(const unsigned char *bytes, int &cb)
+				{
+					if (!bytes || cb < length())return nullptr;
+					memcpy(&data_len_, bytes, sizeof(data_len_));
+					bytes += sizeof(data_len_);
+					cb -= sizeof(data_len_);
+					data_.assign((char*)bytes, cb);
+					bytes += sizeof(char)*data_.size();
+					cb -= data_.size();
+					return bytes;
+				}
+
+			}recv_data;
+#pragma pack(pop)
 
 		}
 	}

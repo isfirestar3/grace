@@ -20,6 +20,7 @@ EXP(int) init_net(void(__stdcall *callback_link_closed)(int32_t),
 		return -1;
 	}
 	if (nsp::toolkit::singleton<operation_manager>::instance()->is_endpoint_exist(ep)) {
+		loinfo("operation_net") << "failed to init_net,the ip:" << ip_port << " is already exits.";
 		return -1;
 	}
 
@@ -30,6 +31,7 @@ EXP(int) init_net(void(__stdcall *callback_link_closed)(int32_t),
 	}
 	catch (const std::bad_alloc&)
 	{
+		loinfo("operation_net") << "failed to create " << ip_port << " share ptr of operation session.";
 		return nsp::proto::errorno_t::kInsufficientResource;
 	}
 
@@ -70,8 +72,12 @@ EXP(int) connect_host(uint32_t robot_id, const char* str_ep)
 
 EXP(int) disconnect(uint32_t robot_id)
 {
+	loinfo("operation_net") << "start call disconnect from agvshell,the robot id is:" << robot_id;
 	std::shared_ptr<operation_session> net_session = nsp::toolkit::singleton<operation_manager>::instance()->find_session(robot_id);
-	if (!net_session) return nsp::proto::errorno_t::kItemNoFound;
+	if (!net_session) {
+		lowarn("operation_net") << "can not file session of robot id:" << robot_id << " while disconnet from agvshell";
+		return nsp::proto::errorno_t::kItemNoFound;
+	}
 
 	net_session->close();
 	nsp::toolkit::singleton<operation_manager>::instance()->remove_seesion(robot_id);

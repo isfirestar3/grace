@@ -8,6 +8,9 @@
 #include <sys/stat.h>
 #include <mutex>
 
+#define FILE_CAN_BLOCK_SIZE			1024
+#define FILE_CAN_BLOCK_SIZE_CAN		8
+
 class file_can_read{
 	file_can_read();
 	~file_can_read();

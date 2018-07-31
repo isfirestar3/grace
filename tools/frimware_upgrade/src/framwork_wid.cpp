@@ -7,17 +7,35 @@
 #include "upload_btns.h"
 #include "ui_upload_btns.h"
 #include "ui_download_btns.h"
+#include "comm_impl.hpp"
+#include "basic_def.h"
 #include <QtCore\qtimer.h>
 #include "net_task_reset.h"
+#include "watcherdialog.hpp"
 #include <QtWidgets\qcheckbox.h>
 #include <direct.h> 
 #include <iostream>
 
-framwork_wid::framwork_wid(QWidget *parent) :QMainWindow(parent){
+namespace
+{
+	static const QString NODE_ID_MATCH = "\\d+-\\d+";
+}
+
+framwork_wid::framwork_wid(QWidget *parent) 
+:QMainWindow(parent),
+m_nodeIDValidator{ QSharedPointer<QRegExpValidator>::create(QRegExp(NODE_ID_MATCH)) }
+{
 	main_wid_.setupUi(this);
+
+	if (m_nodeIDValidator.isNull())
+	{
+		return;
+	}
+
+	main_wid_.edit_node_id->setValidator(m_nodeIDValidator.data());
 	main_wid_.download_table_view->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	main_wid_.upload_table_widget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
+	type_device_ = kdevice_vcu_default;
 	//view_model_ = new QStandardItemModel();
 	//view_model_->setColumnCount(7);
 	//view_model_->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ip地址"));
@@ -61,7 +79,7 @@ framwork_wid::framwork_wid(QWidget *parent) :QMainWindow(parent){
 
 	init_slot();
 	start_task_thead();
-
+	resize(1024, 768);
 }
 
 framwork_wid::~framwork_wid(){
@@ -82,8 +100,10 @@ void framwork_wid::init_slot(){
 	connect(main_wid_.add_upload_btn, SIGNAL(clicked()), this, SLOT(add_upload_item()));
 	connect(main_wid_.select_all_checkbox,SIGNAL(clicked()), this, SLOT(select_all_check()));
 
-	//connect(view_model_, SIGNAL(dataChanged(const QModelIndex &, const QModelIndex &, const QVector<int> &)),
-	//	this, SLOT(btn_slot_clicked(const QModelIndex &, const QModelIndex &, const QVector<int> &)));
+	connect(main_wid_.combo_serial_id, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(on_combox_serial_id_changed(const QString &)));
+	connect(main_wid_.combo_style, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(on_combox_style_changed(const QString &)));
+	connect(this, SIGNAL(updatestatussignal(QString, int, QString, int)),
+		this, SLOT(update_status(QString, int, QString, int)));
 }
 
 void framwork_wid::init_xml_file(){
@@ -123,12 +143,27 @@ void framwork_wid::init_xml_file(){
 		}
 
 		//所有加载均有效情况下打开操作
+		
 		main_wid_.toolBar->setEnabled(true);
 		main_wid_.stackedWidget->setEnabled(true);
 		main_wid_.download_page->setEnabled(true);
 		main_wid_.upload_page->setEnabled(true);
-		main_wid_.update->setEnabled(false);
-		main_wid_.target_cpu_value->setText(QString::fromLocal8Bit(firm_info_.firmware_cpu_type_.c_str()));
+		main_wid_.combo_style->setCurrentIndex(0);
+
+		if (main_wid_.combo_style->currentText().toLower().compare("vcu") == 0)
+		{
+			main_wid_.update->setEnabled(true);
+			main_wid_.connect->setEnabled(true);
+			main_wid_.combo_serial_id->setEnabled(true);
+		}
+		else
+		{
+			main_wid_.update->setEnabled(false);
+			main_wid_.connect->setEnabled(false);
+			main_wid_.combo_serial_id->setEnabled(false);
+		}
+
+		//main_wid_.target_cpu_value->setText(QString::fromLocal8Bit(firm_info_.firmware_cpu_type_.c_str()));
 		main_wid_.target_moule_value->setText(QString::fromLocal8Bit(firm_info_.modules_type_.c_str()));
 		main_wid_.target_vesion_value->setText(QString::fromLocal8Bit(firm_info_.firmware_version_.c_str()));
 		main_wid_.bin_file_value->setText(QString::fromLocal8Bit(firm_info_.firmware_name_.c_str()));
@@ -149,32 +184,91 @@ void framwork_wid::exit_application(){
 }
 
 void framwork_wid::connect_vcu(){
-	std::string local_ip = main_wid_.line_ip_local->text().toLocal8Bit();
 	std::string ip_start = main_wid_.line_ip_begin->text().toLocal8Bit();
 	std::string ip_end = main_wid_.line_ip_end->text().toLocal8Bit();
 	std::vector < std::string > vct_ip;
 	map_ip_index_.clear();
+
 	if (ip_separate(ip_start, ip_end, vct_ip) < 0){
 		return;
 	}
-	int port = main_wid_.line_port->text().toInt();
-	std::string ip_port = "0.0.0.0:" + main_wid_.line_port->text().toLocal8Bit();
+
 	if (main_wid_.connect->property("connect_status") == 0){
 		main_wid_.connect->setText(QStringLiteral("断开"));
 		main_wid_.connect->setProperty("connect_status", 1);
 		main_wid_.update->setEnabled(true);
-		nsp::toolkit::singleton<network_server_manager>::instance()->listen(ip_port);
+		main_wid_.line_ip_begin->setEnabled(false);
+		main_wid_.line_ip_end->setEnabled(false);
+		main_wid_.line_port->setEnabled(false);
+		main_wid_.edit_node_id->setEnabled(false);
+		main_wid_.combo_serial_id->setEnabled(false);
 	}
 	else{
 		main_wid_.connect->setText(QStringLiteral("连接"));
 		main_wid_.connect->setProperty("connect_status", 0);
 		main_wid_.update->setEnabled(false);
-		nsp::toolkit::singleton<network_server_manager>::instance()->close_udp();
+		main_wid_.line_ip_begin->setEnabled(true);
+		main_wid_.line_ip_end->setEnabled(true);
+		main_wid_.line_port->setEnabled(true);
+		main_wid_.edit_node_id->setEnabled(true);
+		main_wid_.combo_serial_id->setEnabled(true);
+
 		nsp::toolkit::singleton<network_client_manager>::instance()->clean_session();
+		main_wid_.download_table_view->setRowCount(0);
 		return;
 	}
-	main_wid_.download_table_view->setRowCount(0);
-	main_wid_.download_table_view->setRowCount(vct_ip.size());
+
+	bool ok = false;
+	int startID = 0, endID = 0;
+	const QString &nodeIDStr = main_wid_.edit_node_id->text();
+
+	if (!nodeIDStr.contains(QRegExp(NODE_ID_MATCH)))
+	{
+		startID = endID = nodeIDStr.toInt(&ok);
+
+		if (!ok)
+		{
+			return;
+		}
+	}
+	else
+	{
+		QString startIDStr;
+
+		if (!getStringBySeparator(startIDStr, nodeIDStr, static_cast<int>(NodeIDField::NIF_StartNodeID), LINE_SEPARATOR))
+		{
+			return;
+		}
+
+		startID = startIDStr.toInt(&ok);
+
+		if (!ok)
+		{
+			return;
+		}
+
+		QString endIDStr;
+
+		if (!getStringBySeparator(endIDStr, nodeIDStr, static_cast<int>(NodeIDField::NIF_EndNodeID), LINE_SEPARATOR))
+		{
+			return;
+		}
+
+		endID = endIDStr.toInt(&ok);
+
+		if (!ok)
+		{
+			return;
+		}
+	}
+
+	int nodeIDCount = endID - startID + 1;
+	int vct_ip_size = vct_ip.size();
+	int rowCount = vct_ip_size * nodeIDCount;
+	main_wid_.select_all_checkbox->setCheckState(Qt::Unchecked);
+	main_wid_.download_table_view->clearContents();
+	main_wid_.download_table_view->setRowCount(rowCount);
+
 	for (int row = 0; row < main_wid_.download_table_view->rowCount(); ++row) {
 		for (int column = 0; column < main_wid_.download_table_view->columnCount(); ++column) {
 			if (column == main_wid_.download_table_view->columnCount() - 1){
@@ -195,15 +289,38 @@ void framwork_wid::connect_vcu(){
 		}
 	}
 
+	QStringList ipNodeIDStrList;
+
+	for (int i = 0; i < vct_ip_size; ++i)
+	{
+		for (int j = startID; j <= endID; ++j)
+		{
+			const QString &ipNodeIDStr = QString("%1%2%3").arg(QString::fromStdString(vct_ip[i])).arg(LINE_SEPARATOR).arg(j);
+			ipNodeIDStrList << ipNodeIDStr;
+		}
+	}
+
+	int ipNodeIDStrListSize = ipNodeIDStrList.size();
+	Q_ASSERT(ipNodeIDStrListSize == rowCount);
+
+	if (ipNodeIDStrListSize != rowCount)
+	{
+		return;
+	}
+
+	std::string local_ip = NET_ADDRESS;
+	int port = main_wid_.line_port->text().toInt();
 	//view_model_->removeRows(0,view_model_->rowCount());
-	for (size_t i = 0; i < vct_ip.size(); i++){
-		main_wid_.download_table_view->setItem(i, 0, new QTableWidgetItem(QString::fromLocal8Bit(vct_ip[i].c_str())));
+	for (size_t i = 0; i < rowCount; i++){
+		const QString &ipNodeIDStr = ipNodeIDStrList[i];
+		main_wid_.download_table_view->setItem(i, 0, new QTableWidgetItem(ipNodeIDStr));
 		//view_model_->setItem(i, 0, new QStandardItem(QString::fromLocal8Bit(vct_ip[i].c_str())));
 		{
 			std::lock_guard<decltype(lock_mutex_)> lock(lock_mutex_);
-			map_ip_index_.insert(std::make_pair(vct_ip[i], i));
+			map_ip_index_.insert(std::make_pair(ipNodeIDStr.toStdString(), i));
 		}
-		get_vcu_info_task(local_ip, vct_ip[i], port);
+
+		start_data_forward(local_ip, ipNodeIDStr.toStdString(), port);
 	}
 }
 
@@ -216,32 +333,94 @@ void framwork_wid::btn_start_slot(int row)
 			return;
 		}
 	}
-	std::string ip_str = main_wid_.download_table_view->item(row, 0)->text().toLocal8Bit();
-	update_vcu_bin_task(ip_str);
+	
+	const QString &ipNodeIDStr = main_wid_.download_table_view->item(row, 0)->text();
+	QString nodeIDStr;
+
+	if (!getStringBySeparator(nodeIDStr, ipNodeIDStr, static_cast<int>(IpNodeIDField::INIF_Node), LINE_SEPARATOR))
+	{
+		return;
+	}
+
+	bool ok = false;
+	uint8_t node_id = nodeIDStr.toUInt(&ok);
+
+	if (!ok)
+	{
+		return;
+	}
+
+	update_vcu_bin_task(row, ipNodeIDStr.toStdString(), node_id);
 }
 void framwork_wid::btn_restart_slot(int row)
 {
-	std::string local_ip = main_wid_.line_ip_local->text().toLocal8Bit();
-	std::string ip_str = main_wid_.download_table_view->item(row, 0)->text().toLocal8Bit();
-	int port = main_wid_.line_port->text().toInt();
-	get_vcu_info_task(local_ip, ip_str, port);
+	const QString &ipNodeIDStr = main_wid_.download_table_view->item(row, 0)->text();
+	QString ipStr;
+
+	if (!getStringBySeparator(ipStr, ipNodeIDStr, static_cast<int>(IpNodeIDField::INIF_Ip), LINE_SEPARATOR))
+	{
+		return;
+	}
+
+	QString nodeIDStr;
+
+	if (!getStringBySeparator(nodeIDStr, ipNodeIDStr, static_cast<int>(IpNodeIDField::INIF_Node), LINE_SEPARATOR))
+	{
+		return;
+	}
+
+	bool ok = false;
+	uint8_t node_id = nodeIDStr.toUInt(&ok);
+
+	if (!ok)
+	{
+		return;
+	}
+
+	std::string local_ip = NET_ADDRESS;
+	int port = main_wid_.line_port->text().toInt(&ok);
+
+	if (!ok)
+	{
+		return;
+	}
+
+	uint8_t serial_id = main_wid_.combo_serial_id->currentText().toUShort();
+	get_vcu_info_task(local_ip, ipStr.toStdString(), node_id, serial_id, port);
 }
 void framwork_wid::btn_reset_slot(int row)
 {
-	nsp::toolkit::singleton<net_task_reset>::instance()->regiset_callback(std::bind(&framwork_wid::update_net_recv_download, this, std::placeholders::_1, std::placeholders::_2,
-		std::placeholders::_3, std::placeholders::_4));
-	nsp::toolkit::singleton<net_task_reset>::instance()->regiset_get_vcu_callback(std::bind(&framwork_wid::update_net_recv_data, this, std::placeholders::_1, std::placeholders::_2,
-		std::placeholders::_3, std::placeholders::_4));
-	std::string ip = main_wid_.download_table_view->item(row, 0)->text().toLocal8Bit();
-	if (nsp::toolkit::singleton<net_task_reset>::instance()->net_reset(ip) == 0){
-		reset_wait_.wait(firm_info_.reset_wait_time_);
-		nsp::toolkit::singleton<net_task_reset>::instance()->get_vcu_type_version_request((FIRMWARE_SOFTWARE_TYPE)firm_info_.firmware_type, ip, firm_info_.firmware_version_control_);
+	const QString &ipNodeIDStr = main_wid_.download_table_view->item(row, 0)->text();
+	QString ipStr;
+
+	if (!getStringBySeparator(ipStr, ipNodeIDStr, static_cast<int>(IpNodeIDField::INIF_Ip), LINE_SEPARATOR))
+	{
+		return;
 	}
 
+	QString nodeIDStr;
+
+	if (!getStringBySeparator(nodeIDStr, ipNodeIDStr, static_cast<int>(IpNodeIDField::INIF_Node), LINE_SEPARATOR))
+	{
+		return;
+	}
+
+	bool ok = false;
+	uint8_t node_id = nodeIDStr.toUInt(&ok);
+
+	if (!ok)
+	{
+		return;
+	}
+
+	int port = main_wid_.line_port->text().toInt();
+	std::string local_ip = NET_ADDRESS;
+	uint8_t serial_id = main_wid_.combo_serial_id->currentText().toUShort();
+	get_vcu_cpu_task(local_ip, ipStr.toStdString(), port, serial_id, node_id);
 }
 void framwork_wid::btn_start_upload_slot(int row)
 {
-	std::string local_ip = main_wid_.line_ip_local->text().toLocal8Bit();
+	std::string local_ip = NET_ADDRESS;
 	QTableWidgetItem* tab_item = main_wid_.upload_table_widget->item(row, 0);
 	if (tab_item == NULL){
 		return;
@@ -269,7 +448,7 @@ void framwork_wid::btn_start_upload_slot(int row)
 		return;
 	}
 	if (task){
-		task->regiset_callback(std::bind(&framwork_wid::update_net_recv_upload, this, std::placeholders::_1, std::placeholders::_2,
+		task->regiset_callback(std::bind(&framwork_wid::update_net_recv_data, this, std::placeholders::_1, std::placeholders::_2,
 			std::placeholders::_3, std::placeholders::_4));
 	}
 	if (!net_task_upload_spool_){
@@ -304,12 +483,35 @@ void framwork_wid::update_vcu_firmware(){
 	
 	for (size_t i = 0; i < main_wid_.download_table_view->rowCount(); i++){
 		//读取状态item是否允许升级
-		QTableWidgetItem* mode_item = main_wid_.download_table_view->item(i, 5);	
 		QCheckBox *checkBox = (QCheckBox*)main_wid_.download_table_view->cellWidget(i, main_wid_.download_table_view->columnCount() - 1);
-		if (mode_item && !(mode_item->data(Qt::UserRole).toBool()))continue;
-		if (checkBox->checkState() == Qt::Unchecked)continue;
-		std::string ip = main_wid_.download_table_view->item(i, 0)->text().toLocal8Bit();
-		update_vcu_bin_task(ip);
+
+		if (nullptr == checkBox)
+		{
+			continue;
+		}
+
+		if (checkBox->checkState() != Qt::Checked)
+		{
+			continue;
+		}
+
+		const QString &ipNodeIDStr = main_wid_.download_table_view->item(i, 0)->text();
+		QString nodeIDStr;
+
+		if (!getStringBySeparator(nodeIDStr, ipNodeIDStr, static_cast<int>(IpNodeIDField::INIF_Node), LINE_SEPARATOR))
+		{
+			return;
+		}
+
+		bool ok = false;
+		uint8_t node_id = nodeIDStr.toUInt(&ok);
+
+		if (!ok)
+		{
+			return;
+		}
+
+		update_vcu_bin_task(i, ipNodeIDStr.toStdString(), node_id);
 	}
 }
 
@@ -317,20 +519,23 @@ void framwork_wid::btn_slot_clicked(const QModelIndex &topLeft, const QModelInde
 	if (topLeft.column() != 6 && roles.size() == 0){
 		return;
 	}
-	std::string local_ip = main_wid_.line_ip_local->text().toLocal8Bit();
+	std::string local_ip = NET_ADDRESS;
 	std::string ip_str;// = main_wid_.download_table_view->item(row, 0)->text.toLocal8Bit();/*= view_model_->item(topLeft.row(), 0)->text().toLocal8Bit()*/
 	int port = main_wid_.line_port->text().toInt();
+	uint8_t serial_id = main_wid_.combo_serial_id->currentText().toUShort();
+	uint8_t node_id = main_wid_.edit_node_id->text().toUShort();
+
 	//根据按钮属性，分别进行不同的操作
 	switch (roles[0])
 	{
 	case Btn_ReGet:
-		get_vcu_info_task(local_ip, ip_str, port);
+		get_vcu_cpu_task(local_ip, ip_str, port, serial_id, node_id);
 		break;
 	case Btn_Retry:
-		update_vcu_bin_task(ip_str);
+		//update_vcu_bin_task(ip_str);
 		break;
 	case Btn_Degrade:
-		update_vcu_bin_task(ip_str);
+		//update_vcu_bin_task(ip_str);
 		break;
 	default:
 		break;
@@ -348,7 +553,7 @@ void framwork_wid::get_upload_vcu_info_task(const std::string& lcoal_ip, const s
 		return;
 	}
 	if (task){
-		task->regiset_callback(std::bind(&framwork_wid::update_upload_net_recv_data, this, std::placeholders::_1, std::placeholders::_2,
+		task->regiset_callback(std::bind(&framwork_wid::update_net_recv_data, this, std::placeholders::_1, std::placeholders::_2,
 			std::placeholders::_3, std::placeholders::_4));
 	}
 	if (!net_task_spool_){
@@ -357,49 +562,116 @@ void framwork_wid::get_upload_vcu_info_task(const std::string& lcoal_ip, const s
 	net_task_spool_->post(task);
 }
 
-void framwork_wid::get_vcu_info_task(const std::string& lcoal_ip, const std::string& ip, const int port){
-	std::shared_ptr<net_task> task = nullptr;
+void framwork_wid::get_vcu_info_task(const std::string& lcoal_ip, const std::string& ip, uint8_t node_id, uint8_t serial_id, const int port)
+{
+	get_vcu_cpu_task(lcoal_ip, ip, port, serial_id, node_id);
+	get_vcu_version_task(lcoal_ip, ip, port, serial_id,node_id);
+}
+
+void framwork_wid::get_vcu_version_task(const std::string& lcoal_ip, const std::string& ip, const int port, uint8_t serial_id, uint8_t node_id)
+{
+	std::shared_ptr<net_task> tasktype = nullptr;
+
 	try{
-		task = std::make_shared<net_task>(lcoal_ip, ip, port, (FIRMWARE_SOFTWARE_TYPE)firm_info_.firmware_type, (FIRMWARE_SOFTWARE_TYPE)firm_info_.firmware_version_control_);
+		tasktype = std::make_shared<net_task>(lcoal_ip, ip, port, kmessage_cmd_data_forward_get_software_version, serial_id, node_id);
 	}
 	catch (...){
 		nsperror << "new net_task make shared failed!";
 		return;
 	}
-	if (task){
-		task->regiset_callback(std::bind(&framwork_wid::update_net_recv_data, this, std::placeholders::_1, std::placeholders::_2,
-			std::placeholders::_3, std::placeholders::_4));
-	}	
-	if (!net_task_spool_){
+
+	if (tasktype)
+	{
+		tasktype->set_firmware_info(firm_info_);
+		tasktype->regiset_callback([&](const std::string& ipNodeIDStr, const int operate_type, const std::string& data, const nsp::proto::errorno_t status){
+			QMetaObject::invokeMethod(this, "get_vcu_version_callback", Qt::BlockingQueuedConnection,
+				Q_ARG(const std::string&, ipNodeIDStr),
+				Q_ARG(const int, operate_type),
+				Q_ARG(const std::string&, data),
+				Q_ARG(const nsp::proto::errorno_t, status));
+		});
+	}
+
+	int(net_task::*func)() = &net_task::get_vcu_version;
+	gdp::core::GdpSingleton<gdp::gui::WatcherDialog>::instance()->run(tasktype.get(), func, this);
+}
+
+void framwork_wid::get_vcu_cpu_task(const std::string& lcoal_ip, const std::string& ip, const int port, uint8_t serial_id,uint8_t node_id )
+{
+	std::shared_ptr<net_task> taskVersion = nullptr;
+
+	try{
+		taskVersion = std::make_shared<net_task>(lcoal_ip, ip, port, kmessage_cmd_data_forward_get_hardware_type, serial_id, node_id);
+	}
+	catch (...){
+		nsperror << "new net_task make shared failed!";
 		return;
 	}
-	net_task_spool_->post(task);
+
+	if (taskVersion)
+	{
+		taskVersion->set_firmware_info(firm_info_);
+		taskVersion->regiset_callback([&](const std::string& ipNodeIDStr, const int operate_type, const std::string& data, const nsp::proto::errorno_t status){
+			QMetaObject::invokeMethod(this, "get_vcu_type_callback", Qt::BlockingQueuedConnection,
+				Q_ARG(const std::string&, ipNodeIDStr),
+				Q_ARG(const int, operate_type),
+				Q_ARG(const std::string&, data),
+				Q_ARG(const nsp::proto::errorno_t, status));
+		});
+	}
+
+	int(net_task::*func)() = &net_task::get_vcu_type;
+	gdp::core::GdpSingleton<gdp::gui::WatcherDialog>::instance()->run(taskVersion.get(), func, this);
 }
 
 //创建任务，放进线程池中
-void framwork_wid::update_vcu_bin_task(const std::string& ip){
+void framwork_wid::update_vcu_bin_task(int row, const std::string& ip_node_id_str, uint8_t node_id){
+	const QString &ipNodeIDStr = QString::fromStdString(ip_node_id_str);
+	QString ipStr;
+
+	if (!getStringBySeparator(ipStr, ipNodeIDStr, static_cast<int>(IpNodeIDField::INIF_Ip), LINE_SEPARATOR))
+	{
+		return;
+	}
+
+	const std::string &ip = ipStr.toStdString();
 	std::shared_ptr<net_task_download> task = nullptr;
+
 	try{
-		task = std::make_shared<net_task_download>(ip, (FIRMWARE_SOFTWARE_TYPE)firm_info_.firmware_type, firm_info_.reset_wait_time_, firm_info_.block_write_delay_, firm_info_.firmware_version_control_);
+		uint8_t serial_id = main_wid_.combo_serial_id->currentText().toUShort();
+		task = std::make_shared<net_task_download>(ip, firm_info_.reset_wait_time_, firm_info_.block_write_delay_, serial_id,node_id);
 	}
 	catch (...){
 		nsperror << "new net_task_download make shared failed!";
 		return;
 	}
-	if (task){
-		task->regiset_callback(std::bind(&framwork_wid::update_net_recv_download, this, std::placeholders::_1, std::placeholders::_2,
-			std::placeholders::_3, std::placeholders::_4));
-		task->regiset_get_vcu_callback(std::bind(&framwork_wid::update_net_recv_data, this, std::placeholders::_1, std::placeholders::_2,
-			std::placeholders::_3, std::placeholders::_4));
+
+	if (task)
+	{
+		task->regiset_get_vcu_callback([&](const std::string& ipNodeIDStr, const int operate_type, const std::string& data, const nsp::proto::errorno_t status){
+			QMetaObject::invokeMethod(this, "update_vcu_bin_task_callback", Qt::BlockingQueuedConnection, 
+				Q_ARG(const std::string&, ipNodeIDStr),
+				Q_ARG(const int, operate_type),
+				Q_ARG(const std::string&, data),
+				Q_ARG(const nsp::proto::errorno_t, status));
+		});
 	}
-	if (!net_task_download_spool_){
-		return;
-	}
-	net_task_download_spool_->post(task);
+
+	void(net_task_download::*func)() = &net_task_download::on_task;
+	gdp::core::GdpSingleton<gdp::gui::WatcherDialog>::instance()->run(task.get(), func, this);
+	main_wid_.download_table_view->item(row, 3)->setText(QString::fromLocal8Bit("正在获取信息..."));
+	main_wid_.download_table_view->item(row, 1)->setText("");
+	main_wid_.download_table_view->item(row, 2)->setText("");
+	nsp::toolkit::singleton<network_client_manager>::instance()->clean_session();
+	const std::string &local_ip = NET_ADDRESS;
+	int port = main_wid_.line_port->text().toInt();
+	start_data_forward(local_ip, ip_node_id_str, port);
+	btn_restart_slot(row);
+	main_wid_.download_table_view->item(row, 3)->setText(QString::fromLocal8Bit("已完成"));
 }
 
 void framwork_wid::upload_file_map(QString index){
-	std::string local_ip = main_wid_.line_ip_local->text().toLocal8Bit();
+	std::string local_ip = NET_ADDRESS;
 	int tab_index = index.toInt();
 	QTableWidgetItem* tab_item = main_wid_.upload_table_widget->item(tab_index, 0);
 	if (tab_item == NULL){
@@ -518,267 +790,474 @@ int framwork_wid::start_task_thead(){
 	return 0;
 }
 
-void framwork_wid::update_upload_net_recv_data(const std::string& ip, const int data_type, const std::string& data, const nsp::proto::errorno_t status)
-{
-	for (size_t i = 0; i < main_wid_.upload_table_widget->rowCount(); i++){
-
-		QTableWidgetItem*item = main_wid_.upload_table_widget->item(i, 0);
-		
-		if (item && ((std::string)item->text().toLocal8Bit() == ip)){
-			QTableWidgetItem* item = 0;
-			if (FIRMWARE_SUB_OPERATE_CODE_GET_VCU_TYPE == data_type){
-				item = new QTableWidgetItem;
-				main_wid_.upload_table_widget->setItem(i, 2, item);
-				//item = main_wid_.upload_table_widget->item(i, 2);
-			}
-			else if (FIRMWARE_SUB_OPERATE_CODE_GET_VCU_VERSION == data_type){
-				item = new QTableWidgetItem;
-				main_wid_.upload_table_widget->setItem(i, 3, item);
-				//item = main_wid_.upload_table_widget->item(i, 3);
-			}
-			else if (FIRMWARE_SUB_OPERATE_CODE_GET_CPU_VERSION == data_type){
-				
-			}
-			if (item)
-			{
-				item->setText(QString::fromLocal8Bit(data.c_str()));
-			}
-
-		}
-	}
-}
-
-void framwork_wid::update_net_recv_data(const std::string& ip, const int data_type, const std::string& data, const nsp::proto::errorno_t status){
-	//std::lock_guard<decltype(lock_mutex_)> lock(lock_mutex_);
-	//ip_ = ip;
-	//data_type_ = data_type;
-	//data_ = data;
-	//status_ = status;
-	//QMetaObject::invokeMethod(this, "update_recv_data");
-	//QTimer::singleShot(0, this, SLOT(update_recv_data()));
-
-	auto iter = map_ip_index_.find(ip);
-	if (iter == map_ip_index_.end()){
-		return;
-	}
-	//QModelIndex index;
-	QTableWidgetItem* item = 0;
-	if (FIRMWARE_SUB_OPERATE_CODE_GET_VCU_TYPE == data_type){
-		item = main_wid_.download_table_view->item(iter->second, 1);
-		if (status == nsp::proto::kSuccessful){
-			//比较型号
-			if (firm_info_.modules_type_ != data.c_str()){
-				main_wid_.download_table_view->item(iter->second, 5)->setData(Qt::DisplayRole, QStringLiteral("型号不一致"));
-				main_wid_.download_table_view->item(iter->second, 5)->setData(Qt::UserRole, false);
-			}
-			else{
-				main_wid_.download_table_view->item(iter->second, 5)->setData(Qt::DisplayRole, QStringLiteral("读取完成"));
-				main_wid_.download_table_view->item(iter->second, 5)->setData(Qt::UserRole, true);
-			}
-		}
-		else{
-			main_wid_.download_table_view->item(iter->second, 5)->setData(Qt::DisplayRole, QStringLiteral("无法连接"));
-			main_wid_.download_table_view->item(iter->second, 5)->setData(Qt::UserRole, false);
-			////main_wid_.download_table_view->item(iter->second, 6)->setData(Qt::DisplayRole, QStringLiteral("重新获取"));
-		}
-	}
-	else if (FIRMWARE_SUB_OPERATE_CODE_GET_VCU_VERSION == data_type){
-		item = main_wid_.download_table_view->item(iter->second, 2);
-		if (status == nsp::proto::kSuccessful){
-			//做版本比较操作
-			if (data.c_str() > firm_info_.firmware_version_){
-				//vcu更高版本
-				main_wid_.download_table_view->item(iter->second, 5)->setData(Qt::DisplayRole, QStringLiteral("版本更高"));
-				////main_wid_.download_table_view->item(iter->second, 6)->setData(Qt::DisplayRole, QStringLiteral("降级"));
-			}
-		}
-	}
-	else if (FIRMWARE_SUB_OPERATE_CODE_GET_CPU_VERSION == data_type){
-		item = main_wid_.download_table_view->item(iter->second, 3);
-		if (status == nsp::proto::kSuccessful){
-			if (firm_info_.firmware_cpu_type_ != data.c_str()){
-				main_wid_.download_table_view->item(iter->second, 5)->setData(Qt::DisplayRole, QStringLiteral("CPU版本不一致"));
-				main_wid_.download_table_view->item(iter->second, 5)->setData(Qt::UserRole, false);
-			}
-			else{
-				main_wid_.download_table_view->item(iter->second, 5)->setData(Qt::DisplayRole, QStringLiteral("读取完成"));
-				main_wid_.download_table_view->item(iter->second, 5)->setData(Qt::UserRole, true);
-			}
-		}
-	}
-	else if (FIRMWARE_COMPLETE_GET_VCU_VERSION == data_type){
-		item = main_wid_.download_table_view->item(iter->second, 2);
-		if (status == nsp::proto::kSuccessful){
-			index_value_ = iter->second;
-			if (firm_info_.firmware_version_control_ == 0){
-				reset_status_ = QStringLiteral("重启完成");
-				QTimer::singleShot(0, this, SLOT(update_reset_final_lstatus()));
-				//main_wid_.download_table_view->item(iter->second, 5)->setData(Qt::DisplayRole, QStringLiteral("重启完成"));
-			}
-			//做版本比较操作
-			else if (firm_info_.firmware_version_control_ == 1){
-				if (data.c_str() == firm_info_.firmware_version_){
-					//版本相同即成功
-					reset_status_ = QStringLiteral("重启完成");
-					QTimer::singleShot(0, this, SLOT(update_reset_final_lstatus()));
-					//main_wid_.download_table_view->item(iter->second, 5)->setData(Qt::DisplayRole, QStringLiteral("重启完成"));		
-				}
-				else{
-					reset_status_ = QStringLiteral("重启失败");
-					QTimer::singleShot(0, this, SLOT(update_reset_final_lstatus()));
-					//main_wid_.download_table_view->item(iter->second, 5)->setData(Qt::DisplayRole, QStringLiteral("失败"));
-					////main_wid_.download_table_view->item(iter->second, 6)->setData(Qt::DisplayRole, QStringLiteral("重新升级"));
-				}
-			}
-			
-		}
-	}
-	
-	//if (!index.isValid()){
-	//	return;
-	//}
-	//QVariant var = QString::fromLocal8Bit(data.c_str());
-	//view_model_->setData(index, var);
-	//main_wid_.download_table_view->reset();
-	if (item)
-		item->setText(QString::fromLocal8Bit(data.c_str()));
-		//item->setData(Qt::DisplayRole, QString::fromLocal8Bit(data.c_str()));
-}
-
-void framwork_wid::update_net_recv_download(const std::string& ip, const int type, const int radi, const nsp::proto::errorno_t status){
-	std::lock_guard<decltype(lock_mutex_)> lock(lock_mutex_);
-	auto iter = map_ip_index_.find(ip);
-	if (iter == map_ip_index_.end()){
-		return;
-	}
-	switch (type)
-	{
-	case FIRMWARE_SUB_OPERATE_CODE_READ_NORAML_FILE:
-		update_download_compare_status(iter->second, radi, status);
-		break;
-	case FIRMWARE_MAIN_OPERATE_CODE_RW_FIRMWARE:
-		update_download_progress_status(iter->second, radi, status);
-		break;
-	case FIRMWARE_RESET_OPERATE_CODE_CALLBACK:
-		update_download_reset_status(iter->second, radi, status);
-		break;
-	default:
-		break;
-	}
-	main_wid_.download_table_view->update();
-}
-
-void framwork_wid::update_download_compare_status(const int index_value, const int radi, const nsp::proto::errorno_t status){
-	if (status == nsp::proto::errorno_t::kUnsuccessful){
-		
-		main_wid_.download_table_view->item(index_value, 5)->setData(Qt::DisplayRole, QStringLiteral("核对失败"));
-		////main_wid_.download_table_view->item(index_value, 6)->setData(Qt::DisplayRole, QStringLiteral("重试"));
-	/*	QModelIndex index = view_model_->index(index_value, 5, QModelIndex());
-		QVariant var = QStringLiteral("核对失败");
-		view_model_->setData(index, var);
-		view_model_->setData(view_model_->index(index_value, 6, QModelIndex()), QVariant(QStringLiteral("重试")));*/
-	}
-}
-void framwork_wid::update_radi()
-{
-	QTableWidgetItem* item = main_wid_.download_table_view->item(index_value_, 4);
-	item->setData(Qt::DisplayRole, radi_);
-	item=main_wid_.download_table_view->item(index_value_, 5);
-	item->setData(Qt::DisplayRole, radi_ != 100 ? QStringLiteral("正在升级") : QStringLiteral("下载完成,正在核对..."));
-}
-void framwork_wid::update_download_progress_status(const int index_value, const int radi, const nsp::proto::errorno_t status){
-	if (status == nsp::proto::errorno_t::kSuccessful){
-		//更新进度条
-		//QTableWidgetItem* item = main_wid_.download_table_view->item(index_value, 4);
-		//item->setData(Qt::DisplayRole, radi);
-		index_value_ = index_value;
-		radi_ = radi;
-		QTimer::singleShot(0,this,SLOT(update_radi()));
-
-		//更新状态条
-		//item = main_wid_.download_table_view->item(index_value, 5);
-		//item->setData(Qt::DisplayRole, radi != 100 ? QStringLiteral("正在升级") : QStringLiteral("下载完成,正在核对..."));
-
-	}
-	else{
-		QTableWidgetItem* item = main_wid_.download_table_view->item(index_value, 5);
-		item->setData(Qt::DisplayRole, QStringLiteral("升级失败"));
-		main_wid_.download_table_view->item(index_value, 6)->setData(Qt::DisplayRole, QStringLiteral("重试"));
-	}
-}
 void framwork_wid::update_reset_final_lstatus()
 {
 	QTableWidgetItem* item = main_wid_.download_table_view->item(index_value_, 5);
 	item->setData(Qt::DisplayRole, reset_status_);
 }
-void framwork_wid::update_reset_status()
+
+//void framwork_wid::update_status(QString qstr_staus)
+//{
+//
+//}
+
+void framwork_wid::start_data_forward(const std::string& lcoal_ip, const std::string& ipNodeIDStr, const int port)
 {
-	QTableWidgetItem* item = main_wid_.download_table_view->item(index_value_, 5);
-	item->setData(Qt::DisplayRole, var_);
-}
-void framwork_wid::update_download_reset_status(const int index_value, const int radi, const nsp::proto::errorno_t status){
-	index_value_ = index_value;
-	//QTableWidgetItem* item = main_wid_.download_table_view->item(index_value, 5);
-	switch (status)
+	QString ipStr;
+
+	if (!getStringBySeparator(ipStr, QString::fromStdString(ipNodeIDStr), static_cast<int>(IpNodeIDField::INIF_Ip), LINE_SEPARATOR))
 	{
-	case nsp::proto::errorno_t::kSuccessful:
-		var_ = QStringLiteral("正在重启");
-		break;
-	case nsp::proto::errorno_t::kRequestTimeout:
-		var_ = QStringLiteral("等待重启超时");
-		break;
-	case nsp::proto::errorno_t::kUnsuccessful:
-		var_ = QStringLiteral("重启失败");
-		break;
-	default:
-		break;
+		return;
 	}
-	//QTableWidgetItem*item=main_wid_.download_table_view->item(index_value, 5);
-	//item->setData(Qt::DisplayRole, var_);
-	QTimer::singleShot(0, this, SLOT(update_reset_status()));
-	qApp->processEvents();
+
+	QString nodeIDStr;
+
+	if (!getStringBySeparator(nodeIDStr, QString::fromStdString(ipNodeIDStr), static_cast<int>(IpNodeIDField::INIF_Node), LINE_SEPARATOR))
+	{
+		return;
+	}
+
+	uint8_t serial_id = main_wid_.combo_serial_id->currentText().toUShort();
+	uint8_t node_id = nodeIDStr.toUShort();
+	std::shared_ptr < net_task> task = nullptr;
+
+	try{
+		task = std::make_shared<net_task>(lcoal_ip, ipStr.toStdString(), port, kmessage_cmd_start_data_forward, serial_id, node_id);
+	}
+	catch (...){
+		nsperror << "new net_task make shared failed!";
+		return;
+	}
+
+	if (task)
+	{
+		task->regiset_callback([&](const std::string& ipNodeIDStr, const int operate_type, const std::string& data, const nsp::proto::errorno_t status){
+			QMetaObject::invokeMethod(this, "start_data_foward_callback", Qt::BlockingQueuedConnection,
+				Q_ARG(const std::string&, ipNodeIDStr),
+				Q_ARG(const int, operate_type),
+				Q_ARG(const std::string&, data),
+				Q_ARG(const nsp::proto::errorno_t, status));
+		});
+	}
+	
+	int(net_task::*func)() = &net_task::start_data_foward;
+	gdp::core::GdpSingleton<gdp::gui::WatcherDialog>::instance()->run(task.get(), func, this);
+	get_vcu_info_task(lcoal_ip, ipStr.toStdString(), node_id, serial_id, port);
 }
 
-void framwork_wid::update_net_recv_upload(const std::string& ip, const int type, const int radi, const nsp::proto::errorno_t status){
-	std::lock_guard<decltype(lock_mutex_)> lock(lock_mutex_);
-	for (size_t i = 0; i < main_wid_.upload_table_widget->rowCount(); i++){
-		QTableWidgetItem* item = main_wid_.upload_table_widget->item(i, 0);
-		if (item && ((std::string)item->text().toLocal8Bit() == ip)){
-			QString show_info;
-			if (status == nsp::proto::kUnsuccessful){
-				show_info = QStringLiteral("获取失败");
-			}
-			else if (status == nsp::proto::kSuccessful){
-				show_info = QStringLiteral("进度：");
-				show_info += QVariant(radi).toString();
-				show_info += " %";
-			}
-			QTableWidgetItem* child_item = main_wid_.upload_table_widget->item(i, 4);
-			if (child_item){
-				child_item->setText(show_info);
-			}
-			else{
-				QTableWidgetItem* new_item = new QTableWidgetItem(show_info);
-				main_wid_.upload_table_widget->setItem(i, 4, new_item);
-			}
-			if (radi == 100){
-				for (size_t i = 0; i < main_wid_.upload_table_widget->rowCount(); i++){
-					QTableWidgetItem*item = main_wid_.upload_table_widget->item(i, 0);
-					if (item && ((std::string)item->text().toLocal8Bit() == ip)){
-						QTimer::singleShot(0, this, SLOT(set_delete_btn_status()));
-						index_delete_ = i;
-					}
+void framwork_wid::on_combox_style_changed(const QString & qstr_style)
+{
+	if (qstr_style.toLower().compare("vcu") == 0)
+	{
+		main_wid_.combo_serial_id->setEnabled(true);
+	}
+	else
+	{
+		main_wid_.combo_serial_id->setEnabled(false);
+	}
 
-				}
+	if (main_wid_.edit_node_id->text().isEmpty() || main_wid_.combo_serial_id->currentText().isEmpty())
+	{
+		main_wid_.connect->setEnabled(false);
+	}
+	else
+	{
+		main_wid_.connect->setEnabled(true);
+	}
 
-			}
-			return;
+	return;
+}
+
+void framwork_wid::on_combox_serial_id_changed(const QString & qstr_serial_id)
+{
+	return;
+}
+
+void framwork_wid::update_net_recv_data(const std::string& ip, const int operate_type, const std::string& data, const nsp::proto::errorno_t status){
+	auto iter = map_ip_index_.find(ip);
+	if (iter == map_ip_index_.end()){
+		return;
+	}
+
+	if (operate_type == kmessage_cmd_data_forward_get_hardware_type)
+	{
+		emit updatestatussignal(ip.c_str(), kupdatearea_type, QString::fromLocal8Bit(data.c_str()), status);
+	}
+	else if (operate_type == kmessage_cmd_data_forward_get_hardware_type_upload)
+	{
+		emit updatestatussignal(ip.c_str(), kupdatearea_type_upload, QString::fromLocal8Bit(data.c_str()), status);
+	}
+	else if (operate_type == kmessage_cmd_data_forward_get_software_version)
+	{
+		emit updatestatussignal(ip.c_str(), kupdatearea_version, QString::fromLocal8Bit(data.c_str()), status);
+	}
+	else if (operate_type == kmessage_cmd_data_forward_get_software_version_upload)
+	{
+		emit updatestatussignal(ip.c_str(), kupdatearea_version_upload, QString::fromLocal8Bit(data.c_str()), status);
+	}
+	else if (kmessage_cmd_data_forward_initial_rom_update == operate_type)
+	{
+		emit updatestatussignal(ip.c_str(), kupdatearea_status, QString::fromLocal8Bit(data.c_str()), status);
+	}
+	else if (kmessage_cmd_data_forward_download_packet == operate_type)
+	{
+		emit updatestatussignal(ip.c_str(), kupdatearea_progress_download, QString::fromLocal8Bit(data.c_str()), status);
+	}
+	else if (kmessage_cmd_data_forward_download_packet_ex == operate_type)
+	{
+		emit updatestatussignal(ip.c_str(), kupdatearea_status, QString::fromLocal8Bit(data.c_str()), status);
+	}
+	else if (kmessage_cmd_data_forward_upload_packet == operate_type)
+	{
+		emit updatestatussignal(ip.c_str(), kupdatearea_progress_upload, QString::fromLocal8Bit(data.c_str()), status);
+	}
+	else if (kmessage_cmd_data_forward_reset == operate_type)
+	{
+		emit updatestatussignal(ip.c_str(), kupdatearea_status, QString::fromLocal8Bit(data.c_str()), status);
+
+		if (status == nsp::proto::kSuccessful)
+		{
+			emit updatestatussignal(ip.c_str(), kupdatearea_reset, QString::fromLocal8Bit(data.c_str()), status);
+		}
+	}
+	else if (operate_type == kmessage_cmd_start_data_forward)
+	{
+		if (status == nsp::proto::kSuccessful)
+		{
+			emit updatestatussignal(ip.c_str(), kupdatearea_data_forward, QString::fromLocal8Bit(data.c_str()), status);
+		}
+		else
+		{
+			emit updatestatussignal(ip.c_str(), kupdatearea_status, QString::fromLocal8Bit(data.c_str()), status);
 		}
 	}
 }
 
-void framwork_wid::set_delete_btn_status()
+void framwork_wid::update_status(QString ipNodeIDStr, int uidate_area, QString result, int status)
 {
-	Upload_btns *upload = (Upload_btns*)main_wid_.upload_table_widget->cellWidget(index_delete_, 5);
-	upload->ui.delete_->setEnabled(true);
+	auto iter = map_ip_index_.find(ipNodeIDStr.toStdString());
+
+	if (map_ip_index_.end() == iter)
+	{
+		return;
+	}
+
+	QString ip;
+
+	if (!getStringBySeparator(ip, ipNodeIDStr, static_cast<int>(IpNodeIDField::INIF_Ip), LINE_SEPARATOR))
+	{
+		return;
+	}
+
+	QString nodeIDStr;
+
+	if (!getStringBySeparator(nodeIDStr, ipNodeIDStr, static_cast<int>(IpNodeIDField::INIF_Node), LINE_SEPARATOR))
+	{
+		return;
+	}
+
+	bool ok = false;
+	uint8_t node_id = nodeIDStr.toUInt(&ok);
+
+	if (!ok)
+	{
+		return;
+	}
+
+	QTableWidgetItem * item = nullptr;
+	std::string strtext = result.toStdString().c_str();
+
+	switch ((enum ui_update_area)uidate_area)
+	{
+	case kupdatearea_type:
+		if (status == nsp::proto::errorno_t::kSuccessful)
+		{
+			item = main_wid_.download_table_view->item(iter->second, 4);
+
+			if (item != nullptr)
+			{
+				if (firm_info_.modules_type_.compare(result.toStdString().c_str()) != 0)
+				{
+					item->setData(Qt::DisplayRole, QStringLiteral("型号不一致"));
+				}
+				else
+				{
+					item->setData(Qt::DisplayRole, QStringLiteral("读取完成"));
+				}
+			}
+
+			int port = main_wid_.line_port->text().toInt();
+			std::string local_ip = NET_ADDRESS;
+			uint8_t serial_id = main_wid_.combo_serial_id->currentText().toUShort();
+
+			get_vcu_version_task(local_ip, ip.toStdString(), port, serial_id, node_id);
+		}
+
+		item = main_wid_.download_table_view->item(iter->second, 1);
+
+		if (item != nullptr)
+		{
+			item->setData(Qt::DisplayRole, strtext.c_str());
+		}
+		break;
+	case kupdatearea_type_upload:
+		if (status == nsp::proto::errorno_t::kSuccessful)
+		{
+			item = main_wid_.upload_table_widget->item(iter->second, 4);
+
+			if (item != nullptr)
+			{
+				if (firm_info_.modules_type_.compare(result.toStdString().c_str()) != 0)
+				{
+					item->setData(Qt::DisplayRole, QStringLiteral("型号不一致"));
+				}
+				else
+				{
+					item->setData(Qt::DisplayRole, QStringLiteral("读取完成"));
+				}
+			}
+		}
+
+		item = main_wid_.upload_table_widget->item(iter->second, 2);
+
+		if (item != nullptr)
+		{
+			item->setData(Qt::DisplayRole, strtext.c_str());
+		}
+		break;
+	case kupdatearea_version_upload:
+		if (status == nsp::proto::errorno_t::kSuccessful)
+		{
+			item = main_wid_.upload_table_widget->item(iter->second, 4);
+			if (item != nullptr)
+			{
+				if (result.toStdString() > firm_info_.firmware_version_)
+				{
+					item->setData(Qt::DisplayRole, QStringLiteral("版本更高"));
+				}
+				else
+				{
+					item->setData(Qt::DisplayRole, QStringLiteral("读取完成"));
+				}
+			}
+		}
+
+		item = main_wid_.upload_table_widget->item(iter->second, 3);
+
+		if (item != nullptr)
+		{
+			item->setData(Qt::DisplayRole, strtext.c_str());
+		}
+		break;
+	case kupdatearea_version:
+		if ( status == nsp::proto::errorno_t::kSuccessful )
+		{
+			item = main_wid_.download_table_view->item(iter->second, 4);
+			if (item != nullptr)
+			{
+				if (result.toStdString() > firm_info_.firmware_version_)
+				{
+					item->setData(Qt::DisplayRole, QStringLiteral("版本更高"));
+				}
+				else
+				{
+					item->setData(Qt::DisplayRole, QStringLiteral("读取完成"));
+				}
+			}
+		}
+
+		item = main_wid_.download_table_view->item(iter->second, 2);
+
+		if (item != nullptr)
+		{
+			item->setData(Qt::DisplayRole, strtext.c_str());
+		}
+		break;
+	case kupdatearea_progress_download:
+		if ( status == nsp::proto::errorno_t::kSuccessful)
+		{
+			item = main_wid_.download_table_view->item(iter->second, 3);
+			if (item != nullptr)
+			{
+				QString show_info(QStringLiteral("进度："));
+				show_info += result;
+				
+				item->setData(Qt::DisplayRole, show_info);
+
+				if (result.compare("100%") == 0)
+				{
+					//Upload_btns *upload = (Upload_btns*)main_wid_.download_table_view->cellWidget(iter->second, 5);
+					//upload->ui.delete_->setEnabled(true);
+					strtext = "下载完成,正在重启...";
+				}
+				else
+				{
+					item = main_wid_.download_table_view->item(iter->second, 5);
+					strtext = "正在升级";
+				}
+			}
+		}
+		else
+		{
+			main_wid_.download_table_view->item(iter->second, 5)->setData(Qt::DisplayRole, QStringLiteral("重试"));
+		}
+		item = main_wid_.download_table_view->item(iter->second, 4);
+
+		if (item != nullptr)
+		{
+			
+			item->setData(Qt::DisplayRole, QString ::fromLocal8Bit(strtext.c_str()));
+		}
+		break;
+	case kupdatearea_progress_upload:
+		if (status == nsp::proto::errorno_t::kSuccessful)
+		{
+			item = main_wid_.upload_table_widget->item(iter->second, 4);
+			if (item != nullptr)
+			{
+				QString show_info(QStringLiteral("进度："));
+				show_info += result;
+
+				item->setData(Qt::DisplayRole, show_info);
+
+				if (result.compare("100%") == 0)
+				{
+					Upload_btns *upload = (Upload_btns*)main_wid_.upload_table_widget->cellWidget(iter->second, 5);
+					upload->ui.delete_->setEnabled(true);
+					strtext = "上传完成";
+				}
+				else
+				{
+					item = main_wid_.download_table_view->item(iter->second, 5);
+					strtext = "正在升级";
+				}
+
+				if (item != nullptr)
+				{
+					item->setData(Qt::DisplayRole, strtext.c_str());
+				}
+			}
+
+		}
+		else
+		{
+			main_wid_.download_table_view->item(iter->second, 5)->setData(Qt::DisplayRole, QStringLiteral("重试"));
+		}
+		item = main_wid_.download_table_view->item(iter->second, 4);
+
+		if (item != nullptr)
+		{
+			item->setData(Qt::DisplayRole, strtext.c_str());
+		}
+		break;
+	case kupdatearea_status:
+		item = main_wid_.download_table_view->item(iter->second, 4);
+
+		if (item != nullptr)
+		{
+			item->setData(Qt::DisplayRole, strtext.c_str());
+		}
+		break;
+	case kupdatearea_reset:
+	{
+		reset_wait_.wait(firm_info_.reset_wait_time_);
+		int port = main_wid_.line_port->text().toInt();
+		std::string local_ip = NET_ADDRESS;
+		uint8_t serial_id = main_wid_.combo_serial_id->currentText().toUShort();
+		get_vcu_version_task(local_ip, ip.toStdString(), port, serial_id,node_id);
+		break;
+	}
+	case kupdatearea_data_forward:
+	{
+		int port = main_wid_.line_port->text().toInt();
+		std::string local_ip = NET_ADDRESS;
+		uint8_t serial_id = main_wid_.combo_serial_id->currentText().toUShort();
+
+		get_vcu_cpu_task(local_ip, ip.toStdString(), port, serial_id, node_id);
+		//get_vcu_info_task(local_ip, ip.toStdString(), port);
+		break;
+	}
+	default:
+		break;
+	}
+}
+
+Q_INVOKABLE void framwork_wid::start_data_foward_callback(const std::string& ipNodeIDStr, const int operate_type, const std::string& data, const nsp::proto::errorno_t status)
+{
+	auto iter = map_ip_index_.find(ipNodeIDStr);
+
+	if (map_ip_index_.end() == iter)
+	{
+		return;
+	}
+
+	int row = iter->second;
+	QTableWidgetItem *pItem = main_wid_.download_table_view->item(row, 4);
+
+	if (nullptr == pItem)
+	{
+		return;
+	}
+
+	pItem->setText(QString::fromLocal8Bit(data.data()));
+}
+
+Q_INVOKABLE void framwork_wid::get_vcu_type_callback(const std::string& ipNodeIDStr, const int operate_type, const std::string& data, const nsp::proto::errorno_t status)
+{
+	auto iter = map_ip_index_.find(ipNodeIDStr);
+
+	if (map_ip_index_.end() == iter)
+	{
+		return;
+	}
+
+	int row = iter->second;
+	QTableWidgetItem *pItem = main_wid_.download_table_view->item(row, 1);
+
+	if (nullptr == pItem)
+	{
+		return;
+	}
+
+	pItem->setText(QString::fromLocal8Bit(data.data()));
+}
+
+Q_INVOKABLE void framwork_wid::get_vcu_version_callback(const std::string& ipNodeIDStr, const int operate_type, const std::string& data, const nsp::proto::errorno_t status)
+{
+	auto iter = map_ip_index_.find(ipNodeIDStr);
+
+	if (map_ip_index_.end() == iter)
+	{
+		return;
+	}
+
+	int row = iter->second;
+	QTableWidgetItem *pItem = main_wid_.download_table_view->item(row, 2);
+
+	if (nullptr == pItem)
+	{
+		return;
+	}
+
+	pItem->setText(QString::fromLocal8Bit(data.data()));
+}
+
+Q_INVOKABLE void framwork_wid::update_vcu_bin_task_callback(const std::string& ipNodeIDStr, const int operate_type, const std::string& data, const nsp::proto::errorno_t /*status*/)
+{
+	auto iter = map_ip_index_.find(ipNodeIDStr);
+
+	if (map_ip_index_.end() == iter)
+	{
+		return;
+	}
+
+	int row = iter->second;
+	QTableWidgetItem *pItem = main_wid_.download_table_view->item(row, 3);
+
+	if (nullptr == pItem)
+	{
+		return;
+	}
+
+	pItem->setText(QString::fromLocal8Bit(data.data()));
 }

@@ -64,11 +64,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\code\grace\trunk\robot\motion_template;C:\code\grace\trunk\sdk\var;C:\code\grace\trunk\private\libxml2\libxml;C:\code\grace\trunk\private\libxml2;C:\code\grace\trunk\sdk\nsp\icom;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\code\grace\trunk\sdk\lib;C:\code\grace\trunk\robot\motion_template\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libnsp.d;libxml2.lib;getopt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

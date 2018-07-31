@@ -22,7 +22,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="45" ></RowDefinition>
             <RowDefinition Height="9*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+           
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions >
@@ -33,10 +33,15 @@
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
                 <TextBlock Width="45" Margin="15,15,-10,10" Text="IP过滤：" TextAlignment="Center"></TextBlock>
                 <TextBox x:Name="SelectIP" Width="138"   Margin="10,10,10,10" PreviewTextInput="OnPreviewTextInput" TextChanged="OnChangeTextInput" HorizontalContentAlignment="Center"  VerticalContentAlignment="Center"  InputMethod.IsInputMethodEnabled ="False" ></TextBox>
-                <XControl:XCheckBox Margin="0,16,0,0" Click="OnShowOnline"></XControl:XCheckBox>
-                <TextBlock Text="仅显示在线" Margin="0,16,10,0" ></TextBlock>
+                <XControl:XCheckBox x:Name= "OnlineCheck"  Margin="0,16,0,0" Click="OnShowOnline">仅显示在线</XControl:XCheckBox>
+                <!--<TextBlock Text="仅显示在线" Margin="0,16,10,0" ></TextBlock>-->
             </StackPanel>
 
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" >
+                <Label Name="Online_num" Margin="0,10,0,0">0</Label>
+                <Label Margin="0,10,0,0">/</Label>
+                <Label Name="Total_num" Margin="0,10,0,0">0</Label>
+            </StackPanel>
 
             <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" >
                 <XControl:XButton NormalImgae="../Assets/开始连接.png"    MouseOverImage="../Assets/开始连接hover.png" PressedImage ="../Assets/开始连接press.png" Cursor="Hand"  Click="OnConnnectBatch" NineGrid="1" Margin="0,0,10,0" ></XControl:XButton>
@@ -170,21 +175,7 @@
                 </ListView.View>
             </XControl:SortListView>
         </XControl:GridLineDecorator>
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <StackPanel  Orientation="Horizontal" Margin="10,5,0,0" Height="28" Grid.Column="0" x:Name="PanelRobotNum">
-               
-                <TextBlock Text="{Binding PageCount_}" Width="20" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"></TextBlock>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" Margin="10,5,0,0" Height="30" Grid.Column="1" HorizontalAlignment="Right" >
-                <XControl:XButton NormalImgae="../Assets/上一页normal.png" MouseOverImage="../Assets/上一页hover.png" PressedImage ="../Assets/上一页active.png" Cursor="Hand"  Click="OnPreviousPage" NineGrid="1" Margin="0,0,10,0"></XControl:XButton>
-                <XControl:XButton NormalImgae="../Assets/下一页normal.png" MouseOverImage="../Assets/下一页hover.png" PressedImage ="../Assets/下一页active.png" Cursor="Hand"  Click="OnNextPage" NineGrid="1" Margin="0,0,20,0"></XControl:XButton>
-            </StackPanel>
-        </Grid>
+        
     </Grid>
 </Page>
 

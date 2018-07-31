@@ -58,6 +58,13 @@ agv_base::agv_base(vehicle_type_t t ,int is_gz_arm_core)
 		//init_broadcast();
 		g_net_inited = true;
 	}
+
+    memset(&__nav, 0, sizeof(__nav));
+    memset(&__veh, 0, sizeof(__veh));
+    memset(&__opr, 0, sizeof(__opr));
+    memset(&__safety, 0, sizeof(__safety));
+    memset(&__fault, 0, sizeof(__fault));
+    memset(&__dio_main, 0, sizeof(__dio_main));
 }
 
 
@@ -207,6 +214,7 @@ int agv_base::login(const char *epstr) {
 	set_combine_sequence_prc( kStatusDescribe_Resume );
 	set_combine_queue_task_prc( kStatusDescribe_Resume );
 
+    on_login();
 	loinfo( "agvbase" ) << "AgvBase:" << __agv_id << " net_id=" << __net_id << " login_to_host "<<epstr<<" success!";
 
 	return 0;
@@ -360,6 +368,7 @@ int agv_base::goto_dock( int dock_id, uint64_t& goto_task_id,
 		{
 			std::shared_ptr<agv_atom_taskdata_checkstatus_available> p_check_navavi = std::shared_ptr<agv_atom_taskdata_checkstatus_available>( new agv_atom_taskdata_checkstatus_available( AgvAtomTaskType_Nav ) );
 			p_check_navavi->set_task_phase( AgvTaskPhase_WaitAck );
+            p_check_navavi->set_atomtaskseq_idex(__nav_sequence.size());
 			__nav_sequence.push_back( p_check_navavi );
 			loinfo( "agvbase" ) << "AgvBase:" << __agv_id << " new gotodock: idx=1 agv_atom_taskdata_checkstatus_available";
 		}
@@ -396,6 +405,7 @@ int agv_base::goto_dock( int dock_id, uint64_t& goto_task_id,
 		{
 			std::shared_ptr<agv_atom_taskdata_checkstatus_final> p_check_navfin = std::shared_ptr<agv_atom_taskdata_checkstatus_final>( new agv_atom_taskdata_checkstatus_final( AgvAtomTaskType_Nav ) );
 			p_check_navfin->set_task_phase( AgvTaskPhase_WaitAck );
+            p_check_navfin->set_atomtaskseq_idex(__nav_sequence.size());
 			__nav_sequence.push_back( p_check_navfin );
 			loinfo( "agvbase" ) << "AgvBase:" << __agv_id << " new gotodock: idx=5 agv_atom_taskdata_checkstatus_final";
 		}
@@ -1899,9 +1909,8 @@ void agv_base::common_read_ack( uint32_t id, const void *data ) {
 					}
 
 					check_nav_status_from_navseq( __nav.track_status_.response_ );
-					check_nav_status_from_optseq( __nav.track_status_.response_ );
-					//::log__save("agvbase_debug", kLogLevel_Trace, kLogTarget_Filesystem, "AgvBase:%d readnav and do traffic end", __agv_id);
-
+                    check_nav_status_from_optseq(__nav.track_status_.response_);
+                    //::log__save("agvbase_debug", kLogLevel_Trace, kLogTarget_Filesystem, "AgvBase:%d readnav and do traffic end", __agv_id);
 
 				}
 				break;
@@ -2008,26 +2017,43 @@ void agv_base::update_agv_data() {
 			__vct_agv_obj_list = v;
 		}
 	}
-    //loinfo("agvbase_debug") << "AgvBase:" << __agv_id << " update_agv_data 2";
 
-	get_var_info_by_id_asyn<var__navigation_t>( kVarFixedObject_Navigation );
+    if (__map_subscribe_data.empty())//无订阅，读全量数据
+    {
+        //loinfo("agvbase_debug") << "AgvBase:" << __agv_id << " update_agv_data 2";
 
-    //loinfo("agvbase_debug") << "AgvBase:" << __agv_id << " update_agv_data 3";
-	get_var_info_by_id_asyn<var__vehicle_t>( kVarFixedObject_Vehide );
-    //loinfo("agvbase_debug") << "AgvBase:" << __agv_id << " update_agv_data 4";
+        get_var_info_by_id_asyn<var__navigation_t>(kVarFixedObject_Navigation);
 
-	get_var_info_by_id_asyn<var__operation_t>( kVarFixedObject_Operation );
-    //loinfo("agvbase_debug") << "AgvBase:" << __agv_id << " update_agv_data 5";
+        //loinfo("agvbase_debug") << "AgvBase:" << __agv_id << " update_agv_data 3";
+        get_var_info_by_id_asyn<var__vehicle_t>(kVarFixedObject_Vehide);
+        //loinfo("agvbase_debug") << "AgvBase:" << __agv_id << " update_agv_data 4";
 
-	get_var_info_by_id_asyn<var__safety_t>( kVarFixedObject_SaftyProtec );
-    //loinfo("agvbase_debug") << "AgvBase:" << __agv_id << " update_agv_data 6";
+        get_var_info_by_id_asyn<var__operation_t>(kVarFixedObject_Operation);
+        //loinfo("agvbase_debug") << "AgvBase:" << __agv_id << " update_agv_data 5";
 
-	get_var_info_by_id_asyn<var__error_handler_t>( kVarFixedObject_ErrorCollecter );
-    //loinfo("agvbase_debug") << "AgvBase:" << __agv_id << " update_agv_data 7";
-    get_var_info_by_id_asyn<var__dio_t>(kVarFixedObject_InternalDIO);
-    //loinfo("agvbase_debug") << "AgvBase:" << __agv_id << " update_agv_data 8";
-	get_elongate_variable();
-    //loinfo("agvbase_debug") << "AgvBase:" << __agv_id << " update_agv_data 9";
+        get_var_info_by_id_asyn<var__safety_t>(kVarFixedObject_SaftyProtec);
+        //loinfo("agvbase_debug") << "AgvBase:" << __agv_id << " update_agv_data 6";
+
+        get_var_info_by_id_asyn<var__error_handler_t>(kVarFixedObject_ErrorCollecter);
+        //loinfo("agvbase_debug") << "AgvBase:" << __agv_id << " update_agv_data 7";
+        get_var_info_by_id_asyn<var__dio_t>(kVarFixedObject_InternalDIO);
+
+        //loinfo("agvbase_debug") << "AgvBase:" << __agv_id << " update_agv_data 8";
+        get_elongate_variable();
+        //loinfo("agvbase_debug") << "AgvBase:" << __agv_id << " update_agv_data 9";
+    } 
+    else
+    {
+        for (auto& item:__map_subscribe_data)
+        {
+            int r = mn::post_common_read_request_by_id(__net_id, item.second, std::bind(&agv_base::common_read_ack_subscrbe, this, std::placeholders::_1, std::placeholders::_2));
+            if (r < 0){//如果接口调用失败，那么直接返回
+                loerror("agvbase") << "AgvBase:" << __agv_id << "subscribe post_common_read_request_by_id failed，ret < 0，id = " << item.second.items[0].varid << " err=" << r;
+            }
+        }
+    }
+
+
 }
 
 status_describe_t agv_base::get_nav_sequence_prc() {
@@ -2064,8 +2090,56 @@ uint64_t agv_base::get_autoinc_nav_id() {
 int agv_base::traffic_path_available_cb( int has_path ) {
 
 	//::log__save("agvbase_debug", kLogLevel_Trace, kLogTarget_Filesystem, "AgvBase:%d traffic_path_available_cb", __agv_id);
-	loinfo( "agvbase" ) << "AgvBase:" << __agv_id << " traffic_path_available_cb start!";
 
+    
+    int idex_from_cache = 0;
+    std::vector<trail_t> path_from_cache;
+
+    std::shared_ptr<detour_wait_info> dwi;
+    if (get_cur_detourwait_dockinf(__cache_idex, __cache_path.size(), dwi) >= 0)
+    {
+        if (dwi)//停止边在缓存中
+        {
+            int new_path_size = dwi->wait_idx - __cache_idex;
+            if (new_path_size<=0)
+            {
+                __detour_blocked_dock = dwi->dock_id;
+                loinfo("agvbase") << "AgvBase:" << __agv_id << " detour traffic need wait,dwi.wait=" << dwi->wait << " counter=" << dwi->wait_counter<<" dwi.wait_idex="<<dwi->wait_idx<<" dock="<<dwi->dock_id;
+                dwi->wait_counter++;
+                return 0;
+            }
+            else    //需要取出部分缓存
+            {
+                idex_from_cache = __cache_idex;
+                for (int i = 0; i < new_path_size; i++)
+                {
+                    path_from_cache.push_back(__cache_path[i]);
+                }
+                if (new_path_size == __cache_path.size())
+                {
+                    __cache_path.clear();
+                }
+                else
+                {
+                    std::vector<trail_t> tmp;
+                    tmp.assign(__cache_path.begin() + new_path_size, __cache_path.end());
+                    __cache_path = tmp;
+                }
+
+                __cache_idex += new_path_size;
+
+                loinfo("agvbase") << "AgvBase:" << __agv_id << " detour traffic get part path,new path idx="<<idex_from_cache<<" size="<<path_from_cache.size()<<" cache left idx="<<__cache_idex<<" size="<<__cache_path.size()<<" ,need wait for dwi.wait=" << dwi->wait << " counter=" << dwi->wait_counter << " dwi.wait_idex=" << dwi->wait_idx << " dock=" << dwi->dock_id;
+
+            }
+
+        }
+    }
+
+    if (!has_path)
+    {
+        return 0;
+    }
+    loinfo("agvbase") << "AgvBase:" << __agv_id << " traffic_path_available_cb start!";
 
 	std::lock_guard<decltype( __mtx_nav_sequence_traffic )> lock( __mtx_nav_sequence_traffic );
 	do {
@@ -2076,20 +2150,37 @@ int agv_base::traffic_path_available_cb( int has_path ) {
 			&& task->get_atomtaskdata_type() > AgvAtomTaskData_Internal_Send
 			&& task->get_atomtaskdata_type() < AgvAtomTaskData_CheckStatus
 			&& task->get_task_phase() == AgvTaskPhase_WaitTraffic ) {
-			if ( __nav_path_iswhole ) {
-				task->set_task_phase( AgvTaskPhase_Fin );
-				break;
-			}
-			bool path_is_whole = false;
-			int idex = 0;
-			std::vector<trail_t> path;
-			if ( __agv_driver ) {
-				path = __agv_driver->GetAllocatedTaskPath( path_is_whole, idex );
-			}
-			if ( path.empty() ) {
-				break;
-			}
-			__nav_path_iswhole = path_is_whole ? 1 : 0;
+
+            int idex = 0;
+            std::vector<trail_t> path;
+            bool path_is_whole = false;
+            if (path_from_cache.empty())
+            {
+                if (__nav_path_iswhole) {
+                    task->set_task_phase(AgvTaskPhase_Fin);
+                    break;
+                }                    
+
+                if (__agv_driver) {
+                    path = __agv_driver->GetAllocatedTaskPath(path_is_whole, idex);
+                }
+                if (path.empty()) {
+                    break;
+                }
+                __nav_path_iswhole = path_is_whole ? 1 : 0;
+                if (!__nav_path_iswhole)
+                {
+                    __cache_idex = idex;
+                    __cache_path = path;
+                }
+            }
+            else
+            {
+                idex = idex_from_cache;
+                path = path_from_cache;
+                path_is_whole = false;
+            }
+
 
 			switch ( task->get_atomtaskdata_type() ) {
 				case AgvAtomTaskData_NewNav:
@@ -2168,10 +2259,18 @@ int agv_base::do_opt_senquence( int dock, int opt,
 	const std::function<void( uint64_t taskid, status_describe_t status, int err, void* user )> &fn, void* user ) {
 	{
 		std::lock_guard<decltype( __mtx_opt_sequence )> lock( __mtx_opt_sequence );
+        static int printlog = 1;
 		if ( __cur_opt_sequence_idx != -1 ) {
-			loerror( "agvbase" ) << "AgvBase:" << __agv_id << " do_opt_senquence "  " last task not finished!";
+            if (printlog)
+            {
+                loerror("agvbase") << "AgvBase:" << __agv_id << " do_opt_senquence "  " last task not finished!";
+                printlog = 0;
+            }
 			return -1;
 		}
+
+        printlog = 1;
+
 		__opt_sequence.clear();
 		{
 			optseq_task_id = ++__opt_task_id;
@@ -4287,6 +4386,12 @@ int agv_base::detour_dock(std::vector<via_dock_info> via_docks)
         __map_detour_wait.clear();
     }
 
+    if (via_docks.empty())
+    {
+        loerror("agvbase") << "AgvBase:" << __agv_id << " detour_dock failed,via_docks.empty()";
+        return -1;
+    }
+
     for (auto& dock : via_docks)
     {
         loinfo("agvbase") << "AgvBase:" << __agv_id << " detour_dock:" << dock.dock_id << " wait:" << dock.wait;
@@ -4301,10 +4406,6 @@ int agv_base::detour_dock(std::vector<via_dock_info> via_docks)
         }
         std::shared_ptr<agv_atom_taskdata_pathsearch> p_path = std::static_pointer_cast< agv_atom_taskdata_pathsearch, agv_atom_taskdata_base >(__nav_sequence[2]);
         final_destUpl = p_path->destUpl;
-    } 
-
-    if (__agv_driver) {
-        __agv_driver->CancelTaskPath();
     }
 
     std::vector<trail_t> pathUpl_whole;
@@ -4363,9 +4464,10 @@ int agv_base::detour_dock(std::vector<via_dock_info> via_docks)
         std::shared_ptr<detour_wait_info> dwi = std::shared_ptr<detour_wait_info>(new detour_wait_info);
         dwi->dock_id = dock.dock_id;
         dwi->wait = dock.wait;
-        dwi->wait_idx = pathUpl_whole.size();
+        dwi->wait_idx = pathUpl_whole.size()-1;
         map_detour_wait[dwi->dock_id] = dwi;
         last_destUpl = destUpl;
+        loinfo("agvbase") << "AgvBase:" << __agv_id << " detour_dock block poiont:" << dock.dock_id << " wait:" << dock.wait << " idx=" << dwi->wait_idx;
     }       
 
     {
@@ -4378,13 +4480,29 @@ int agv_base::detour_dock(std::vector<via_dock_info> via_docks)
                 << final_destUpl.edge_id_ << " " << final_destUpl.percentage_ << " " << final_destUpl.angle_ << ") failed,detour_dock failed!";
             return -1;
         }
-        pathUpl_whole.insert(pathUpl_whole.end(), pathUpl.begin(), pathUpl.end());
+        //pathUpl_whole.insert(pathUpl_whole.end(), pathUpl.begin()+1, pathUpl.end());
+        trail_t l = pathUpl_whole.back();
+        trail_t r = pathUpl.front();
+        if (l.edge_id_ == r.edge_id_ && l.wop_id_ == r.wop_id_)
+        {
+            if (pathUpl.size() > 1)
+            {
+                pathUpl_whole.insert(pathUpl_whole.end(), pathUpl.begin() + 1, pathUpl.end());
+            }
+        }
+        else
+        {
+            pathUpl_whole.insert(pathUpl_whole.end(), pathUpl.begin(), pathUpl.end());
+
+        }
     }
 
     //set traffic
     if (__agv_driver) {
-        __agv_driver->SetAllocatedAvailabeCallback(std::bind(&agv_base::traffic_path_available_cb, this, std::placeholders::_1));
-        __agv_driver->StartTaskPath(pathUpl_whole);
+		if (false == __agv_driver->UpdateTaskPath(pathUpl_whole)) {
+			loerror("agvbase") << "AgvBase:" << __agv_id << " update task path failed...";
+			return -3;
+		}
     }
 
 
@@ -4399,6 +4517,11 @@ int agv_base::detour_dock(std::vector<via_dock_info> via_docks)
         __map_detour_wait = map_detour_wait;
     }
     return 0;
+}
+
+int agv_base::get_detour_blocked_dock()
+{
+    return __detour_blocked_dock;
 }
 
 int agv_base::go_on_detour(int dock)
@@ -4419,6 +4542,10 @@ int agv_base::go_on_detour(int dock)
 int agv_base::get_cur_detourwait_dockinf(int idx,int size,std::shared_ptr<detour_wait_info>& dwi)
 {
     dwi = nullptr;
+    if (size<=0)
+    {
+        return -1;
+    }
     {
         std::lock_guard<decltype(__mtx_map_detour_wait)> lock(__mtx_map_detour_wait);
         for (auto& itr:__map_detour_wait)
@@ -4428,7 +4555,7 @@ int agv_base::get_cur_detourwait_dockinf(int idx,int size,std::shared_ptr<detour
             {
                 if (tmp->wait_idx >= idx && tmp->wait_idx <= (idx + size))
                 {
-                    if (tmp->wait_counter >= tmp->wait)
+                    if (tmp->wait_counter >= tmp->wait && tmp->wait >= 0)
                     {
                         tmp = nullptr;
                         break;
@@ -4438,6 +4565,10 @@ int agv_base::get_cur_detourwait_dockinf(int idx,int size,std::shared_ptr<detour
                         dwi = tmp;
                         return 0;
                     }                                    
+                }
+                else   if (tmp->wait_idx < idx)
+                {
+                    tmp = nullptr;
                 }
             }
             else
@@ -4609,5 +4740,141 @@ int agv_base::get_battery_capacity_total(double& total)
         return -2;
     }
 
+    return 0;
+}
+
+int agv_base::subscribe_data(int id, void *begin)
+{
+    __map_subscribe_data[id] = __vec_post_common;
+    __vec_post_common.items.clear();
+    return 0;
+}
+
+void agv_base::common_read_ack_subscrbe(uint32_t id, const void *data) {
+    do {
+
+        mn::common_data *asio_data_ = (mn::common_data*)(data);
+        if (asio_data_->err_ < 0) {
+            loerror("agvbase") << "AgvBase:" << __agv_id << " common_read_ack_subscrbe failed, asio_data_.get_err() = " << asio_data_->err_ << ", id=" << id;
+            break;
+        }
+        if (asio_data_->items.size() == 0){
+            break;
+        }
+        common_data_item ca = asio_data_->items[0];
+
+        switch (ca.vartype) {
+        case kVarType_Vehicle:
+        {
+                                 std::lock_guard<decltype(__mtx_veh)> lock(__mtx_veh);
+                                 for (auto& itm:asio_data_->items)
+                                 {
+                                     memcpy((char*)&__veh + itm.offset, itm.data.c_str(), itm.data.size());
+                                 }
+
+                                 //var__vehicle_t* vh = (var__vehicle_t*)(ca.data.c_str());
+                                 //memcpy(&__veh, vh, sizeof(__veh));
+        }
+            break;
+        case kVarType_Navigation:
+        {
+            {
+                std::lock_guard<decltype(__mtx_nav)> lock(__mtx_nav);
+                for (auto& itm : asio_data_->items)
+                {
+                    memcpy((char*)&__nav + itm.offset, itm.data.c_str(), itm.data.size());
+                }
+                //var__navigation_t* nv = (var__navigation_t*)(ca.data.c_str());
+                //memcpy(&__nav, nv, sizeof(__nav));
+            }
+
+                                    //::log__save("agvbase_debug", kLogLevel_Trace, kLogTarget_Filesystem, "AgvBase:%d readnav and do traffic begin", __agv_id);
+                                    upl_t cur_upl;
+                                    int idex = 0;
+                                    if (get_current_upl(cur_upl) >= 0) {
+                                        if (get_current_traj_idex(idex) >= 0) {
+                                            if (__agv_driver) {
+                                                __agv_driver->UpdateUPL(cur_upl, idex);
+                                                __agv_driver->DoAllocatedAnddRelease();
+                                            }
+                                        }
+                                    }
+
+                                    check_nav_status_from_navseq(__nav.track_status_.response_);
+                                    check_nav_status_from_optseq(__nav.track_status_.response_);
+                                    //::log__save("agvbase_debug", kLogLevel_Trace, kLogTarget_Filesystem, "AgvBase:%d readnav and do traffic end", __agv_id);
+
+        }
+            break;
+        case kVarType_Operation:
+        {
+            {
+                std::lock_guard<decltype(__mtx_opt)> lock(__mtx_opt);
+                for (auto& itm : asio_data_->items)
+                {
+                    memcpy((char*)&__opr + itm.offset, itm.data.c_str(), itm.data.size());
+                }
+                //var__operation_t* op = (var__operation_t*)(ca.data.c_str());
+                //memcpy(&__opr, op, sizeof(var__operation_t));
+            }
+                                   //::log__save("agvbase_debug", kLogLevel_Trace, kLogTarget_Filesystem, "AgvBase:%d check_opt_status begin", __agv_id);
+                                   check_opt_status(__opr);
+                                   //::log__save("agvbase_debug", kLogLevel_Trace, kLogTarget_Filesystem, "AgvBase:%d check_opt_status end", __agv_id);
+
+        }
+            break;
+        case kVarType_ErrorHandler:
+        {
+                                      std::lock_guard<decltype(__mtx_fault)> lock(__mtx_fault);
+                                      for (auto& itm : asio_data_->items)
+                                      {
+                                          memcpy((char*)&__fault + itm.offset, itm.data.c_str(), itm.data.size());
+                                      }
+                                      //var__error_handler_t* op = (var__error_handler_t*)(ca.data.c_str());
+                                      //memcpy(&__fault, op, sizeof(var__error_handler_t));
+        }
+            break;
+        case kVarType_SafetyProtec:
+        {
+                                      std::lock_guard<decltype(__mtx_safety)> lock(__mtx_safety);
+                                      for (auto& itm : asio_data_->items)
+                                      {
+                                          memcpy((char*)&__safety + itm.offset, itm.data.c_str(), itm.data.size());
+                                      }
+                                      //var__safety_t* op = (var__safety_t*)(ca.data.c_str());
+                                      //memcpy(&__safety, op, sizeof(var__safety_t));
+        }
+            break;
+        case kVarType_DIO:
+        {
+                             if (ca.varid == kVarFixedObject_InternalDIO)
+                             {
+                                 std::lock_guard<decltype(__mtx_dio_main)> lock(__mtx_dio_main);
+                                 for (auto& itm : asio_data_->items)
+                                 {
+                                     memcpy((char*)&__dio_main + itm.offset, itm.data.c_str(), itm.data.size());
+                                 }
+                                 //var__dio_t* vh = (var__dio_t*)(ca.data.c_str());
+                                 //memcpy(&__dio_main, vh, sizeof(var__dio_t));
+                             }
+                             else
+                             {
+                                 get_elongate_variable_ack(id, data);
+                             }
+        }
+            break;
+        default:
+            get_elongate_variable_ack(id, data);
+            break;
+        }
+
+
+    } while (0);
+
+
+}
+
+int agv_base::on_login()
+{
     return 0;
 }

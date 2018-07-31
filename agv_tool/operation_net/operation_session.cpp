@@ -203,6 +203,7 @@ int operation_session::recv_get_hostname_ack(const std::shared_ptr<nsp::proto::p
 	}
 	loinfo("operation_net") << "success to connect to server,the robot id is "<< identity_id_ <<",the link is " << this->lnk_;
 	connect_callback_(identity_id_, 0, data->msg_);
+	loinfo("operation_net") << "success callback tool UI,the robot id is "<< identity_id_;
 	return 0;
 }
 

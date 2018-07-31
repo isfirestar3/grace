@@ -33,6 +33,39 @@
 
 #define FIRMWARE_RW_FILE_BLOCK_LENGTH						8
 
+#define FIRMWARE_WRITE_FILE_BLOCK_LENGTH						8
+
+#define FIRMWARE_RETURY_NUMBER						3
+
+#define FIRMWARE_MAIN_OPERATE_CODE_CAN_DATA_CHANGE					0x08
+
+#define FIRMWARE_CAN_COMMOND_START_DATA_FORWARD			0x06
+
+#define FIRMWARE_CAN_COMMOND_GET_SOFTWARE_VERSION			0x01
+#define FIRMWARE_CAN_COMMOND_GET_SOFTWARE_VERSION_ACK			0x11
+#define FIRMWARE_CAN_COMMOND_GET_HARDWARE_TYPE			0x02
+#define FIRMWARE_CAN_COMMOND_GET_HARDWARE_TYPE_ACK			0x12
+#define FIRMWARE_CAN_COMMOND_INITIAL_ROM_UPDATE			0X03
+#define FIRMWARE_CAN_COMMOND_INITIAL_ROM_UPDATE_ACK			0X13
+#define FIRMWARE_CAN_COMMOND_DOWNLOAD_PACKET			0x04
+#define FIRMWARE_CAN_COMMOND_DOWNLOAD_PACKET_ACK			0x14
+#define FIRMWARE_CAN_COMMOND_UPLOAD_PACKET			0x08
+#define FIRMWARE_CAN_COMMOND_UPLOAD_PACKET_ACK			0x18
+#define FIRMWARE_CAN_COMMOND_RESET			0x0A
+#define FIRMWARE_CAN_COMMOND_RESET_ACK			0x1A
+
+#define FIRMWARE_CAN_COMMOND_ABORT_UPDATE			0x0f
+#define FIRMWARE_CAN_COMMOND_ABORT_UPDATE_ACK			0x1f
+#define FIRMWARE_CAN_COMMOND_READ_REGISTER			0x0c
+#define FIRMWARE_CAN_COMMOND_READ_REGISTER_ACK			0x1c
+#define FIRMWARE_CAN_COMMOND_WRITE_REGISTER			0x0d
+#define FIRMWARE_CAN_COMMOND_WRITE_REGISTER_ACK			0x1d
+
+#define FIRMWARE_CAN_COMMOND_CHECKSUM_FAIL_ACK	0X1B
+
+
+//#define FIRMWARE_CAN_COMMOND_GET_HARDWARE_TYPE			0x02
+
 enum FIRMWARE_SOFTWARE_TYPE
 {
 	BOOT_SOFTWARE = 0,
@@ -66,6 +99,13 @@ enum TABLEVIEW_BTN
 	Btn_Degrade						//½µ¼¶
 };
 
+enum device_type
+{
+	kdevice_vcu_default,
+	kdevice_vcu_can,
+	kdevice_kavser,
+};
+
 struct recv_vcu_data : motion::asio_data{
 	std::string remote_ip_;
 	unsigned int data_length_;
@@ -76,4 +116,13 @@ struct recv_bin_data : motion::asio_data{
 	unsigned int offset_;
 	unsigned int data_length_;
 	std::string data_context_;
+};
+
+struct operate_code
+{
+	operate_code(){ memset(this, 0, sizeof(operate_code)); };
+	uint8_t main_code;
+	uint8_t sub_code;
+	uint8_t cmd_code;
+	uint8_t extern_code;
 };
