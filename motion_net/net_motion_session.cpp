@@ -1274,4 +1274,17 @@ namespace mn {
 		this->net_status_ = net_stat;
 		this->login_error_ = login_err;
 	}
+
+	int net_motion_session::post_offline_task(uint64_t task_id, const mn_offline_task &task, const std::shared_ptr<asio_partnet> &asioc) {
+		return 0;
+	}
+
+	int net_motion_session::cancel_offline_task(uint64_t task_id, const std::shared_ptr<asio_partnet> &asio) {
+		return 0;
+	}
+
+	int net_motion_session::post_offline_nextstep(uint64_t task_id, const std::shared_ptr<asio_partnet> &asio) {
+		return 0;
+	}
+
 }

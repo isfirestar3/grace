@@ -164,5 +164,9 @@ namespace mn {
 		int post_operation_resume_task( uint64_t operator_task_id, const std::shared_ptr<asio_partnet> &asio );
 		int registry_periodic_report(const struct periodic_title &read_periodic_data, const std::shared_ptr<asio_partnet> &asio);
 		int unregistry_periodic_report(const std::shared_ptr<asio_partnet> &asio);
+
+		int post_offline_task(uint64_t task_id, const mn_offline_task &task, const std::shared_ptr<asio_partnet> &asio);
+		int cancel_offline_task(uint64_t task_id, const std::shared_ptr<asio_partnet> &asio);
+		int post_offline_nextstep(uint64_t task_id, const std::shared_ptr<asio_partnet> &asio);
 	};
 };

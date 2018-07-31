@@ -191,6 +191,21 @@ namespace mn {
 		uint32_t middle_;
 		uint32_t response_;
 	};
+
+	struct offline_operator_node_t {
+		uint64_t task_id;
+		int32_t task_code;
+		uint64_t task_params[10];
+	};
+	struct offline_task_node_t {
+		uint64_t task_id;
+		upl_t dest_upl;
+		position_t dest_pos;
+		std::vector<trail_t> trails;
+		std::vector<offline_operator_node_t> opers;
+	};
+	typedef std::vector<offline_task_node_t> mn_offline_task;
+
 }
 
 #endif /* !MOTION_NET_DEFINE_H */
