@@ -85,12 +85,13 @@ int run__algorithm_traj_control() {
 
 #if !_WIN32
 	var__vehicle_t *oveh;
-	/* VCU 环境下的导航前仿真流程*/
+
+	/* simulation process under VCU environment */
 	if (sim) {
 		oveh = var__get_vehicle();
-		/* 命令速度作为反馈速度 */
+		/* using command velocity as feedback */
 		memcpy(&oveh->i.actual_velocity_, &oveh->i.command_velocity_, sizeof(velocity_t));
-		/* 底盘时间戳使用系统时间戳 */
+		/* using system tiemstamp as vehicle timestamp */
 		oveh->i.time_stamp_ = posix__clock_gettime();
 		oveh->i.time_stamp_ /= 10000;
 		var__release_object_reference(oveh);
@@ -203,7 +204,7 @@ void *run__guard_proc(void *argv) {
         return NULL;
     }
 
-    /* 预设在整个进程生命周期， 不会发生对象增减 */
+    /* no object increase or decrease in whole process life */
     fixed_object_count = var__query_global_count();
     if (fixed_object_count <= 0) {
         return NULL;
@@ -284,7 +285,7 @@ void *run__navigation_proc(void *argv) {
         return NULL;
     }
 
-    /* 从错误配置中读取，是否因为导航计算失败而停车 */
+    /* in case of error configure loaded, stop vehicle when navigation module detect fatal error */
     err = var__get_error_handler();
     if (!err) {
         posix__uninit_waitable_handle(&waiter);
@@ -388,15 +389,15 @@ int main(int argc, char **argv) {
     }
 #endif
 
-    /* 检查参数并执行异化  */
+    /* check startup argument  */
     if (run__check_args(argc, argv) < 0) {
         return 1;
     }
 
-    /* 输出启动信息 */
+    /* output startup information */
     log__save("motion_template", kLogLevel_Info, kLogTarget_Stdout | kLogTarget_Filesystem, startup_message);
 
-    /* 设置退出例程 */
+    /* set exit proc */
     atexit(&run__app_exit);
 
     if (posix__init_synchronous_waitable_handle(&monitor) < 0) {
@@ -415,11 +416,11 @@ int main(int argc, char **argv) {
 
     objinit();
 
-    /* 在加载其他任何对象之前， 加载错误处理对象, 且不允许失败 */
+    /* load error handler object before any other object loadded, it must be successful */
     if (var__load_error_handler_object() < 0) {
         return 1;
     }
-    /* 获取错误配置中的相关参数 */
+    /* get parameters for error configure */
     err = var__get_error_handler();
     if (!err) {
         return 1;
@@ -442,7 +443,7 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    /* arm 环境需要建立和M核的通道 */
+    /* need to create communication with VCU module while under arm environment */
 #if !_WIN32
     nsp__init_gzd_object();
 	nspi__init_regist_cycle_event();
