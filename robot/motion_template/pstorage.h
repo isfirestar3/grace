@@ -3,17 +3,18 @@
 
 #include "compiler.h"
 
-#if !defined P_STORAGE_FILE_SIZE
-#define P_STORAGE_FILE_SIZE  (64)
-#endif
+extern
+int mm__load_mapping();
+extern
+void mm__release_mapping();
+extern
+int mm__read_mapping(uint32_t offset, uint32_t len, void *data);
+extern
+int mm__write_mapping(uint32_t len, const void *data);
 
 extern
-int run__load_mapping();
+int mm__getupl(void *upl);
 extern
-void run__release_mapping();
-extern
-int run__write_mapping(uint32_t len, const void *data);
-extern
-int run__read_mapping(uint32_t offset, uint32_t len, void *data);
+int mm__setupl(const void *upl);
 
 #endif

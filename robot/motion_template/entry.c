@@ -41,17 +41,6 @@ typedef struct {
     void( *func_)(void *functional_object);
 } canio__event_callback_t;
 
-struct p_storage_t {
-    union {
-        struct {
-            upl_t upl;
-            double last_total_odo;
-        }p_storage_feild;
-
-        unsigned char p_storage_occupy[P_STORAGE_FILE_SIZE];
-    };
-};
-
 #pragma pack(pop)
 
 int run__interval_control(posix__waitable_handle_t *waiter, uint64_t begin_tick, uint32_t maximum_delay) {
@@ -363,9 +352,9 @@ int main(int argc, char **argv) {
     posix__pthread_t navigation_tp, safty_tp, guard_tp;
     posix__waitable_handle_t monitor;
     int retval;
-    struct p_storage_t p_storage_object;
     int p_storage_retval;
     var__navigation_t *nav;
+    upl_t p_storage_upl;
 
     static const char startup_message[] = POSIX__EOL
             "****************************************************************************"POSIX__EOL
@@ -462,19 +451,16 @@ int main(int argc, char **argv) {
     posix__pthread_create(&guard_tp, &run__guard_proc, NULL);
 
     /* zeroization save object */
-    memset(&p_storage_object, 0, sizeof(p_storage_object));
-    p_storage_retval = run__load_mapping();
+    p_storage_retval = mm__load_mapping();
     if (p_storage_retval >= 0) {
-        run__read_mapping(0, sizeof(p_storage_object), (void*) &p_storage_object);
+        mm__getupl(&p_storage_upl);
         log__save("motion_template", kLogLevel_Info, kLogTarget_Filesystem | kLogTarget_Stdout, 
                 "last upl: [edge:%d] [percent:%.2f] [angle:%.2f]", 
-                p_storage_object.p_storage_feild.upl.edge_id_,
-                p_storage_object.p_storage_feild.upl.percentage_,
-                p_storage_object.p_storage_feild.upl.angle_);
+                p_storage_upl.edge_id_, p_storage_upl.percentage_, p_storage_upl.angle_);
         /* acquire to load storage data on startup */
         if (run__if_loadonexec()) {
             if ((nav = var__get_navigation()) != NULL) {
-                memcpy(&nav->i.upl_, &p_storage_object.p_storage_feild.upl, sizeof(upl_t));
+                memcpy(&nav->i.upl_, &p_storage_upl, sizeof(p_storage_upl));
                 var__release_object_reference(nav);
             }
         }
@@ -498,21 +484,21 @@ int main(int argc, char **argv) {
         if (p_storage_retval >= 0) {
             nav = var__get_navigation();
             if (nav) {
-                memcpy(&p_storage_object.p_storage_feild.upl, &nav->i.upl_, sizeof(upl_t));
+                memcpy(&p_storage_upl, &nav->i.upl_, sizeof(upl_t));
                 var__release_object_reference(nav);
 
-                p_storage_retval = run__write_mapping(sizeof(p_storage_object), &p_storage_object);
+                p_storage_retval = mm__setupl(&p_storage_upl);
 
                 /* one time failed, nolonger try */
                 if (p_storage_retval < 0) {
-                    log__save("motion_template", kLogLevel_Warning, kLogTarget_Filesystem | kLogTarget_Stdout, "failed storage upl information to file.");
+                    log__save("motion_template", kLogLevel_Warning, kLogTarget_Filesystem | kLogTarget_Stdout,"failed storage upl information to file.");
                 }
             }
         }
     }
 
     if (p_storage_retval >= 0) {
-        run__release_mapping();
+        mm__release_mapping();
     }
     
     return 0;

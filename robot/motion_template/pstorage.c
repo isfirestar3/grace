@@ -14,11 +14,31 @@
 
 #include "vartypes.h"
 
+#if !defined P_STORAGE_FILE_SIZE
+#define P_STORAGE_FILE_SIZE     (256)
+#endif
+
+#if !defined P_STORAGE_LOC_CONFIG
+#define P_STORAGE_LOC_CONFIG    (128)
+#endif
+
 #pragma pack(push,1)
 
 struct period_storage_data {
 	void *mptr;
 	uint32_t mlen;
+};
+
+struct p_storage_t {
+    union {
+        struct {
+            upl_t upl;
+            double last_total_odo;
+            unsigned char loc_config[P_STORAGE_LOC_CONFIG];
+        }p_storage_feild;
+
+        unsigned char p_storage_occupy[P_STORAGE_FILE_SIZE];
+    };
 };
 
 #pragma pack(pop)
@@ -27,7 +47,7 @@ struct period_storage_data {
 
 static struct period_storage_data mapped_data = {.mptr = NULL, .mlen = 0 };
 
-int run__load_mapping() {
+int mm__load_mapping() {
     char path[255];
     int retval;
     int fd;
@@ -95,13 +115,13 @@ int run__load_mapping() {
     return retval;
 }
 
-void run__release_mapping() {
+void mm__release_mapping() {
 	if (mapped_data.mptr && mapped_data.mlen > 0 ) {
 		munmap(mapped_data.mptr, sizeof (mapped_data.mlen));
 	}
 }
 
-int run__write_mapping(uint32_t len, const void *data) {
+int mm__write_mapping(uint32_t len, const void *data) {
 	if (!mapped_data.mptr || (mapped_data.mlen <= 0) || !data) {
 		return -EINVAL;
 	}
@@ -110,11 +130,19 @@ int run__write_mapping(uint32_t len, const void *data) {
 	return 0;
 }
 
-int run__read_mapping(uint32_t offset, uint32_t len, void *data) {
+int mm__read_mapping(uint32_t offset, uint32_t len, void *data) {
 	if (!mapped_data.mptr || (mapped_data.mlen <= 0) || (offset + len > mapped_data.mlen) || !data) {
 		return -EINVAL;
 	}
 	
 	memcpy(data, mapped_data.mptr + offset, len);
 	return 0;
+}
+
+int mm__getupl(void *upl) {
+    return mm__read_mapping(0, sizeof(upl_t), upl);
+}
+
+int mm__setupl(const void *upl) {
+    return mm__write_mapping(sizeof(upl_t), upl);
 }
