@@ -114,6 +114,7 @@ namespace mn {
 		int recv_periodic_report( const unsigned char *buffer, int &cb );
 		void recv_dispatch(const unsigned char *buffer, int &cb );
 		int recv_mtver(const unsigned char *buffer, int &cb );
+		int recv_cfgloc(const unsigned char *buffer, int &cb);
 
 	public:
 		net_motion_session(int robot_id);
@@ -164,5 +165,7 @@ namespace mn {
 		int post_operation_resume_task( uint64_t operator_task_id, const std::shared_ptr<asio_partnet> &asio );
 		int registry_periodic_report(const struct periodic_title &read_periodic_data, const std::shared_ptr<asio_partnet> &asio);
 		int unregistry_periodic_report(const std::shared_ptr<asio_partnet> &asio);
+		int post_localization_cfgread_request( const std::shared_ptr<asio_partnet> &asio);
+		int post_localization_cfgwrite_request( const uint8_t *data, uint8_t offset, uint8_t cb, const std::shared_ptr<asio_partnet> &asio);
 	};
 };

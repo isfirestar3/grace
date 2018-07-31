@@ -349,4 +349,20 @@ namespace mn {
 		std::shared_ptr<asio_partnet> partnet = std::make_shared<asio_partnet>( robot_id, apc );
 		return net_session->post_dbg_segmentfault( partnet );
 	}
+
+	EXP(int) post_localization_cfgread_request(uint32_t robot_id, apc_t &apc) {
+		std::shared_ptr<net_motion_session> net_session = nsp::toolkit::singleton<net_manager>::instance()->search( robot_id );
+		if ( !net_session ) return -ENOENT;
+
+		std::shared_ptr<asio_partnet> partnet = std::make_shared<asio_partnet>( robot_id, apc );
+		return net_session->post_localization_cfgread_request( partnet );
+	}
+
+	EXP(int) post_localization_cfgwrite_request(uint32_t robot_id, const uint8_t *data, uint8_t offset, uint8_t cb, apc_t &apc) {
+		std::shared_ptr<net_motion_session> net_session = nsp::toolkit::singleton<net_manager>::instance()->search( robot_id );
+		if ( !net_session ) return -ENOENT;
+
+		std::shared_ptr<asio_partnet> partnet = std::make_shared<asio_partnet>( robot_id, apc );
+		return net_session->post_localization_cfgwrite_request( data, offset, cb, partnet );
+	}
 }

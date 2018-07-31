@@ -10,6 +10,7 @@
 #include "proto_task_status.h"
 #include "proto_allocate_operation_task.h"
 #include "proto_keep_alive.h"
+#include "proto_localization_msg.h"
 
 #include "rapidxml_iterators.hpp"
 #include "rapidxml_print.hpp"
@@ -521,6 +522,21 @@ namespace mn {
 		return pool_.async_complete( pkt->head.id_, pkt->head.type_, ( const char* ) &mtver );
 	}
 
+	int net_motion_session::recv_cfgloc(const unsigned char *pos, int &cb) {
+		std::shared_ptr<nsp::proto::proto_localization_cfgread_ack> ack;
+		if (build<nsp::proto::proto_localization_cfgread_ack>(pos, cb, ack) < 0) {
+			return -1;
+		}
+
+		struct loc_data_t locdat;
+		locdat.err_ = ack->head_.err_;
+
+		if (locdat.err_ >= 0 ) {
+			memcpy(locdat.data_, ack->blob_, sizeof(locdat.data_));
+		}
+		return pool_.async_complete( ack->head_.id_, ack->head_.type_, ( const char* ) &locdat );
+	}
+
 	void net_motion_session::recv_dispatch(const unsigned char *buffer, int &cb ) {
 		auto len = nsp::proto::proto_head::type_length();
 		if (cb < len) {
@@ -580,6 +596,7 @@ namespace mn {
 			case PKTTYPE_DBG_CLEAR_FAULT_ACK:
 			case PKTTYPE_INITIACTIVE_COMMON_READ_ACK:
 			case PKTTYPE_INITIACTIVE_COMMON_READ_CANCLE_ACK:
+			case PKTTYPE_LOCALIZATION_CFGWRITE_ACK:
 				recv_normal_complete( pos, cb );
 				break;
 			case PKTTYPE_INITIACTIVE_READ_ACK:
@@ -587,6 +604,9 @@ namespace mn {
 				break;
 			case PKTTYPE_DBG_GET_MTVER_ACK:
 				recv_mtver( pos, cb );
+				break;
+			case PKTTYPE_LOCALIZATION_CFGREAD_ACK:
+				recv_cfgloc( pos, cb );
 				break;
 			default:
 				mnlog_error << "unknown packet type received. " << type;
@@ -1143,6 +1163,43 @@ namespace mn {
 
 		uint32_t pktid = pool_.get_pktid();
 		nsp::proto::proto_head packet( PKTTYPE_INITIACTIVE_COMMON_READ_CANCLE, pktid, PROTO_HEAD_LEN );
+
+		return pool_.queue_packet(pktid, asio,  [&] () ->int {
+			return psend( &packet );
+		} );
+	}
+
+	// read/write for localization program configutions
+	int net_motion_session::post_localization_cfgread_request( const std::shared_ptr<asio_partnet> &asio) {
+		int err = check_connection_status();
+		if ( err < 0 ) {
+			return err;
+		}
+		
+		pool_.periodic_pktid_cancel();
+
+		uint32_t pktid = pool_.get_pktid();
+		nsp::proto::proto_head packet( PKTTYPE_LOCALIZATION_CFGREAD, pktid, PROTO_HEAD_LEN );
+
+		return pool_.queue_packet(pktid, asio,  [&] () ->int {
+			return psend( &packet );
+		} );
+	}
+		
+	int net_motion_session::post_localization_cfgwrite_request( const uint8_t *data, uint8_t offset, uint8_t cb, 
+		const std::shared_ptr<asio_partnet> &asio)
+	{
+		int err = check_connection_status();
+		if ( err < 0 ) {
+			return err;
+		}
+		
+		pool_.periodic_pktid_cancel();
+
+		uint32_t pktid = pool_.get_pktid();
+		nsp::proto::proto_localization_cfgwrite packet( PKTTYPE_LOCALIZATION_CFGWRITE, pktid);
+		memcpy(packet.blob_ + offset, data, cb);
+		packet.calc_size();
 
 		return pool_.queue_packet(pktid, asio,  [&] () ->int {
 			return psend( &packet );
