@@ -15,6 +15,8 @@
 #include "posix_atomic.h"
 #include "logger.h"
 #include "pstorage.h"
+#include "drive_unit.h"
+#include "wheel.h"
 
 #include <assert.h>
 
@@ -1342,6 +1344,8 @@ int nspi__on_localization_cfgread(HTCPLINK link, const char *data, int cb) {
         log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout, 
             "illegal controlor type:0x%08X try method nspi__on_localization_cfgread", nct);
         retval = -EBADF;
+    } else {
+        retval = mm__getloc(ack.blob_);
     }
 
     ack.head_.id_ = request->id_;
@@ -1349,10 +1353,8 @@ int nspi__on_localization_cfgread(HTCPLINK link, const char *data, int cb) {
     ack.head_.type_ = PKTTYPE_LOCALIZATION_CFGREAD_ACK;
     ack.head_.err_ = retval;
 
-    if (tcp_write(link, ack.head_.size_, &nsp__packet_maker, &ack) < 0) {
-        return -1;
-    }
-    return ack.head_.err_;
+    tcp_write(link, ack.head_.size_, &nsp__packet_maker, &ack);
+    return 0;
 }
 
 static
@@ -1375,6 +1377,95 @@ int nspi__on_localization_cfgwrite(HTCPLINK link, const char *data, int cb) {
     ack.size_ = sizeof(ack);
     ack.type_ = PKTTYPE_LOCALIZATION_CFGWRITE_ACK;
     ack.err_ = retval;
+
+    tcp_write(link, ack.size_, &nsp__packet_maker, &ack);
+    return 0;
+}
+
+static
+int nspi__wheels_by_driveunit(HTCPLINK link, const char *data, int cb) {
+    nsp__wheels_of_driveunit *request = (nsp__wheels_of_driveunit *)data;
+    var__drive_unit_t *unit;
+    int retval;
+    nsp__wheels_of_driveunit_ack ack, *ack_wheels;
+    var__functional_object_t **functionals;
+    int wheel_count;
+    int i;
+    int unit_id;
+
+    retval = 0;
+    ack_wheels = NULL;
+
+    do {
+        unit_id = request->unit_id;
+        unit = var__getunit_byid(unit_id);
+        if (!unit) {
+            log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout, 
+                    "read wheels by driveunit by unit id %d no found.", unit_id);
+            retval = -ENOENT;
+            break;
+        }
+
+        wheel_count = unit->associated_cnt_;
+        if (wheel_count > 0) {
+            ack_wheels = (nsp__wheels_of_driveunit_ack *)malloc(sizeof(nsp__wheels_of_driveunit_ack) + wheel_count * sizeof(int));
+            if (!ack_wheels) {
+                retval = -ENOMEM;
+                break;
+            }
+            ack_wheels->head_.id_ = request->head_.id_;
+            ack_wheels->head_.type_ = PKTTYPE_READ_WHEELS_BY_DRIVEUNIT_ACK;
+            ack_wheels->head_.size_ = sizeof(nsp__wheels_of_driveunit_ack) + wheel_count * sizeof(int);
+            
+            ack_wheels->unit_id = unit_id;
+            ack_wheels->count_ = wheel_count;
+
+            functionals = (var__functional_object_t **)malloc(wheel_count * sizeof(void *));
+            if (!functionals) {
+                retval = -ENOMEM;
+                break;
+            }
+
+            if (var__driveunit_parse_to_functional(unit, (void **)functionals, &wheel_count) < 0) {
+                log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout, 
+                    "read wheels by driveunit by unit id %d can not be parse to wheel functonals.", unit_id);
+                free(functionals);
+                retval = -1;
+                break;
+            }
+            
+            for (i = 0; i < wheel_count; i++) {
+                ack_wheels->ids_[i] = functionals[i]->object_id_;
+                var__release_wheel_dup(functionals[i]);
+            }
+            free(functionals);
+
+        }else{
+            ack_wheels = &ack;
+
+            ack_wheels->head_.id_ = request->head_.id_;
+            ack_wheels->head_.type_ = PKTTYPE_READ_WHEELS_BY_DRIVEUNIT_ACK;
+            ack_wheels->head_.size_ = sizeof(ack);
+
+            ack_wheels->unit_id = unit_id;
+            ack_wheels->count_ = 0;
+        }
+
+        retval = 0;
+
+    }while(0);
+
+    ack_wheels->head_.err_ = retval;
+
+    tcp_write(link, ack_wheels->head_.size_, &nsp__packet_maker, ack_wheels);
+
+    if ( (ack_wheels != &ack) && ack_wheels ){
+        free(ack_wheels);
+    }
+
+    if (unit){
+        var__release_object_reference(unit);
+    }
 
     return 0;
 }
@@ -1444,6 +1535,9 @@ int nsp__on_tcp_recvdata(HTCPLINK link, const char *data, int cb) {
             break;
         case PKTTYPE_LOCALIZATION_CFGWRITE:
             retval = nspi__on_localization_cfgwrite( link, data, cb );
+            break;
+        case PKTTYPE_READ_WHEELS_BY_DRIVEUNIT:
+            retval = nspi__wheels_by_driveunit( link, data, cb );
             break;
         case PKTTYPE_INITIACTIVE_COMMON_READ:
             retval = nspi__regist_cycle_event(link, data, cb);

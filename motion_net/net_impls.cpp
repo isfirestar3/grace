@@ -365,4 +365,12 @@ namespace mn {
 		std::shared_ptr<asio_partnet> partnet = std::make_shared<asio_partnet>( robot_id, apc );
 		return net_session->post_localization_cfgwrite_request( data, offset, cb, partnet );
 	}
+
+	EXP(int) query_wheels_by_driveunit(uint32_t robot_id, uint32_t unit_id, apc_t &apc) {
+		std::shared_ptr<net_motion_session> net_session = nsp::toolkit::singleton<net_manager>::instance()->search( robot_id );
+		if ( !net_session ) return -ENOENT;
+
+		std::shared_ptr<asio_partnet> partnet = std::make_shared<asio_partnet>( robot_id, apc );
+		return net_session->query_wheels_by_driveunit( unit_id, partnet );
+	}
 }

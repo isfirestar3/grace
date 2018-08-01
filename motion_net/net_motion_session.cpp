@@ -537,6 +537,22 @@ namespace mn {
 		return pool_.async_complete( ack->head_.id_, ack->head_.type_, ( const char* ) &locdat );
 	}
 
+	int net_motion_session::recv_wheels_of_driveunit(const unsigned char *pos, int &cb) {
+		std::shared_ptr<nsp::proto::proto_wheels_by_driveunit_ack> ack;
+		if (build<nsp::proto::proto_wheels_by_driveunit_ack>(pos, cb, ack) < 0) {
+			return -1;
+		}
+
+		struct wheels_of_driveunit wodu;
+		wodu.err_ = ack->head.err_;
+		wodu.unit_id = ack->unit_id;
+		for (auto &iter : ack->wheels) {
+			wodu.wheels.push_back(iter);
+		}
+
+		return pool_.async_complete( ack->head.id_, ack->head.type_, ( const char* ) &wodu );
+	}
+
 	void net_motion_session::recv_dispatch(const unsigned char *buffer, int &cb ) {
 		auto len = nsp::proto::proto_head::type_length();
 		if (cb < len) {
@@ -607,6 +623,9 @@ namespace mn {
 				break;
 			case PKTTYPE_LOCALIZATION_CFGREAD_ACK:
 				recv_cfgloc( pos, cb );
+				break;
+			case PKTTYPE_READ_WHEELS_BY_DRIVEUNIT_ACK:
+				recv_wheels_of_driveunit(pos, cb);
 				break;
 			default:
 				mnlog_error << "unknown packet type received. " << type;
@@ -1199,6 +1218,24 @@ namespace mn {
 		uint32_t pktid = pool_.get_pktid();
 		nsp::proto::proto_localization_cfgwrite packet( PKTTYPE_LOCALIZATION_CFGWRITE, pktid);
 		memcpy(packet.blob_ + offset, data, cb);
+		packet.calc_size();
+
+		return pool_.queue_packet(pktid, asio,  [&] () ->int {
+			return psend( &packet );
+		} );
+	}
+
+	int net_motion_session::query_wheels_by_driveunit( uint32_t unit_id, const std::shared_ptr<asio_partnet> &asio) {
+		int err = check_connection_status();
+		if ( err < 0 ) {
+			return err;
+		}
+		
+		pool_.periodic_pktid_cancel();
+
+		uint32_t pktid = pool_.get_pktid();
+		nsp::proto::proto_wheels_by_driveunit packet( PKTTYPE_READ_WHEELS_BY_DRIVEUNIT, pktid);
+		packet.unit_id = unit_id;
 		packet.calc_size();
 
 		return pool_.queue_packet(pktid, asio,  [&] () ->int {

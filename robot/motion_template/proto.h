@@ -272,6 +272,18 @@ typedef struct {
 typedef nsp__localization_cfgwrite_t nsp__localization_cfgread_ack_t;
 typedef nsp__packet_head_t nsp__localization_cfgwrite_ack_t;
 
+typedef struct {
+    nsp__packet_head_t head_;
+    int unit_id;
+}nsp__wheels_of_driveunit;
+
+typedef struct {
+    nsp__packet_head_t head_;
+    int unit_id;
+    int count_;
+    int ids_[0];
+}nsp__wheels_of_driveunit_ack;
+
 #pragma pack(pop)
 
 extern int nsp__on_tcp_recvdata(HTCPLINK link, const char *data, int cb);

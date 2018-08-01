@@ -200,3 +200,33 @@ int var__driveunit_parse_to_functional(const var__drive_unit_t *unit, void **fun
     }
     return 0;
 }
+
+var__drive_unit_t *var__getunit(objhld_t hld) {
+    var__functional_object_t *obj;
+    var__drive_unit_t *unit;
+    
+    obj = objrefr(hld);
+    if (obj) {
+        if (obj->type_ != kVarType_DriveUnit) {
+            objdefr(hld);
+            return NULL;
+        }
+        
+        unit = var__object_body_ptr(var__drive_unit_t, obj);
+        var__acquire_lock(obj);
+        return unit;
+    }
+
+    return NULL;
+}
+
+var__drive_unit_t *var__getunit_byid(int id) {
+    objhld_t hld;
+
+    hld = var__getobj_handle_byid(id);
+    if (hld >= 0) {
+        return var__getunit(hld);
+    }
+
+    return NULL;
+}

@@ -35,6 +35,14 @@ typedef struct _var__drive_unit {
 extern
 int var__load_driveunit();
 
+/*得到 var__functional_object_t *
+  手动调用 var__release_object_reference 释放
+ */
+extern
+var__drive_unit_t *var__getunit(objhld_t hld);
+extern
+var__drive_unit_t *var__getunit_byid(int id);
+
 /* 因为 drive unit 的对象数据区域不可变更， 因此这个引用为 const 属性返回， 不需要反引用
  */
 extern

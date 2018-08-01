@@ -198,6 +198,14 @@ namespace mn {
 	struct loc_data_t : public asio_t {
 		uint8_t data_[128];
 	};
+
+	/*
+	returned by query_wheels_by_driveunit
+	*/
+	struct wheels_of_driveunit : public asio_t {
+		int unit_id;
+		std::vector<int> wheels;
+	};
 }
 
 #endif /* !MOTION_NET_DEFINE_H */

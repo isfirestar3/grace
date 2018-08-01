@@ -115,6 +115,7 @@ namespace mn {
 		void recv_dispatch(const unsigned char *buffer, int &cb );
 		int recv_mtver(const unsigned char *buffer, int &cb );
 		int recv_cfgloc(const unsigned char *buffer, int &cb);
+		int recv_wheels_of_driveunit(const unsigned char *buffer, int &cb);
 
 	public:
 		net_motion_session(int robot_id);
@@ -167,5 +168,6 @@ namespace mn {
 		int unregistry_periodic_report(const std::shared_ptr<asio_partnet> &asio);
 		int post_localization_cfgread_request( const std::shared_ptr<asio_partnet> &asio);
 		int post_localization_cfgwrite_request( const uint8_t *data, uint8_t offset, uint8_t cb, const std::shared_ptr<asio_partnet> &asio);
+		int query_wheels_by_driveunit(uint32_t unit_id, const std::shared_ptr<asio_partnet> &asio);
 	};
 };

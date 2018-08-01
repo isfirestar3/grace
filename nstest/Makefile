@@ -6,10 +6,11 @@ CC=g++
 
 CFLAGS=-Wall -std=c++11
 
-INCLUDES+=-I ../sdk/misc/ -I ../sdk/var/ -I ../sdk/nsp/
+INCLUDES+=-I ../sdk/misc/ -I ../sdk/var/ -I ../sdk/nsp/ -I ../sdk/nsp/icom/
 #INCLUDES+=-I libnsp/
         
-SRCS+=$(wildcard *.cpp) 
+#SRCS+=$(wildcard *.cpp) 
+SRCS+=AutoCalibration.cpp
 SRCS+=$(wildcard ../sdk/nsp/*.cpp)
 
 OBJS:=$(patsubst %.cpp,%.o,$(SRCS))

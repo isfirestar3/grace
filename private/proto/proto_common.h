@@ -74,6 +74,76 @@ namespace nsp{
 
 
 		}proto_vec_comm_t;
+
+		typedef struct _proto_wheels_by_driveunit : public nsp::proto::proto_interface
+		{
+			_proto_wheels_by_driveunit(uint32_t type, uint32_t id) :head(type, id) {}
+			nsp::proto::proto_head head;
+			nsp::proto::proto_crt_t<int> unit_id;
+
+			unsigned char *serialize(unsigned char *bytes) const override
+			{
+				unsigned char *pos = bytes;
+				pos = head.serialize(pos);
+				pos = unit_id.serialize(pos);
+				return pos;
+			}
+
+			const unsigned char *build(const  unsigned char * byte, int &cb) override
+			{
+				const unsigned char *pos = byte;
+				pos = head.build(pos, cb);
+				pos = unit_id.build(pos, cb);
+				return pos;
+			}
+
+			const int length() const override
+			{
+				return unit_id.length() + head.length();
+			}
+
+			void calc_size()
+			{
+				head.size_ = length();
+			}
+
+		}proto_wheels_by_driveunit;
+
+		typedef struct _proto_wheels_by_driveunit_ack : public nsp::proto::proto_interface
+		{
+			nsp::proto::proto_head head;
+			nsp::proto::proto_crt_t<int> unit_id;
+			nsp::proto::proto_vector_t<nsp::proto::proto_crt_t<int>> wheels;
+
+			unsigned char *serialize(unsigned char *bytes) const override
+			{
+				unsigned char *pos = bytes;
+				pos = head.serialize(pos);
+				pos = unit_id.serialize(pos);
+				pos = wheels.serialize(pos);
+				return pos;
+			}
+
+			const unsigned char *build(const  unsigned char * byte, int &cb) override
+			{
+				const unsigned char *pos = byte;
+				pos = head.build(pos, cb);
+				pos = unit_id.build(pos, cb);
+				pos = wheels.build(pos, cb);
+				return pos;
+			}
+
+			const int length() const override
+			{
+				return unit_id.length() + wheels.length() + head.length();
+			}
+
+			void calc_size()
+			{
+				head.size_ = length();
+			}
+
+		}proto_wheels_by_driveunit_ack;
 		
 		struct proto_periodic_title {
 			nsp::proto::proto_crt_t<int> var_id_;

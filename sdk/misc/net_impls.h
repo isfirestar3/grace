@@ -87,6 +87,8 @@ namespace mn {
 	EXP(int) post_query_mtver(uint32_t robot_id, apc_t &apc);
 	// kill mt process
 	EXP(int) post_dbg_segmentfault(uint32_t robot_id, apc_t &apc);
+	// get wheels by drive unit
+	EXP(int) query_wheels_by_driveunit(uint32_t robot_id, uint32_t unit_id, apc_t &apc);
 
 	/////////////////////定位和标定相关接口////////////////////////////////
 	// 返回 loc_data_t
