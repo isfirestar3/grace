@@ -10,6 +10,7 @@
 #include "proto_task_status.h"
 #include "proto_allocate_operation_task.h"
 #include "proto_keep_alive.h"
+#include "proto_offline_task.h"
 
 #include "rapidxml_iterators.hpp"
 #include "rapidxml_print.hpp"
@@ -544,6 +545,9 @@ namespace mn {
 			case PKTTYPE_CANCEL_NAVIGATION_TASK_ACK:
 			case PKTTYPE_PAUSE_NAVIGATION_TASK_ACK:
 			case PKTTYPE_RESUME_NAVIGATION_TASK_ACK:
+			case PKTTYPE_ALLOC_OFFLINE_TASK_ACK:
+			case PKTTYPE_CANCEL_OFFLINE_TASK_ACK:
+			case PKTTYPE_OFFLINE_NEXT_STEP_ACK:
 				recv_navigation_operation_ack(pos, cb);
 				break;
 			case PKTTYPE_QUERY_NAVIGATION_TASK_STATUS_ACK:
@@ -1275,16 +1279,78 @@ namespace mn {
 		this->login_error_ = login_err;
 	}
 
-	int net_motion_session::post_offline_task(uint64_t task_id, const mn_offline_task &task, const std::shared_ptr<asio_partnet> &asioc) {
-		return 0;
+	int net_motion_session::post_offline_task(uint64_t task_id, const mn_offline_task &task, const std::shared_ptr<asio_partnet> &asio) {
+		int err = check_connection_status();
+		if (err < 0) {
+			return err;
+		}
+
+		uint32_t pktid = pool_.get_pktid();
+		nsp::proto::proto_offline_task packet(PKTTYPE_ALLOC_OFFLINE_TASK, pktid);
+		packet.task_id_ = task_id;
+
+		for (const auto &iter_node : task) {
+			nsp::proto::proto_offline_node_t task_node;
+			task_node.task_id_ = iter_node.task_id_;
+			task_node.dest_upl_.edge_id_ = iter_node.dest_upl_.edge_id_;
+			task_node.dest_upl_.percentage_ = iter_node.dest_upl_.percentage_;
+			task_node.dest_upl_.angle_ = iter_node.dest_upl_.angle_;
+			task_node.dest_pos_.x_ = iter_node.dest_pos_.x_;
+			task_node.dest_pos_.y_ = iter_node.dest_pos_.y_;
+			task_node.dest_pos_.w_ = iter_node.dest_pos_.w_;
+			for (const auto &iter_oper : iter_node.opers_) {
+				nsp::proto::proto_offline_operation_t task_oper;
+				task_oper.task_id_ = iter_oper.task_id_;
+				task_oper.code_ = iter_oper.code_;
+				task_oper.params0_ = iter_oper.params_[0];
+				task_oper.params1_ = iter_oper.params_[1];
+				task_oper.params2_ = iter_oper.params_[2];
+				task_oper.params3_ = iter_oper.params_[3];
+				task_oper.params4_ = iter_oper.params_[4];
+				task_oper.params5_ = iter_oper.params_[5];
+				task_oper.params6_ = iter_oper.params_[6];
+				task_oper.params7_ = iter_oper.params_[7];
+				task_oper.params8_ = iter_oper.params_[8];
+				task_oper.params9_ = iter_oper.params_[9];
+				task_node.opers_.push_back(std::move(task_oper));
+			}
+			packet.nodes_.push_back(std::move(task_node));
+		}
+		return pool_.queue_packet(pktid, asio, [&]() ->int {
+			return psend(&packet);
+		});
 	}
 
 	int net_motion_session::cancel_offline_task(uint64_t task_id, const std::shared_ptr<asio_partnet> &asio) {
-		return 0;
+		int err = check_connection_status();
+		if (err < 0) {
+			return err;
+		}
+
+		uint32_t pktid = pool_.get_pktid();
+		nsp::proto::proto_task_status_t packet(PKTTYPE_CANCEL_OFFLINE_TASK, pktid);
+		packet.task_id_ = task_id;
+		packet.calc_size();
+
+		return pool_.queue_packet(pktid, asio, [&]() ->int {
+			return psend(&packet);
+		});
 	}
 
 	int net_motion_session::post_offline_nextstep(uint64_t task_id, const std::shared_ptr<asio_partnet> &asio) {
-		return 0;
+		int err = check_connection_status();
+		if (err < 0) {
+			return err;
+		}
+
+		uint32_t pktid = pool_.get_pktid();
+		nsp::proto::proto_task_status_t packet(PKTTYPE_OFFLINE_NEXT_STEP, pktid);
+		packet.task_id_ = task_id;
+		packet.calc_size();
+
+		return pool_.queue_packet(pktid, asio, [&]() ->int {
+			return psend(&packet);
+		});
 	}
 
 }

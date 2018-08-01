@@ -193,16 +193,16 @@ namespace mn {
 	};
 
 	struct offline_operator_node_t {
-		uint64_t task_id;
-		int32_t task_code;
-		uint64_t task_params[10];
+		uint64_t task_id_;
+		int32_t code_;
+		uint64_t params_[10];
 	};
 	struct offline_task_node_t {
-		uint64_t task_id;
-		upl_t dest_upl;
-		position_t dest_pos;
-		std::vector<trail_t> trails;
-		std::vector<offline_operator_node_t> opers;
+		uint64_t task_id_;
+		upl_t dest_upl_;
+		position_t dest_pos_;
+		std::vector<trail_t> trails_;
+		std::vector<offline_operator_node_t> opers_;
 	};
 	typedef std::vector<offline_task_node_t> mn_offline_task;
 

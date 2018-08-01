@@ -1,11 +1,5 @@
-#if !_WIN32
 #define _GNU_SOURCE
 #include <sched.h>
-#include "gzdrive.h"
-#include "regist_event.h"
-#include <signal.h>
-#endif
-
 #include "version.h"
 
 #include "var.h"
@@ -22,6 +16,12 @@
 
 #include "canio.h"
 #include "args.h"
+
+#if !_WIN32
+#include "gzdrive.h"
+#include "regist_event.h"
+#include <signal.h>
+#endif
 
 #include "error.h"
 
@@ -301,14 +301,13 @@ void *run__navigation_proc(void *argv) {
         memory_dump_object = NULL;
     }
 	
-#if !_WIN32
 	cpu_set_t set;
     CPU_ZERO(&set);
     CPU_SET(3, &set);
     if (pthread_setaffinity_np(pthread_self(), sizeof(set), &set) == -1) {
         log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout,"nav thread bind cpu3 error.");
     }
-#endif
+
     log__save("motion_template", kLogLevel_Info, kLogTarget_Filesystem | kLogTarget_Stdout,"navigation loop success startup.");
 
     while (1) {
@@ -369,11 +368,9 @@ int main(int argc, char **argv) {
     posix__pthread_t navigation_tp, safty_tp, guard_tp;
     posix__waitable_handle_t monitor;
     int retval;
+    struct p_storage_t p_storage_object;
+    int p_storage_retval;
     var__navigation_t *nav;
-#if !_WIN32
-	struct p_storage_t p_storage_object;
-	int p_storage_retval;
-#endif
 
     static const char startup_message[] = POSIX__EOL
             "****************************************************************************"POSIX__EOL
@@ -467,8 +464,7 @@ int main(int argc, char **argv) {
     /* create thread for guard and error detect */
     posix__pthread_create(&guard_tp, &run__guard_proc, NULL);
 
-#if !_WIN32
-	/* zeroization save object */
+    /* zeroization save object */
     memset(&p_storage_object, 0, sizeof(p_storage_object));
     p_storage_retval = run__load_mapping();
     if (p_storage_retval >= 0) {
@@ -488,7 +484,7 @@ int main(int argc, char **argv) {
     } else {
         log__save("motion_template", kLogLevel_Warning, kLogTarget_Filesystem | kLogTarget_Stdout, "failed load file mapping for UPL.");
     }
-#endif
+
     while (1) {
         retval = posix__waitfor_waitable_handle(&monitor, (uint32_t) navigation_timeout_as_fatal);
         if ((ETIMEDOUT == retval) && (navigation_timeout_as_fatal > 0)) {
@@ -501,7 +497,7 @@ int main(int argc, char **argv) {
                 break;
             }
         }
-#if !_WIN32
+
         if (p_storage_retval >= 0) {
             nav = var__get_navigation();
             if (nav) {
@@ -516,13 +512,11 @@ int main(int argc, char **argv) {
                 }
             }
         }
-#endif
     }
 
-#if !_WIN32
     if (p_storage_retval >= 0) {
         run__release_mapping();
     }
-#endif   
+    
     return 0;
 }
