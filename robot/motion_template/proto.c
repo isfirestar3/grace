@@ -72,6 +72,65 @@ int nspi__on_login(HTCPLINK link, const char *data, int cb) {
 static HTCPLINK previous_link = INVALID_HTCPLINK;
 
 static
+int nspi__calibate_byid(HTCPLINK link, const char *data, int cb) {
+    nsp__common_protocol_item_t *item;
+    nsp__common_protocol_t *pkt_common_calibate = (nsp__common_protocol_t *) data;
+    int i;
+    nsp__common_calibate_ack_t ack_common_calibate;
+    int usable;
+    int retval;
+    enum nsp__controlor_type_t nct;
+
+    usable = cb;
+    retval = 0;
+
+    /* build a acknowledge packet */
+    memcpy(&ack_common_calibate, &pkt_common_calibate->head_, sizeof ( nsp__packet_head_t));
+    ack_common_calibate.size_ = sizeof ( ack_common_calibate);
+    ack_common_calibate.type_ = PKTTYPE_COMMON_CALIBRATION_BYID_ACK;
+
+    do {
+        /* check link access */
+        nct = nsp__get_link_type(link);
+        if (nct != kControlorType_Calibration ) {
+            log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout, 
+                "illegal controlor type:0x%08X try method nspi__calibate_byid", nct);
+            retval = -EBADF;
+            break;
+        }
+
+        /* source data length security checking */
+        if (usable < sizeof(nsp__common_protocol_t)) {
+            log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout, 
+                "invalid common write byid request size %d", cb);
+            retval = -EFAULT;
+            break;
+        }
+        usable -= sizeof(nsp__common_protocol_t);
+
+        /* try to write all request node into functional objects */
+        item = (nsp__common_protocol_item_t *) pkt_common_calibate->items;
+        for (i = 0; i < pkt_common_calibate->count_; i++) {
+
+            /* data length security checking */
+            usable -= sizeof(nsp__common_protocol_item_t);
+            usable -= item->length_;
+            if (usable < 0) {
+                log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout, "invalid common write byid request size");
+                retval = -EFAULT;
+                break;
+            }
+
+            item = (nsp__common_protocol_item_t *) (((char *) item) + (sizeof ( nsp__common_protocol_item_t) + item->length_));
+        }
+    }while(0);
+    
+    ack_common_calibate.err_ = retval;
+    
+    return tcp_write(link, ack_common_calibate.size_, &nsp__packet_maker, &ack_common_calibate);
+}
+
+static
 int nspi__on_common_write_byid(HTCPLINK link, const char *data, int cb) {
     nsp__common_protocol_item_t *item;
     nsp__common_protocol_t *pkt_common_write = (nsp__common_protocol_t *) data;
@@ -1539,6 +1598,10 @@ int nsp__on_tcp_recvdata(HTCPLINK link, const char *data, int cb) {
         case PKTTYPE_READ_WHEELS_BY_DRIVEUNIT:
             retval = nspi__wheels_by_driveunit( link, data, cb );
             break;
+        case PKTTYPE_COMMON_CALIBRATION_BYID:
+            retval = nspi__calibate_byid( link, data, cb  );
+            break;
+
         case PKTTYPE_INITIACTIVE_COMMON_READ:
             retval = nspi__regist_cycle_event(link, data, cb);
             break;

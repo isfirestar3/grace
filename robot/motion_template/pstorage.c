@@ -93,6 +93,7 @@ int mm__load_mapping() {
 			}
 		} 
 
+        /* pa_offset = offset & ~(sysconf(_SC_PAGE_SIZE) - 1) */
         addr = mmap(NULL, P_STORAGE_FILE_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
         if (MAP_FAILED == addr) {
             log__save("motion_template", kLogLevel_Error, kLogTarget_Filesystem | kLogTarget_Stdout,

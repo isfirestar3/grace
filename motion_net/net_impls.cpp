@@ -373,4 +373,12 @@ namespace mn {
 		std::shared_ptr<asio_partnet> partnet = std::make_shared<asio_partnet>( robot_id, apc );
 		return net_session->query_wheels_by_driveunit( unit_id, partnet );
 	}
+
+	EXP(int) post_common_calibate_request_by_id( uint32_t robot_id, const struct common_data &write_data, apc_t &apc ) {
+		std::shared_ptr<net_motion_session> net_session = nsp::toolkit::singleton<net_manager>::instance()->search( robot_id );
+		if ( !net_session ) return -ENOENT;
+
+		std::shared_ptr<asio_partnet> partnet = std::make_shared<asio_partnet>( robot_id, apc );
+		return net_session->post_common_calibate_request_by_id( write_data, partnet );
+	}
 }

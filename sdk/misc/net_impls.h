@@ -95,6 +95,8 @@ namespace mn {
 	EXP(int) post_localization_cfgread_request(uint32_t robot_id, apc_t &apc);
 	// 返回 asio_t
 	EXP(int) post_localization_cfgwrite_request(uint32_t robot_id, const uint8_t *data, uint8_t offset, uint8_t cb, apc_t &apc);
+	// 通用校准， 返回 asio_t
+	EXP(int) post_common_calibate_request_by_id( uint32_t robot_id, const struct common_data &write_data, apc_t &apc );
 
 #if __cplusplus > 0
 }

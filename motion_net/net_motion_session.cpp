@@ -606,6 +606,7 @@ namespace mn {
 				break;
 			case PKTTYPE_COMMON_WRITE_BYID_ACK:
 			case PKTTYPE_COMMON_COMPARE_WRITE_ACK:
+			case PKTTYPE_COMMON_CALIBRATION_BYID_ACK:
 			case PKTTYPE_QUERY_REPORT_STATUS_ACK:
 			case PKTTYPE_ADDITIONAL_NAVIGATION_TRAJECTORY_ACK:
 			case PKTTYPE_QUERY_OPERATION_PARAMETER_ACK:
@@ -935,6 +936,30 @@ namespace mn {
 
 		uint32_t pktid = pool_.get_pktid();
 		nsp::proto::proto_vec_commom_ack_t packet( PKTTYPE_COMMON_WRITE_BYID, pktid );
+
+		for ( const auto &iter : write_data.items ) {
+			nsp::proto::proto_common_ack item;
+			item.var_id_ = iter.varid;
+			item.var_type_ = iter.vartype;
+			item.offset_ = iter.offset;
+			item.value_ = iter.data;
+			packet.vec_common_ack.push_back( item );
+		}
+		packet.calc_size();
+
+		return pool_.queue_packet(pktid, asio,  [&] () ->int {
+			return psend( &packet );
+		} );
+	}
+
+	int net_motion_session::post_common_calibate_request_by_id( const struct common_data &write_data, const std::shared_ptr<asio_partnet> &asio ) {
+		int err = check_connection_status();
+		if ( err < 0 ) {
+			return err;
+		}
+
+		uint32_t pktid = pool_.get_pktid();
+		nsp::proto::proto_vec_commom_ack_t packet( PKTTYPE_COMMON_CALIBRATION_BYID, pktid );
 
 		for ( const auto &iter : write_data.items ) {
 			nsp::proto::proto_common_ack item;

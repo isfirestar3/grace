@@ -62,6 +62,7 @@ typedef struct {
 } nsp__common_protocol_t;
 
 typedef nsp__packet_head_t nsp__common_protocol_write_ack_t;
+typedef nsp__packet_head_t nsp__common_calibate_ack_t;
 
 typedef struct {
     nsp__packet_head_t head_;

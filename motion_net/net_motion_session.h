@@ -169,5 +169,6 @@ namespace mn {
 		int post_localization_cfgread_request( const std::shared_ptr<asio_partnet> &asio);
 		int post_localization_cfgwrite_request( const uint8_t *data, uint8_t offset, uint8_t cb, const std::shared_ptr<asio_partnet> &asio);
 		int query_wheels_by_driveunit(uint32_t unit_id, const std::shared_ptr<asio_partnet> &asio);
+		int post_common_calibate_request_by_id( const struct common_data &write_data, const std::shared_ptr<asio_partnet> &asio );
 	};
 };
