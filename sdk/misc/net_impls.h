@@ -88,6 +88,11 @@ namespace mn {
 	// kill mt process
 	EXP(int) post_dbg_segmentfault(uint32_t robot_id, apc_t &apc);
 
+	/////////////////////离线任务接口////////////////////////////////
+	EXP(int) post_offline_task(uint32_t robot_id, uint64_t task_id, const mn_offline_task &task, apc_t &apc);
+	EXP(int) cancel_offline_task(uint32_t robot_id, uint64_t task_id, apc_t &apc);
+	EXP(int) post_offline_nextstep(uint32_t robot_id, uint64_t task_id, apc_t &apc);
+
 #if __cplusplus > 0
 }
 #endif

@@ -115,6 +115,7 @@ copy "$(OutDir)$(ProjectName).dll"  "$(ProjectDir)..\RTM\"</Command>
     <ClInclude Include="..\private\proto\proto_navigation_task.h" />
     <ClInclude Include="..\private\proto\proto_navigation_task_status_ack.h" />
     <ClInclude Include="..\private\proto\proto_navigation_task_traj_ack.h" />
+    <ClInclude Include="..\private\proto\proto_offline_task.h" />
     <ClInclude Include="..\private\proto\proto_operator_task_action_ack.h" />
     <ClInclude Include="..\private\proto\proto_pre_login.h" />
     <ClInclude Include="..\private\proto\proto_report_status.h" />

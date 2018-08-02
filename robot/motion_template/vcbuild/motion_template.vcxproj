@@ -213,6 +213,7 @@ copy "$(OutDir)$(ProjectName).exe" "$(SolutionDir)..\..\..\sdk\bin"</Command>
     <ClCompile Include="..\var\moons.c" />
     <ClCompile Include="..\var\navigation.c" />
     <ClCompile Include="..\var\netio.c" />
+    <ClCompile Include="..\var\offlinetask.c" />
     <ClCompile Include="..\var\operation.c" />
     <ClCompile Include="..\var\optpar.c" />
     <ClCompile Include="..\var\safety.c" />
@@ -315,6 +316,7 @@ copy "$(OutDir)$(ProjectName).exe" "$(SolutionDir)..\..\..\sdk\bin"</Command>
     <ClInclude Include="..\..\..\private\libxml2\libxml\xpath.h" />
     <ClInclude Include="..\..\..\private\libxml2\libxml\xpathInternals.h" />
     <ClInclude Include="..\..\..\private\libxml2\libxml\xpointer.h" />
+    <ClInclude Include="..\..\..\sdk\var\offlinetask.h" />
     <ClInclude Include="..\args.h" />
     <ClInclude Include="..\entry.h" />
     <ClInclude Include="..\gesn.h" />

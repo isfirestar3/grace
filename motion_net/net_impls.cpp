@@ -349,4 +349,34 @@ namespace mn {
 		std::shared_ptr<asio_partnet> partnet = std::make_shared<asio_partnet>( robot_id, apc );
 		return net_session->post_dbg_segmentfault( partnet );
 	}
+
+	EXP(int) post_offline_task(uint32_t robot_id, uint64_t task_id, const mn_offline_task &task, apc_t &apc) {
+		std::shared_ptr<net_motion_session> net_session = nsp::toolkit::singleton<net_manager>::instance()->search(robot_id);
+		if (!net_session) return -ENOENT;
+
+		try {
+			std::shared_ptr<asio_partnet> partnet = std::make_shared<asio_partnet>(robot_id, apc);
+			return net_session->post_offline_task(task_id, task, partnet);
+		}
+		catch (...) {
+			return -ENOMEM;
+		}
+	}
+
+	EXP(int) cancel_offline_task(uint32_t robot_id, uint64_t task_id, apc_t &apc) {
+		std::shared_ptr<net_motion_session> net_session = nsp::toolkit::singleton<net_manager>::instance()->search(robot_id);
+		if (!net_session) return -ENOENT;
+
+		std::shared_ptr<asio_partnet> partnet = std::make_shared<asio_partnet>(robot_id, apc);
+		return net_session->cancel_offline_task(task_id, partnet);
+	}
+
+	EXP(int) post_offline_nextstep(uint32_t robot_id, uint64_t task_id, apc_t &apc) {
+		std::shared_ptr<net_motion_session> net_session = nsp::toolkit::singleton<net_manager>::instance()->search(robot_id);
+		if (!net_session) return -ENOENT;
+
+		std::shared_ptr<asio_partnet> partnet = std::make_shared<asio_partnet>(robot_id, apc);
+		return net_session->post_offline_nextstep(task_id, partnet);
+	}
+
 }

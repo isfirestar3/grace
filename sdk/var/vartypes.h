@@ -43,8 +43,8 @@ enum var__fixed_object_id {
     kVarFixedObject_Driver4,
     kVarFixedObject_Driver5,
     kVarFixedObject_Driver6,
-    kVarFixedObject_Driver7,
-    kVarFixedObject_VirtualLast = kVarFixedObject_Driver7,
+    kVarFixedObject_OfflineTask, // 离线任务 
+	kVarFixedObject_VirtualLast = kVarFixedObject_OfflineTask,
 
     kVarReserved_MaximumFunction = 20, // 最大预留区间
 };
@@ -66,6 +66,7 @@ enum var__types {
     kVarType_Map, // 地图
     kVarType_OperationTarget, // 操作目标参数表
     kVarType_Localization,
+	kVarType_OfflineTask, // 离线任务 
 
     // dev
     kVarType_CanBus = 0x100, // CAN 总线设备
