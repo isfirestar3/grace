@@ -67,6 +67,7 @@ namespace nsp {
 			nsp::proto::proto_crt_t<uint64_t> task_id_;
 			nsp::proto::upl_t dest_upl_;
 			nsp::proto::position_t dest_pos_;
+			nsp::proto::proto_vector_t<trail_t> trails_;
 			nsp::proto::proto_vector_t<proto_offline_operation_t> opers_;
 
 			unsigned char *serialize(unsigned char *bytes) const override
@@ -75,6 +76,7 @@ namespace nsp {
 				pos = task_id_.serialize(pos);
 				pos = dest_upl_.serialize(pos);
 				pos = dest_pos_.serialize(pos);
+				pos = trails_.serialize(pos);
 				pos = opers_.serialize(pos);
 				return pos;
 			}
@@ -85,13 +87,14 @@ namespace nsp {
 				pos = task_id_.build(pos, cb);
 				pos = dest_upl_.build(pos, cb);
 				pos = dest_pos_.build(pos, cb);
+				pos = trails_.build(pos, cb);
 				pos = opers_.build(pos, cb);
 				return pos;
 			}
 
 			const int length() const override
 			{
-				return task_id_.length() + dest_upl_.length() + dest_pos_.length() + opers_.length();
+				return task_id_.length() + dest_upl_.length() + dest_pos_.length() + trails_.length() + opers_.length();
 			}
 		} proto_offline_node_t;
 

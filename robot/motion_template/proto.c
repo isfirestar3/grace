@@ -14,6 +14,7 @@
 #include "args.h"
 #include "posix_atomic.h"
 #include "logger.h"
+#include "offlinetask.h"
 
 #include <assert.h>
 
@@ -1329,6 +1330,22 @@ void nspi__on_raise_segmentfault(HTCPLINK link) {
 #endif
 }
 
+//free heap memory when next incoming offline task  arrived
+//notify customer / rex navigation completed
+//decline post_navigation_task(not customer) / post_add_navigation_task_traj / post_allocate_operation_task when offline task is existed
+//decline offline task when either navigation task or operation task is existed
+static int nspi__on_allocate_offline_task(HTCPLINK link, const char *data, int cb) {
+	nsp__allocate_offline_task_t *pkt_offline_task = (nsp__allocate_offline_task_t *)data;
+	nsp__allocate_offline_task_ack_t ack_offline_task;
+
+	memcpy(&ack_offline_task.head_, &pkt_offline_task->head_, sizeof(nsp__packet_head_t));
+	ack_offline_task.head_.type_ = PKTTYPE_ALLOC_OFFLINE_TASK_ACK;
+	ack_offline_task.head_.size_ = sizeof (ack_offline_task);
+	ack_offline_task.head_.err_ = var__set_offline_task(data, cb);
+
+	return tcp_write(link, ack_offline_task.head_.size_, &nsp__packet_maker, &ack_offline_task);
+}
+
 static
 int nspi__on_nonsupport(HTCPLINK link, const char *data, int cb) {
     nsp__packet_head_t *head = (nsp__packet_head_t *)data;
@@ -1454,6 +1471,12 @@ int nsp__on_tcp_recvdata(HTCPLINK link, const char *data, int cb) {
         case PKTTYPE_DBG_SIGSEGV:
             nspi__on_raise_segmentfault(link);
             break;
+
+		case PKTTYPE_ALLOC_OFFLINE_TASK:
+		case PKTTYPE_CANCEL_OFFLINE_TASK:
+		case PKTTYPE_OFFLINE_NEXT_STEP:
+			nspi__on_allocate_offline_task(link, data, cb);
+			break;
 
         default:
             retval = nspi__on_nonsupport(link, data, cb);

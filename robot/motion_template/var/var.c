@@ -57,7 +57,7 @@ void var__load_private_driver_object() {
     var__functional_object_t *object;
     int retval;
 
-    for ( i = kVarFixedObject_Driver0; i <= kVarFixedObject_Driver7; i++) {
+    for ( i = kVarFixedObject_Driver0; i <= kVarFixedObject_Driver6; i++) {
         retval = var__allocate_functional_object(0, kVarType_PrivateDriver, &object);
         if ((retval >= 0) && (object)) {
             object->object_id_ = i;

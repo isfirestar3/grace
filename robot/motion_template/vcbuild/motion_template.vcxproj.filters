@@ -138,11 +138,11 @@
     <ClCompile Include="..\memdump.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\mclog.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\regist_event.c">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\var\offlinetask.c">
+      <Filter>var</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -469,6 +469,9 @@
     </ClInclude>
     <ClInclude Include="..\regist_event.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sdk\var\offlinetask.h">
+      <Filter>var</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

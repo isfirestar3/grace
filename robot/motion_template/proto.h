@@ -265,6 +265,17 @@ typedef struct {
 }nsp__keepalive_udp_t;
 typedef nsp__keepalive_udp_t nsp__keepalive_udp_ack_t;
 
+// 离线任务相关协议
+typedef struct nsp__allocate_offline_task {
+	nsp__packet_head_t head_;
+	uint64_t task_id_;
+	int cnt_nodes_;
+	char data[0];
+} nsp__allocate_offline_task_t;
+typedef nsp__control_navigation_task_t nsp__allocate_offline_task_ack_t;
+typedef nsp__control_navigation_task_t nsp__cancel_offline_task_t;
+typedef nsp__control_navigation_task_t nsp__nextstep_offline_task_t;
+
 #pragma pack(pop)
 
 extern int nsp__on_tcp_recvdata(HTCPLINK link, const char *data, int cb);
